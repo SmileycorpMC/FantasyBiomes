@@ -1,0 +1,22 @@
+{
+    "forge_marker": 1,
+	"defaults": {
+        "model": "cross"
+    },
+	"variants": {
+		"age" : {
+			"0": {
+				"textures": { "cross": "fbiomes:blocks/brambles" }
+			},
+			"1": {
+				"textures": { "cross": "fbiomes:blocks/brambles_grow_0" }
+			},
+			"2": {
+				"textures": { "cross": "fbiomes:blocks/brambles_grow_1" }
+			},
+			"3": {
+				"textures": { "cross": "fbiomes:blocks/brambles_berries" }
+			}
+		}
+    }
+}

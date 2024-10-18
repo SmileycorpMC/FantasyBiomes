@@ -1,0 +1,31 @@
+{
+    "forge_marker": 1,
+	"defaults": {
+        "model": "fbiomes:wall_shroom"
+    },
+	"variants": {
+		"facing=up":  { 
+			"model": "cross",
+			"textures": {"particle": "#cross", "cross": "fbiomes:blocks/glowshroom_pink"}
+		},
+		"facing=east":  { 
+			"model": "fbiomes:wall_shroom",
+			"textures": {"particle": "#cross", "cross": "fbiomes:blocks/glowshroom_pink_wall"},
+			"y": 180
+		},
+		"facing=south":  { 
+			"model": "fbiomes:wall_shroom",
+			"textures": {"particle": "#cross", "cross": "fbiomes:blocks/glowshroom_pink_wall"},	
+			"y": 270
+		},
+		"facing=west":  { 
+			"model": "fbiomes:wall_shroom",
+			"textures": {"particle": "#cross", "cross": "fbiomes:blocks/glowshroom_pink_wall"}
+		},
+		"facing=north":  { 
+			"model": "fbiomes:wall_shroom",
+			"textures": {"particle": "#cross", "cross": "fbiomes:blocks/glowshroom_pink_wall"},	
+			"y": 90
+		}
+    }
+}

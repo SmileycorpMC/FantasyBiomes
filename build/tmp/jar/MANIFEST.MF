@@ -1,0 +1,9 @@
+Manifest-Version: 1.0
+Implementation-Title: FantasyBiomes
+Implementation-Version: 1.12.2-1.0.0
+Specification-Vendor: smileycorp
+Specification-Title: fbiomes
+Implementation-Timestamp: 2024-10-18T20:12:22+0100
+Specification-Version: 1
+Implementation-Vendor: smileycorp
+

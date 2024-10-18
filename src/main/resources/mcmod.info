@@ -1,0 +1,16 @@
+[
+{
+  "modid": "fbiomes",
+  "name": "Fantasy Biomes",
+  "description": "Placeholder Boiiii",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Smileycorp"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
