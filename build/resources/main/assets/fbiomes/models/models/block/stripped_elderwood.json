@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "fbiomes:blocks/stripped_elderwood_log_side",
+		"particle": "#all"
+    }
+}

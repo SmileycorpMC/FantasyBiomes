@@ -1,0 +1,24 @@
+{
+    "forge_marker": 1,
+	"variants": {
+		"facing=up":  { 
+			"model": "fbiomes:block/green_glowshroom"
+		},
+		"facing=west":  { 
+			"model": "fbiomes:block/green_wall_glowshroom",
+			"y": 90
+		},
+		"facing=north":  { 
+			"model": "fbiomes:block/green_wall_glowshroom",
+			"y": 180
+		},
+		"facing=east":  { 
+			"model": "fbiomes:block/green_wall_glowshroom",
+			"y": 270
+			
+		},
+		"facing=south":  { 
+			"model": "fbiomes:block/green_wall_glowshroom"
+		}
+    }
+}

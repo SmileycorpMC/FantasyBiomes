@@ -1,0 +1,7 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "fbiomes:blocks/elderwood_sapling",
+		"particle": "#cross"
+    }
+}

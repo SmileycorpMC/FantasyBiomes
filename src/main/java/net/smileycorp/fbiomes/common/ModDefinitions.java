@@ -22,7 +22,7 @@ public class ModDefinitions {
 	}
 	
 	static {
-		String[] woods = {"greatoak", "gnarlroot", "ash", "pine", "cedar"};
+		String[] woods = {"elderwood", "gnarlroot", "ash", "pine", "cedar"};
 		for (String wood: woods) {
 			wood_types.put(wood, null);
 		}

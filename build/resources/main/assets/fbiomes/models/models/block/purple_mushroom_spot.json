@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "fbiomes:blocks/purple_mushroom_spot"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "fbiomes:blocks/purple_mushroom",
+		"particle": "#cross"
+    }
+}

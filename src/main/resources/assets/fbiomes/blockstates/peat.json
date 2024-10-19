@@ -1,4 +1,1 @@
-{
-"forge_marker": 1,
-"defaults": {"model": "cube_all", "textures": { "all": "fbiomes:blocks/peat" }},
-"variants": {"normal": [{}]}}
+{"forge_marker": 1, "variants": {"normal": {"model": "fbiomes:block/peat"}}}

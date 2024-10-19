@@ -1,31 +1,24 @@
 {
     "forge_marker": 1,
-	"defaults": {
-        "model": "fbiomes:wall_shroom"
-    },
 	"variants": {
 		"facing=up":  { 
-			"model": "cross",
-			"textures": {"particle": "#cross", "cross": "fbiomes:blocks/toadstool"}
-		},
-		"facing=east":  { 
-			"model": "fbiomes:wall_shroom",
-			"textures": {"particle": "#cross", "cross": "fbiomes:blocks/toadstool_wall"},
-			"y": 180
-		},
-		"facing=south":  { 
-			"model": "fbiomes:wall_shroom",
-			"textures": {"particle": "#cross", "cross": "fbiomes:blocks/toadstool_wall"},	
-			"y": 270
+			"model": "fbiomes:block/toadstool"
 		},
 		"facing=west":  { 
-			"model": "fbiomes:wall_shroom",
-			"textures": {"particle": "#cross", "cross": "fbiomes:blocks/toadstool_wall"}
+			"model": "fbiomes:block/wall_toadstool",
+			"y": 90
 		},
 		"facing=north":  { 
-			"model": "fbiomes:wall_shroom",
-			"textures": {"particle": "#cross", "cross": "fbiomes:blocks/toadstool_wall"},	
-			"y": 90
+			"model": "fbiomes:block/wall_toadstool",
+			"y": 180
+		},
+		"facing=east":  { 
+			"model": "fbiomes:block/wall_toadstool",
+			"y": 270
+			
+		},
+		"facing=south":  { 
+			"model": "fbiomes:block/wall_toadstool"
 		}
     }
 }
