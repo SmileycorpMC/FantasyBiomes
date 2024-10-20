@@ -1,12 +1,12 @@
 package net.smileycorp.fbiomes.common.world.gen.fungusforest;
 
-import java.util.Random;
-
 import net.smileycorp.fbiomes.common.blocks.BlockBigGlowshroom;
 import net.smileycorp.fbiomes.common.blocks.BlockBigGlowshroom.EnumVariant;
 import net.smileycorp.fbiomes.common.blocks.BlockBigMushroom;
 import net.smileycorp.fbiomes.common.blocks.BlockBigMushroom.EnumShape;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
+
+import java.util.Random;
 
 
 public class WorldGenBigGlowshroom extends WorldGenBigFBMushroomBase {

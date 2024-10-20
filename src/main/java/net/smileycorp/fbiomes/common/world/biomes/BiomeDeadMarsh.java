@@ -1,7 +1,5 @@
 package net.smileycorp.fbiomes.common.world.biomes;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockStone;
 import net.minecraft.entity.passive.EntityDonkey;
 import net.minecraft.entity.passive.EntityHorse;
@@ -19,8 +17,10 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.smileycorp.fbiomes.common.ModDefinitions;
+import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
+
+import java.util.Random;
 
 public class BiomeDeadMarsh extends Biome {
 
@@ -28,7 +28,7 @@ public class BiomeDeadMarsh extends Biome {
 		super(new BiomeProperties("Dead Marsh").setBaseHeight(-0.2F).setHeightVariation(0F));
 		topBlock=FBiomesBlocks.MUD.getDefaultState();
 		fillerBlock=FBiomesBlocks.MUD.getDefaultState();
-		setRegistryName(ModDefinitions.getResource("Dead_Marsh"));
+		setRegistryName(Constants.loc("Dead_Marsh"));
 		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityHorse.class, 5, 2, 6));
         this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityDonkey.class, 1, 1, 3));
 	}

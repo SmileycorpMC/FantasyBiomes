@@ -2,16 +2,13 @@ package net.smileycorp.fbiomes.common;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
-
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
-import net.smileycorp.fbiomes.common.items.FBiomesItems.ItemRegistry;
 import net.smileycorp.fbiomes.common.world.biomes.FBiomes;
 
 @Mod(modid = "fbiomes")
@@ -33,7 +30,7 @@ public class FantasyBiomes {
 	 @EventHandler
 	 public void init(FMLInitializationEvent event){
 		 FBiomes.init();
-		 ItemRegistry.registerLateItems();
+		 //ItemRegistry.registerLateItems();
 		 RecipesRegistry.registerLateRegistry();
 	 }
 	 

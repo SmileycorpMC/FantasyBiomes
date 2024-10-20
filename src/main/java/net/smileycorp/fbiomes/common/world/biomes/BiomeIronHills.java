@@ -1,7 +1,5 @@
 package net.smileycorp.fbiomes.common.world.biomes;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
@@ -19,7 +17,9 @@ import net.minecraft.world.gen.feature.WorldGenTaiga2;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.event.terraingen.OreGenEvent;
 import net.minecraftforge.event.terraingen.TerrainGen;
-import net.smileycorp.fbiomes.common.ModDefinitions;
+import net.smileycorp.fbiomes.common.Constants;
+
+import java.util.Random;
 
 public class BiomeIronHills extends Biome {
 
@@ -27,7 +27,7 @@ public class BiomeIronHills extends Biome {
 		super(new BiomeProperties("Iron Hills").setBaseHeight(4F).setHeightVariation(1F));
 		topBlock=Blocks.SNOW.getDefaultState();
 		fillerBlock=Blocks.SNOW.getDefaultState();
-		setRegistryName(ModDefinitions.getResource("iron_hills"));
+		setRegistryName(Constants.loc("iron_hills"));
 	}
 	
 	@Override

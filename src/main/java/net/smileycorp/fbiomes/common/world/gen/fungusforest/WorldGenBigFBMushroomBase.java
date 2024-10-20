@@ -1,7 +1,5 @@
 package net.smileycorp.fbiomes.common.world.gen.fungusforest;
 
-import java.util.Random;
-
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -10,6 +8,8 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.IPlantable;
 import net.smileycorp.atlas.api.util.DirectionUtils;
+
+import java.util.Random;
 
 public abstract class WorldGenBigFBMushroomBase extends WorldGenerator {
 	

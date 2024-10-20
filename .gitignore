@@ -28,3 +28,5 @@ forge*changelog.txt
 /.gradle
 *.lock
 /build
+/.gradle
+/build

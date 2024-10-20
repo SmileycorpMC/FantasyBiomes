@@ -1,12 +1,12 @@
 package net.smileycorp.fbiomes.common.world.gen;
 
-import java.util.Random;
-
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.smileycorp.fbiomes.common.blocks.BlockBrambleBush;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
+
+import java.util.Random;
 
 public class WorldGenBrambles extends WorldGenerator {
 

@@ -2,6 +2,7 @@
     "parent": "block/cube_column",
     "textures": {
         "side": "fbiomes:blocks/mushroom_stem_side",
-		"end": "fbiomes:blocks/mushroom_stem_top"
+		"end": "fbiomes:blocks/mushroom_stem_top",
+		"particle": "#side"
     }
 }

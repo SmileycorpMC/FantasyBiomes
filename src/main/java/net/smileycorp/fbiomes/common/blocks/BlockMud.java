@@ -1,7 +1,5 @@
 package net.smileycorp.fbiomes.common.blocks;
 
-import javax.annotation.Nullable;
-
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -14,13 +12,15 @@ import net.minecraft.world.World;
 import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.common.IPlantable;
 import net.smileycorp.atlas.api.block.BlockBase;
+import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import net.smileycorp.fbiomes.common.ModDefinitions;
+
+import javax.annotation.Nullable;
 
 public class BlockMud extends BlockBase {
 	
 	public BlockMud(String name) {
-		super(name, ModDefinitions.modid, Material.CLAY, SoundType.GROUND, 0.5f, 1f,  "shovel", 0, FantasyBiomes.creativeTab);
+		super(name, Constants.MODID, Material.CLAY, SoundType.GROUND, 0.5f, 1f,  "shovel", 0, FantasyBiomes.creativeTab);
 	}
 	
 	@Override

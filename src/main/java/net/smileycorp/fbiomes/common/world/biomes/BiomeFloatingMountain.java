@@ -1,7 +1,5 @@
 package net.smileycorp.fbiomes.common.world.biomes;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
@@ -15,7 +13,9 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenMinable;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.smileycorp.fbiomes.common.ModDefinitions;
+import net.smileycorp.fbiomes.common.Constants;
+
+import java.util.Random;
 
 public class BiomeFloatingMountain extends Biome {
 	
@@ -25,7 +25,7 @@ public class BiomeFloatingMountain extends Biome {
 	public BiomeFloatingMountain() {
 		super(new BiomeProperties("Floating Mountain").setBaseHeight(-0.2F).setHeightVariation(0.1F));
 		topBlock=Blocks.GRASS.getDefaultState();
-		setRegistryName(ModDefinitions.getResource("floating_mountain"));
+		setRegistryName(Constants.loc("floating_mountain"));
 		flowers.clear();
 	}
 	

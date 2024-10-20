@@ -1,14 +1,15 @@
 package net.smileycorp.fbiomes.common.items;
 
 import net.minecraft.item.Item;
-
+import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import net.smileycorp.fbiomes.common.ModDefinitions;
 
 public class ItemFBiomesBase extends Item {
-	public ItemFBiomesBase(String name){
-		setUnlocalizedName(ModDefinitions.getName(name));
+	
+	public ItemFBiomesBase(String name) {
+		setUnlocalizedName(Constants.name(name));
 		setCreativeTab(FantasyBiomes.creativeTab);
-		setRegistryName(ModDefinitions.getResource(name));
+		setRegistryName(Constants.loc(name));
 	}
+	
 }

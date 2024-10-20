@@ -1,7 +1,5 @@
 package net.smileycorp.fbiomes.common.world.biomes;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
@@ -20,11 +18,13 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.smileycorp.fbiomes.common.ModDefinitions;
+import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.world.gen.WorldGenBrambles;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenBoulder;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenStoneCircle;
+
+import java.util.Random;
 
 public class BiomeMoorland extends Biome {
 	
@@ -32,9 +32,9 @@ public class BiomeMoorland extends Biome {
 
 	public BiomeMoorland() {
 		super(new BiomeProperties("Moorland").setBaseHeight(1.1F).setHeightVariation(0.5F));
-		topBlock=Blocks.GRASS.getDefaultState();
-		fillerBlock=Blocks.DIRT.getDefaultState();
-		setRegistryName(ModDefinitions.getResource("Moorland"));
+		topBlock = Blocks.GRASS.getDefaultState();
+		fillerBlock = Blocks.DIRT.getDefaultState();
+		setRegistryName(Constants.loc("Moorland"));
 	}
 	
 	@Override
@@ -67,7 +67,7 @@ public class BiomeMoorland extends Biome {
 	    	 }
 	     }
 	     System.out.println(x + ", " + y + ", " + z);
-	     if (y < 82 && y > 75) {
+	     if ((y < 82 && y > 75) || (y < 70 && y > 63)) {
 	    	 for (int j = y - 1; j <= y; j++) {
 	    		 if (j<= 0 || j>=255) break;
 	    		// if (chunk.getBlockState(i, j, k).getBlock() == Blocks.DIRT || chunk.getBlockState(i, j, k).getBlock() == Blocks.GRASS) {

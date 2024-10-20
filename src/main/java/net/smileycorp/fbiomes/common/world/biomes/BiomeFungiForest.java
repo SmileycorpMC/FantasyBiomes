@@ -1,8 +1,8 @@
 package net.smileycorp.fbiomes.common.world.biomes;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockDoublePlant;
+import net.minecraft.block.BlockOldLeaf;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockStone;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySpider;
@@ -16,26 +16,17 @@ import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
 import net.minecraft.world.gen.ChunkGeneratorSettings;
-import net.minecraft.world.gen.feature.WorldGenAbstractTree;
-import net.minecraft.world.gen.feature.WorldGenBigMushroom;
-import net.minecraft.world.gen.feature.WorldGenBigTree;
-import net.minecraft.world.gen.feature.WorldGenCanopyTree;
-import net.minecraft.world.gen.feature.WorldGenMinable;
-import net.minecraft.world.gen.feature.WorldGenTrees;
-import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraft.world.gen.feature.*;
 import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType;
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.smileycorp.fbiomes.common.ModDefinitions;
-import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenBigFBMushroom;
-import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenBigFBMushroomBase;
-import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenBigGlowshroom;
-import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenShroom;
-import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenSmallFBMushroom;
-import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenSmallFBMushroomBase;
-import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenSmallGlowshroom;
+import net.smileycorp.fbiomes.client.ClientProxy;
+import net.smileycorp.fbiomes.common.Constants;
+import net.smileycorp.fbiomes.common.world.gen.fungusforest.*;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenMysticTree;
+
+import java.util.Random;
 
 public class BiomeFungiForest extends Biome {
 
@@ -43,7 +34,7 @@ public class BiomeFungiForest extends Biome {
 		super(new BiomeProperties("Fungus Forest").setBaseHeight(0.3F).setHeightVariation(0.0F));
 		topBlock=Blocks.GRASS.getDefaultState();
 		fillerBlock=Blocks.DIRT.getDefaultState();
-		setRegistryName(ModDefinitions.getResource("Fungus_Forest"));
+		setRegistryName(Constants.loc("Fungus_Forest"));
 		spawnableCreatureList.clear();
 		spawnableCreatureList.add(new Biome.SpawnListEntry(EntitySpider.class, 5, 2, 6));
 		spawnableCreatureList.add(new Biome.SpawnListEntry(EntitySheep.class, 3, 1, 4));
@@ -71,11 +62,17 @@ public class BiomeFungiForest extends Biome {
         return getFoliageColorAtPos(pos);
     }
 	
-	 @Override
+	@Override
 	@SideOnly(Side.CLIENT)
-	 public int getFoliageColorAtPos(BlockPos pos) {
-		 return 0x06B700;
-	 }
+	public int getFoliageColorAtPos(BlockPos pos) {
+		if (ClientProxy.stateCache == null) return 0x06B700;
+		if (ClientProxy.stateCache.getBlock() == Blocks.LEAVES) {
+			BlockPlanks.EnumType variant = ClientProxy.stateCache.getValue(BlockOldLeaf.VARIANT);
+			if (variant == BlockPlanks.EnumType.BIRCH) return 0xF7AD00;;
+			if (variant == BlockPlanks.EnumType.OAK) return 0x9E1A06;
+		}
+	 	return 0x06B700;
+	}
 	
 	@Override
     public BiomeDecorator createBiomeDecorator(){

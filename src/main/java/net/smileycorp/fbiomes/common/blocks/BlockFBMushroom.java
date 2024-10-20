@@ -1,7 +1,6 @@
 package net.smileycorp.fbiomes.common.blocks;
 
-import javax.annotation.Nullable;
-
+import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLog;
@@ -24,10 +23,10 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.IBlockProperties;
+import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import net.smileycorp.fbiomes.common.ModDefinitions;
 
-import com.google.common.base.Predicate;
+import javax.annotation.Nullable;
 
 public class BlockFBMushroom extends BlockBush implements IBlockProperties {
 	
@@ -45,8 +44,8 @@ public class BlockFBMushroom extends BlockBush implements IBlockProperties {
 		setLightLevel(light);
 		setCreativeTab(FantasyBiomes.creativeTab);
 		setSoundType(SoundType.PLANT);
-		setUnlocalizedName(ModDefinitions.getName(name));
-		setRegistryName(ModDefinitions.getResource(name.toLowerCase()));
+		setUnlocalizedName(Constants.name(name));
+		setRegistryName(Constants.loc(name.toLowerCase()));
 		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
 	}
 	

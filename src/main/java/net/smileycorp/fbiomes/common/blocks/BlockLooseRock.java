@@ -1,7 +1,5 @@
 package net.smileycorp.fbiomes.common.blocks;
 
-import java.util.Random;
-
 import net.minecraft.block.BlockFalling;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -9,13 +7,13 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-
 import net.smileycorp.atlas.api.block.IBlockProperties;
+import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import net.smileycorp.fbiomes.common.ModDefinitions;
+
+import java.util.Random;
 
 public class BlockLooseRock extends BlockFalling implements IBlockProperties {
 	
@@ -25,8 +23,8 @@ public class BlockLooseRock extends BlockFalling implements IBlockProperties {
 		setHardness(1.5F);
 		setResistance(10.0F);
 		setSoundType(SoundType.STONE);
-		setUnlocalizedName(ModDefinitions.getName("LooseRock"));
-		setRegistryName(ModDefinitions.getResource("Loose_Rock"));
+		setUnlocalizedName(Constants.name("LooseRock"));
+		setRegistryName(Constants.loc("Loose_Rock"));
 	}
 	
 	@Override

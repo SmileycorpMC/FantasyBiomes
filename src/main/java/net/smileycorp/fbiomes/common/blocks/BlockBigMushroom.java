@@ -1,7 +1,5 @@
 package net.smileycorp.fbiomes.common.blocks;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
@@ -22,8 +20,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
 import net.smileycorp.atlas.api.block.BlockBase;
+import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import net.smileycorp.fbiomes.common.ModDefinitions;
+
+import java.util.Random;
 
 public class BlockBigMushroom extends BlockBase {
 	
@@ -36,7 +36,7 @@ public class BlockBigMushroom extends BlockBase {
 	}
 	
 	public BlockBigMushroom(String name) {
-		super(name, ModDefinitions.modid, Material.WOOD, SoundType.WOOD, 0.2F, 0, "axe", 1, null);
+		super(name, Constants.MODID, Material.WOOD, SoundType.WOOD, 0.2F, 0, "axe", 1, null);
 		isFlamable=false;
 		setCreativeTab(FantasyBiomes.creativeTab);
 	}

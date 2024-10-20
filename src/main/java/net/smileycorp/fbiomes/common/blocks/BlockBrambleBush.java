@@ -1,7 +1,5 @@
 package net.smileycorp.fbiomes.common.blocks;
 
-import java.util.Random;
-
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
@@ -21,9 +19,11 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.atlas.api.block.IBlockProperties;
+import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import net.smileycorp.fbiomes.common.ModDefinitions;
 import net.smileycorp.fbiomes.common.items.FBiomesItems;
+
+import java.util.Random;
 
 public class BlockBrambleBush extends BlockBush implements IGrowable, IBlockProperties {
 	
@@ -31,8 +31,8 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, IBlockProp
 	
 	public BlockBrambleBush() {
 		setCreativeTab(FantasyBiomes.creativeTab);
-		setUnlocalizedName(ModDefinitions.getName("Brambles"));
-		setRegistryName(ModDefinitions.getResource("Brambles"));
+		setUnlocalizedName(Constants.name("Brambles"));
+		setRegistryName(Constants.loc("Brambles"));
 		setDefaultState(blockState.getBaseState().withProperty(AGE, 0));
 		setSoundType(SoundType.PLANT);
 		setTickRandomly(true);
