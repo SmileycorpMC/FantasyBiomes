@@ -1,0 +1,12 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "net.smileycorp.fbiomes.mixin",
+  "refmap": "mixins.fbiomes.refmap.json",
+  "mixins": [
+
+  ],
+  "client": [
+
+  ],
+  "server": []
+}
