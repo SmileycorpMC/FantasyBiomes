@@ -27,3 +27,4 @@ src/test
 forge*changelog.txt
 /.gradle
 *.lock
+/build
