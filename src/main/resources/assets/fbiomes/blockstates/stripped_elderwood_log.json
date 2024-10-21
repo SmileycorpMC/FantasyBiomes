@@ -1,15 +1,15 @@
 {
   "variants": {
     "axis=x": {
-      "model": "fbiomes:block/stripped_elderwood_log",
+      "model": "fbiomes:stripped_elderwood_log",
       "x": 90,
       "y": 90
     },
     "axis=y": {
-      "model": "fbiomes:block/stripped_elderwood_log"
+      "model": "fbiomes:stripped_elderwood_log"
     },
     "axis=z": {
-      "model": "fbiomes:block/stripped_elderwood_log",
+      "model": "fbiomes:stripped_elderwood_log",
       "x": 90
     }
   }

@@ -13,6 +13,7 @@ import java.util.Random;
 public class BlockBigGlowshroom extends BlockBigMushroom {
 	
 	public static final PropertyEnum<EnumVariant> VARIANT = PropertyEnum.create("variant", EnumVariant.class);
+	public static final PropertyEnum<EnumShape> SHAPE = PropertyEnum.create("shape", EnumShape.class, shape -> shape != EnumShape.SPOT);
 	
 	public BlockBigGlowshroom() {
 		super("Big_Glowshroom");
@@ -26,7 +27,7 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[]{SHAPE, VARIANT});
+		return new BlockStateContainer(this, SHAPE, VARIANT);
 	}
 	
 	@Override

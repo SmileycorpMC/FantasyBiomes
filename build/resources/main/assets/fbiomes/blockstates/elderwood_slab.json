@@ -1,13 +1,13 @@
 {
   "variants": {
     "type=bottom": {
-      "model": "fbiomes:block/elderwood_slab"
+      "model": "fbiomes:elderwood_slab"
     },
     "type=double": {
-      "model": "fbiomes:block/elderwood_planks"
+      "model": "fbiomes:elderwood_planks"
     },
     "type=top": {
-      "model": "fbiomes:block/elderwood_slab_top"
+      "model": "fbiomes:elderwood_slab_top"
     }
   }
 }

@@ -2,23 +2,23 @@
     "forge_marker": 1,
 	"variants": {
 		"facing=up":  { 
-			"model": "fbiomes:block/orange_glowshroom"
+			"model": "fbiomes:orange_glowshroom"
 		},
 		"facing=west":  { 
-			"model": "fbiomes:block/orange_wall_glowshroom",
+			"model": "fbiomes:orange_wall_glowshroom",
 			"y": 90
 		},
 		"facing=north":  { 
-			"model": "fbiomes:block/orange_wall_glowshroom",
+			"model": "fbiomes:orange_wall_glowshroom",
 			"y": 180
 		},
 		"facing=east":  { 
-			"model": "fbiomes:block/orange_wall_glowshroom",
+			"model": "fbiomes:orange_wall_glowshroom",
 			"y": 270
 			
 		},
 		"facing=south":  { 
-			"model": "fbiomes:block/orange_wall_glowshroom"
+			"model": "fbiomes:orange_wall_glowshroom"
 		}
     }
 }

@@ -1,34 +1,35 @@
 {
 	"variants": {
+		"normal": {}
 		"shape=cap,variant=blue":  { 
-			"model": "fbiomes:glowshroom_cap_blue"
+			"model": "fbiomes:blue_glowshroom_cap"
 		},
 		"shape=cap,variant=green":  { 
-			"model": "fbiomes:glowshroom_cap_green"
+			"model": "fbiomes:green_glowshroom_cap""
 		},	
 		"shape=cap,variant=orange":  { 
-			"model": "fbiomes:glowshroom_cap_orange"
+			"model": "fbiomes:orange_glowshroom_cap"
 		},
 		"shape=cap,variant=pink":  { 
-			"model": "fbiomes:glowshroom_cap_pink"
+			"model": "fbiomes:pink_glowshroom_cap"
 		},
 		"shape=cap,variant=purple":  { 
-			"model": "fbiomes:glowshroom_cap_purple"
+			"model": "fbiomes:purple_glowshroom_cap"
 		},
 		"shape=stem,variant=blue":  { 
-			"model": "fbiomes:glowshroom_stem_blue"
+			"model": "fbiomes:blue_glowshroom_stem"
 		},
 		"shape=stem,variant=green":  { 
-			"model": "fbiomes:glowshroom_stem_green"
+			"model": "fbiomes:green_glowshroom_stem"
 		},	
 		"shape=stem,variant=orange":  { 
-			"model": "fbiomes:glowshroom_stem_orange"
+			"model": "fbiomes:orange_glowshroom_stem"
 		},
 		"shape=stem,variant=pink":  { 
-			"model": "fbiomes:glowshroom_stem_pink"
+			"model": "fbiomes:pink_glowshroom_stem"
 		},
 		"shape=stem,variant=purple":  { 
-			"model": "fbiomes:glowshroom_stem_purple"
+			"model": "fbiomes:purple_glowshroom_stem"
 		}
     }
 }

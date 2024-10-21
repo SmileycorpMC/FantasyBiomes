@@ -1,16 +1,16 @@
 {
 	"variants": {
 		"shape=cap,variant=purple":  { 
-			"model": "fbiomes:mushroom_cap_purple"
+			"model": "fbiomes:purple_mushroom_cap"
 		},
 		"shape=cap,variant=green":  { 
-			"model": "fbiomes:mushroom_cap_green"
+			"model": "fbiomes:green_mushroom_cap"
 		},
 		"shape=spot,variant=purple":  { 
-			"model": "fbiomes:mushroom_spot_purple"
+			"model": "fbiomes:purple_mushroom_spot"
 		},
 		"shape=spot,variant=green":  { 
-			"model": "fbiomes:mushroom_spot_green"
+			"model": "fbiomes:green_mushroom_spot"
 		},
 		"shape=stem,variant=purple":  { 
 			"model": "fbiomes:mushroom_stem"

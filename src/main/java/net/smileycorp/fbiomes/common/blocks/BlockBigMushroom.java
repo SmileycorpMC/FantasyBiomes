@@ -53,7 +53,7 @@ public class BlockBigMushroom extends BlockBase {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[]{SHAPE, VARIANT});
+		return new BlockStateContainer(this, SHAPE, VARIANT);
 	}
 	
 	@Override

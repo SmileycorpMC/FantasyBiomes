@@ -15,7 +15,7 @@ public class ItemBlockBigGlowshroom extends ItemBlockBigMushroom {
 	@Override
 	protected String getNameForState(IBlockState state) {
 		String blockName = block.getUnlocalizedName();
-		String shape = TextUtils.toProperCase(state.getValue(BlockBigMushroom.SHAPE).getName());
+		String shape = TextUtils.toProperCase(state.getValue(BlockBigGlowshroom.SHAPE).getName());
 		String variant = TextUtils.toProperCase(state.getValue(BlockBigGlowshroom.VARIANT).getName());
 		return blockName + shape + variant;
 	}

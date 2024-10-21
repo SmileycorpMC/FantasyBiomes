@@ -1,7 +1,7 @@
 {
   "variants": {
-    "": {
-      "model": "fbiomes:block/elderwood_leaves"
+    "default": {
+      "model": "fbiomes:elderwood_leaves"
     }
   }
 }

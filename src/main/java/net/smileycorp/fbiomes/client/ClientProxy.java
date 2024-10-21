@@ -30,7 +30,7 @@ public class ClientProxy {
 			String state = mapper.getPropertyString(block.getStateFromMeta(meta).getProperties());
 			if (block instanceof BlockFBMushroom) {
 				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), 0, new ModelResourceLocation(block.getRegistryName(), "inventory"));
-				return;
+				continue;
 			}
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, new ModelResourceLocation(block.getRegistryName(), state));
 		}

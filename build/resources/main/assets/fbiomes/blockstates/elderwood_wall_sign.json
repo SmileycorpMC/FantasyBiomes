@@ -1,7 +1,7 @@
 {
   "variants": {
     "": {
-      "model": "fbiomes:block/elderwood_sign"
+      "model": "fbiomes:elderwood_sign"
     }
   }
 }
