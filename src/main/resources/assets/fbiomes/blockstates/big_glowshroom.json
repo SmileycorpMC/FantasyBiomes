@@ -1,11 +1,10 @@
 {
 	"variants": {
-		"normal": {}
 		"shape=cap,variant=blue":  { 
 			"model": "fbiomes:blue_glowshroom_cap"
 		},
 		"shape=cap,variant=green":  { 
-			"model": "fbiomes:green_glowshroom_cap""
+			"model": "fbiomes:green_glowshroom_cap"
 		},	
 		"shape=cap,variant=orange":  { 
 			"model": "fbiomes:orange_glowshroom_cap"
