@@ -23,8 +23,8 @@ public class WorldGenSmallGlowshroom extends WorldGenSmallFBMushroomBase {
 	@Override
 	protected void pickType(Random rand) {
 		EnumVariant variant = EnumVariant.values()[rand.nextInt(EnumVariant.values().length)];
-		stem = FBiomesBlocks.BIG_GLOWSHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumShape.STEM).withProperty(BlockBigGlowshroom.VARIANT, variant);
-		cap = FBiomesBlocks.BIG_GLOWSHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumShape.CAP).withProperty(BlockBigGlowshroom.VARIANT, variant);
+		stem = FBiomesBlocks.BIG_GLOWSHROOM.getDefaultState().withProperty(BlockBigGlowshroom.SHAPE, EnumShape.STEM).withProperty(BlockBigGlowshroom.VARIANT, variant);
+		cap = FBiomesBlocks.BIG_GLOWSHROOM.getDefaultState().withProperty(BlockBigGlowshroom.SHAPE, EnumShape.CAP).withProperty(BlockBigGlowshroom.VARIANT, variant);
 	}
 	
 
