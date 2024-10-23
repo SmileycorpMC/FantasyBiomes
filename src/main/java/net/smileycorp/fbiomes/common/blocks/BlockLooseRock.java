@@ -9,13 +9,13 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.smileycorp.atlas.api.block.IBlockProperties;
+import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
 
 import java.util.Random;
 
-public class BlockLooseRock extends BlockFalling implements IBlockProperties {
+public class BlockLooseRock extends BlockFalling implements BlockProperties {
 	
 	public BlockLooseRock() { 
 		super (Material.ROCK);

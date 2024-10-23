@@ -24,7 +24,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.fbiomes.client.ClientProxy;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.world.gen.fungusforest.*;
-import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenMysticTree;
+import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenElderwoodTree;
 
 import java.util.Random;
 
@@ -52,7 +52,7 @@ public class BiomeFungiForest extends Biome {
     	   return rand.nextInt(3)==1 ? new WorldGenBigTree(false) : new WorldGenTrees(false);
        }
        else {
-    	   return new WorldGenMysticTree(false, true);
+    	   return new WorldGenElderwoodTree(false, true);
        }
     }
 	
@@ -139,7 +139,7 @@ public class BiomeFungiForest extends Biome {
 	                        if (worldgenabstracttree.generate(world, rand, blockpos))
 	                        {
 	                            worldgenabstracttree.generateSaplings(world, rand, blockpos);
-	                        } else if (worldgenabstracttree instanceof WorldGenMysticTree) {
+	                        } else if (worldgenabstracttree instanceof WorldGenElderwoodTree) {
 	                        	worldgenabstracttree = rand.nextInt(3) == 0 ? new WorldGenCanopyTree(false) : new WorldGenBigTree(false);
 		                        worldgenabstracttree.setDecorationDefaults();
 

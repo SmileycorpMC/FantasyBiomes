@@ -8,7 +8,7 @@ import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
-import net.smileycorp.atlas.api.block.IBlockProperties;
+import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 
 import java.lang.reflect.Field;
@@ -28,7 +28,7 @@ public class FBiomesItems {
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		IForgeRegistry<Item> registry = event.getRegistry();
 		for (final Block block : FBiomesBlocks.BLOCKS) {
-			if (((IBlockProperties)block).usesCustomItemHandler()) continue;
+			if (((BlockProperties)block).usesCustomItemHandler()) continue;
 			ItemBlock item = new ItemBlock(block);
 			item.setRegistryName(block.getRegistryName());
 			item.setUnlocalizedName(block.getUnlocalizedName());

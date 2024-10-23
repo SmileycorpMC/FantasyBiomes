@@ -19,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
-public class WorldGenMysticTree extends WorldGenAbstractTree {
+public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 	
 	final boolean isNatural;
 	IBlockState wood = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK);
@@ -27,9 +27,9 @@ public class WorldGenMysticTree extends WorldGenAbstractTree {
 	IBlockState leaves = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK);
 	IBlockState roots = FBiomesBlocks.ROOTS.getDefaultState();
 	
-	public WorldGenMysticTree(boolean notify, boolean isNatural) {
+	public WorldGenElderwoodTree(boolean notify, boolean isNatural) {
 		super(notify);
-		this.isNatural=isNatural;
+		this.isNatural = isNatural;
 	}
 	
 	@Override

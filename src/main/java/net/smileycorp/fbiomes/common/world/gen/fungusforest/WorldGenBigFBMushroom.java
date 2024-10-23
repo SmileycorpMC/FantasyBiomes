@@ -6,9 +6,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3i;
 import net.minecraft.world.World;
 import net.smileycorp.fbiomes.common.blocks.BlockBigMushroom;
-import net.smileycorp.fbiomes.common.blocks.BlockBigMushroom.EnumShape;
-import net.smileycorp.fbiomes.common.blocks.BlockBigMushroom.EnumVariant;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumBigMushroomShape;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumBigMushroomVariant;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -27,15 +27,15 @@ public class WorldGenBigFBMushroom extends WorldGenBigFBMushroomBase {
 	
 	public WorldGenBigFBMushroom(IBlockState stem, IBlockState cap) {
 		super(stem, cap);
-		spot = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumShape.SPOT).withProperty(BlockBigMushroom.VARIANT, cap.getValue(BlockBigMushroom.VARIANT));	
+		spot = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumBigMushroomShape.SPOT).withProperty(BlockBigMushroom.VARIANT, cap.getValue(BlockBigMushroom.VARIANT));
 	}
 	
 	@Override
 	protected void pickType(Random rand) {
-		EnumVariant variant = EnumVariant.values()[rand.nextInt(EnumVariant.values().length)];
-		stem = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumShape.STEM).withProperty(BlockBigMushroom.VARIANT, variant);
-		cap = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumShape.CAP).withProperty(BlockBigMushroom.VARIANT, variant);
-		spot = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumShape.SPOT).withProperty(BlockBigMushroom.VARIANT, variant);	
+		EnumBigMushroomVariant variant = EnumBigMushroomVariant.values()[rand.nextInt(EnumBigMushroomVariant.values().length)];
+		stem = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumBigMushroomShape.STEM).withProperty(BlockBigMushroom.VARIANT, variant);
+		cap = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumBigMushroomShape.CAP).withProperty(BlockBigMushroom.VARIANT, variant);
+		spot = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumBigMushroomShape.SPOT).withProperty(BlockBigMushroom.VARIANT, variant);
 	}
 	
 	@Override

@@ -1,9 +1,7 @@
 package net.smileycorp.fbiomes.common.blocks;
 
-import net.minecraft.block.Block;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -14,7 +12,6 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.IStringSerializable;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -22,22 +19,24 @@ import net.minecraft.world.World;
 import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumBigMushroomShape;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumBigMushroomVariant;
 
 import java.util.Random;
 
 public class BlockBigMushroom extends BlockBase {
 	
-	public static final PropertyEnum<EnumShape> SHAPE = PropertyEnum.create("shape", EnumShape.class);
-	public static final PropertyEnum<EnumVariant> VARIANT = PropertyEnum.create("variant", EnumVariant.class);
+	public static final PropertyEnum<EnumBigMushroomShape> SHAPE = PropertyEnum.create("shape", EnumBigMushroomShape.class);
+	public static final PropertyEnum<EnumBigMushroomVariant> VARIANT = PropertyEnum.create("variant", EnumBigMushroomVariant.class);
 	
 	public BlockBigMushroom() {
 		this("Big_Mushroom");
-		setDefaultState(blockState.getBaseState().withProperty(SHAPE, EnumShape.CAP).withProperty(VARIANT, EnumVariant.GREEN));
+		setDefaultState(blockState.getBaseState().withProperty(SHAPE, EnumBigMushroomShape.CAP).withProperty(VARIANT, EnumBigMushroomVariant.GREEN));
 	}
 	
 	public BlockBigMushroom(String name) {
 		super(name, Constants.MODID, Material.WOOD, SoundType.WOOD, 0.2F, 0, "axe", 1, null);
-		isFlamable=false;
+		isFlamable = false;
 		setCreativeTab(FantasyBiomes.creativeTab);
 	}
 	
@@ -64,8 +63,8 @@ public class BlockBigMushroom extends BlockBase {
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		if (meta >= this.getMaxMeta()) return this.getDefaultState();
-		EnumShape shape = EnumShape.values()[meta%3];
-		EnumVariant variant = EnumVariant.values()[(meta-(meta%3)) / 3];
+		EnumBigMushroomShape shape = EnumBigMushroomShape.values()[meta % 3];
+		EnumBigMushroomVariant variant = EnumBigMushroomVariant.values()[(meta-(meta % 3)) / 3];
 		return this.getDefaultState().withProperty(VARIANT, variant).withProperty(SHAPE, shape);
 	}
 	
@@ -98,57 +97,4 @@ public class BlockBigMushroom extends BlockBase {
 		return true;
 	}
 	
-	public enum EnumVariant implements IStringSerializable {
-		PURPLE("purple", FBiomesBlocks.PURPLE_SHROOM),
-		GREEN("green", FBiomesBlocks.GREEN_SHROOM);
-		
-		final String name;
-		final int meta;
-		final Block drop;
-		
-		EnumVariant(String name, Block drop) {
-			this.name=name;
-			this.meta=this.ordinal();
-			this.drop=drop;
-		}
-
-		@Override
-		public String getName() {
-			return name;
-		}
-		
-		public int getMeta() {
-			return meta;
-		}
-		
-		public Item getDrop() {
-			return Item.getItemFromBlock(drop);
-		}
-		
-	}
-	
-	public enum EnumShape implements IStringSerializable {
-		CAP("cap"),
-		STEM("stem"),
-		SPOT("spot");
-		
-		final String name;
-		final int meta;
-		
-		EnumShape(String name) {
-			this.name=name;
-			this.meta=this.ordinal();
-		}
-
-		@Override
-		public String getName() {
-			return name;
-		}
-		
-		public int getMeta() {
-			return meta;
-		}
-		
-	}
-
 }

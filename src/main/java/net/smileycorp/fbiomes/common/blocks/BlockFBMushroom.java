@@ -22,22 +22,15 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.oredict.OreDictionary;
-import net.smileycorp.atlas.api.block.IBlockProperties;
+import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
 
 import javax.annotation.Nullable;
 
-public class BlockFBMushroom extends BlockBush implements IBlockProperties {
+public class BlockFBMushroom extends BlockBush implements BlockProperties {
 	
-	public static final PropertyDirection FACING = PropertyDirection.create("facing", new Predicate<EnumFacing>()
-	{
-        @Override
-		public boolean apply(@Nullable EnumFacing p_apply_1_)
-        {
-            return p_apply_1_ != EnumFacing.DOWN;
-        }
-	});
+	public static final PropertyDirection FACING = PropertyDirection.create("facing", dir -> dir != EnumFacing.DOWN);
 	
 	public BlockFBMushroom(String name, float light) {
 		super(Material.PLANTS);
@@ -62,21 +55,16 @@ public class BlockFBMushroom extends BlockBush implements IBlockProperties {
 	
 	private EnumFacing getFacing(World world, BlockPos pos, EnumFacing facing) {
 		if (canFacingSustain(world, pos, facing)) return facing;
-		for (EnumFacing facing0 : FACING.getAllowedValues()) {
-			if (facing0!=facing && canFacingSustain(world, pos, facing0)) return facing;
-		}
+		for (EnumFacing facing0 : FACING.getAllowedValues()) if (facing0 != facing && canFacingSustain(world, pos, facing0)) return facing;
 		return EnumFacing.UP;
 	}
 
 	private boolean canFacingSustain(World world, BlockPos pos, EnumFacing facing) {
-		if (facing==EnumFacing.DOWN) return false;
+		if (facing == EnumFacing.DOWN) return false;
 		IBlockState state = world.getBlockState(pos.offset(facing, -1));
 		Block block = state.getBlock();
-		if (state.isFullBlock() && (block instanceof BlockLog || state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND))
-			return true;
-		for (int id : OreDictionary.getOreIDs(new ItemStack(block))) {
-			if (OreDictionary.getOreName(id).equals("stone")) return true;
-		}
+		if (state.isFullBlock() && (block instanceof BlockLog || state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND)) return true;
+		for (int id : OreDictionary.getOreIDs(new ItemStack(block))) if (OreDictionary.getOreName(id).equals("stone")) return true;
 		return false;
 	}
 
@@ -117,9 +105,7 @@ public class BlockFBMushroom extends BlockBush implements IBlockProperties {
         IBlockState soil = world.getBlockState(pos.down());
         for (EnumFacing facing : FACING.getAllowedValues()) {
         	IBlockState state = world.getBlockState(pos.offset(facing.getOpposite()));
-        	if (state.isFullCube()&&(state.getBlock() instanceof BlockLog || state.getMaterial() == Material.GROUND || state.getMaterial() == Material.GRASS)) {
-        		return true;
-        	}
+        	if (state.isFullCube()&&(state.getBlock() instanceof BlockLog || state.getMaterial() == Material.GROUND || state.getMaterial() == Material.GRASS)) return true;
         }
         return soil.isFullBlock() && (soil.getMaterial()==Material.GRASS || soil.getMaterial()==Material.GROUND);
     }
@@ -127,9 +113,7 @@ public class BlockFBMushroom extends BlockBush implements IBlockProperties {
 	@Override
 	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
 		IBlockState soil = world.getBlockState(pos.down());
-        if (state.getBlock() == this) {
-            return canPlaceBlockAt(world, pos);
-        }
+        if (state.getBlock() == this) return canPlaceBlockAt(world, pos);
         return soil.isFullBlock() && (soil.getMaterial()==Material.GRASS || soil.getMaterial()==Material.GROUND);
     }
 	 
@@ -137,11 +121,9 @@ public class BlockFBMushroom extends BlockBush implements IBlockProperties {
 	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor){
 		IBlockState soil = world.getBlockState(pos.down());
 		EnumFacing facing = world.getBlockState(pos).getValue(FACING);
-    	if (!(world.getBlockState(pos.offset(facing.getOpposite())).getBlock() instanceof BlockLog)) {
-    		if (!(facing==EnumFacing.UP&&(soil.isFullBlock() && (soil.getMaterial()==Material.GRASS || soil.getMaterial()==Material.GROUND)))){
-    			Minecraft.getMinecraft().world.setBlockToAir(pos);
-    		}
-    	}
+    	if ((world.getBlockState(pos.offset(facing.getOpposite())).getBlock() instanceof BlockLog)) return;
+		if (!(facing == EnumFacing.UP && (soil.isFullBlock() && (soil.getMaterial() == Material.GRASS || soil.getMaterial() == Material.GROUND))))
+			if (world instanceof World) ((World) world).setBlockToAir(pos);
 	 }
 	
 	@Override

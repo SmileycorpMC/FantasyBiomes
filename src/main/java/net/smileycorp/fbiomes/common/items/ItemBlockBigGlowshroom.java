@@ -3,7 +3,6 @@ package net.smileycorp.fbiomes.common.items;
 import net.minecraft.block.state.IBlockState;
 import net.smileycorp.atlas.api.util.TextUtils;
 import net.smileycorp.fbiomes.common.blocks.BlockBigGlowshroom;
-import net.smileycorp.fbiomes.common.blocks.BlockBigMushroom;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 
 public class ItemBlockBigGlowshroom extends ItemBlockBigMushroom {

@@ -18,14 +18,14 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.smileycorp.atlas.api.block.IBlockProperties;
+import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
 import net.smileycorp.fbiomes.common.items.FBiomesItems;
 
 import java.util.Random;
 
-public class BlockBrambleBush extends BlockBush implements IGrowable, IBlockProperties {
+public class BlockBrambleBush extends BlockBush implements IGrowable, BlockProperties {
 	
 	public static PropertyInteger AGE = PropertyInteger.create("age", 0, 3);
 	

@@ -12,13 +12,13 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.smileycorp.atlas.api.block.IBlockProperties;
+import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
 
 import java.util.Random;
 
-public class BlockRoots extends BlockBush implements IBlockProperties {
+public class BlockRoots extends BlockBush implements BlockProperties {
 
 	public BlockRoots() {
 		super(Material.PLANTS);

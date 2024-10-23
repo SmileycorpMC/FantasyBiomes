@@ -9,6 +9,8 @@ import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.atlas.api.block.ShapedBlock;
 import net.smileycorp.atlas.api.block.wood.WoodBlock;
 import net.smileycorp.fbiomes.common.Constants;
+import net.smileycorp.fbiomes.common.FantasyBiomes;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -43,7 +45,7 @@ public class FBiomesBlocks {
 	//public static Block FAE_WATER_FLOWING;
 	
 	//Trees
-	//public static WoodBlock WOOD;
+	public static WoodBlock WOOD = new WoodBlock<>(Constants.MODID, FantasyBiomes.creativeTab, EnumWoodType.class);
 	
 	//Ores
 	//public static Block MYTHRIL_ORE;
@@ -52,7 +54,6 @@ public class FBiomesBlocks {
 	public final static BlockFBMushroom[] glowshrooms = {BLUE_GLOWSHROOM, GREEN_GLOWSHROOM, ORANGE_GLOWSHROOM, PINK_GLOWSHROOM, PURPLE_GLOWSHROOM};
 	
 	@SubscribeEvent
-	//this is a terrible way of doing it, but I'm feeling lazy for this part
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> registry = event.getRegistry();
 		for (Field field : FBiomesBlocks.class.getDeclaredFields()) {

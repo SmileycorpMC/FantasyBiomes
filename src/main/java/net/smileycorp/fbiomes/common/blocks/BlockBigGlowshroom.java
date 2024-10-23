@@ -1,23 +1,22 @@
 package net.smileycorp.fbiomes.common.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.item.Item;
-import net.minecraft.util.IStringSerializable;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumBigMushroomShape;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumGlowshroomVariant;
 
 import java.util.Random;
 
 public class BlockBigGlowshroom extends BlockBigMushroom {
 	
-	public static final PropertyEnum<EnumVariant> VARIANT = PropertyEnum.create("variant", EnumVariant.class);
-	public static final PropertyEnum<EnumShape> SHAPE = PropertyEnum.create("shape", EnumShape.class, shape -> shape != EnumShape.SPOT);
+	public static final PropertyEnum<EnumGlowshroomVariant> VARIANT = PropertyEnum.create("variant", EnumGlowshroomVariant.class);
+	public static final PropertyEnum<EnumBigMushroomShape> SHAPE = PropertyEnum.create("shape", EnumBigMushroomShape.class, EnumBigMushroomShape.CAP, EnumBigMushroomShape.STEM);
 	
 	public BlockBigGlowshroom() {
 		super("Big_Glowshroom");
-		setDefaultState(blockState.getBaseState().withProperty(SHAPE, EnumShape.CAP).withProperty(VARIANT, EnumVariant.BLUE));
+		setDefaultState(blockState.getBaseState().withProperty(SHAPE, EnumBigMushroomShape.CAP).withProperty(VARIANT, EnumGlowshroomVariant.BLUE));
 	}
 	
 	@Override
@@ -33,8 +32,8 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		if (meta >= this.getMaxMeta()) return this.getDefaultState();
-		EnumShape shape = EnumShape.values()[meta%2];
-		EnumVariant variant = EnumVariant.values()[(meta-(meta%2)) / 2];
+		EnumBigMushroomShape shape = EnumBigMushroomShape.values()[meta % 2];
+		EnumGlowshroomVariant variant = EnumGlowshroomVariant.values()[(meta - (meta % 2)) / 2];
 		return this.getDefaultState().withProperty(VARIANT, variant).withProperty(SHAPE, shape);
 	}
 	
@@ -52,39 +51,7 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	
 	@Override
 	public int getLightValue(IBlockState state) {
-		return state.getValue(SHAPE)==EnumShape.CAP ? 15 : 5;
+		return state.getValue(SHAPE)== EnumBigMushroomShape.CAP ? 15 : 5;
 	}
 	
-	public enum EnumVariant implements IStringSerializable {
-		BLUE("blue", FBiomesBlocks.BLUE_GLOWSHROOM),
-		GREEN("green", FBiomesBlocks.GREEN_GLOWSHROOM),
-		ORANGE("orange", FBiomesBlocks.ORANGE_GLOWSHROOM),
-		PINK("pink", FBiomesBlocks.PINK_GLOWSHROOM),
-		PURPLE("purple", FBiomesBlocks.PURPLE_GLOWSHROOM);
-		
-		final String name;
-		final int meta;
-		final Block drop;
-		
-		EnumVariant(String name, Block drop) {
-			this.name=name;
-			this.meta=this.ordinal();
-			this.drop=drop;
-		}
-
-		@Override
-		public String getName() {
-			return name;
-		}
-		
-		public int getMeta() {
-			return meta;
-		}
-		
-		public Item getDrop() {
-			return Item.getItemFromBlock(drop);
-		}
-		
-	}
-
 }
