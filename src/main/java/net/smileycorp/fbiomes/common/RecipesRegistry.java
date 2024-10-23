@@ -28,7 +28,7 @@ public class RecipesRegistry {
 			//OreDictionary.registerOre("oreMithril", FBiomesBlocks.MITHRIL_ORE);
 			//OreDictionary.registerOre("blockMithril", FBiomesBlocks.MITHRIL_BLOCK);
 		}
-		
+		FBiomesBlocks.WOOD.registerRecipes();
 		//GameRegistry.addSmelting(FBiomesBlocks.MITHRIL_ORE, new ItemStack(FBiomesItems.MITHRIL_INGOT), 1.8f);
 	}
 	

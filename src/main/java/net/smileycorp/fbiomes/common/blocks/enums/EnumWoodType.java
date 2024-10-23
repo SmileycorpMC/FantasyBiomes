@@ -4,21 +4,23 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.smileycorp.atlas.api.block.wood.WoodEnum;
+import net.smileycorp.atlas.api.util.Func;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenElderwoodTree;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Map;
+import java.util.function.Supplier;
 
 public enum EnumWoodType implements WoodEnum {
-    ELDERWOOD ("elderwood", new WorldGenElderwoodTree(true, false), null,
+    ELDERWOOD ("elderwood", () -> new WorldGenElderwoodTree(true, false), null,
             MapColor.SILVER_STAINED_HARDENED_CLAY, MapColor.CYAN_STAINED_HARDENED_CLAY, MapColor.GREEN_STAINED_HARDENED_CLAY);
     
     private final String name;
-    private final WorldGenerator tree, largeTree;
+    private final Supplier<WorldGenerator> tree, largeTree;
     private final MapColor plankColour, logColour, leavesColour;
     
-    EnumWoodType(String name, WorldGenerator tree, WorldGenerator largeTree, MapColor plankColour, MapColor logColour, MapColor leavesColour) {
+    EnumWoodType(String name, Supplier<WorldGenerator> tree, Supplier<WorldGenerator> largeTree, MapColor plankColour, MapColor logColour, MapColor leavesColour) {
         this.name = name;
         this.tree = tree;
         this.largeTree = largeTree;
@@ -29,13 +31,13 @@ public enum EnumWoodType implements WoodEnum {
     
     @Nullable
     @Override
-    public WorldGenerator getTree() {
+    public Supplier<WorldGenerator> getTree() {
         return tree;
     }
     
     @Nullable
     @Override
-    public WorldGenerator getLargeTree() {
+    public Supplier<WorldGenerator> getLargeTree() {
         return largeTree;
     }
     

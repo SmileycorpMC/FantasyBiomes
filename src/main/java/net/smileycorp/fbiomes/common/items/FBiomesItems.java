@@ -34,6 +34,7 @@ public class FBiomesItems {
 			item.setUnlocalizedName(block.getUnlocalizedName());
 			register(registry, item);
 		}
+		FBiomesBlocks.WOOD.registerItems(registry);
 		register(registry, new ItemBlockBigMushroom());
 		register(registry, new ItemBlockBigGlowshroom());
 		for (Field field : FBiomesItems.class.getDeclaredFields()) {

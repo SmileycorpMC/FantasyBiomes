@@ -21,13 +21,12 @@ build
 eclipse
 run
 
-src/test
-
 # Files from Forge MDK
 forge*changelog.txt
+/libs
+/.gradle
+/.gradle/4.9
+/.gradle/4.9/fileContent
 /.gradle
 *.lock
-/build
-/.gradle
-/build
-libs/Atlas-Lib-1.12.2-1.1.6.jar
+*.bin

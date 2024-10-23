@@ -11,6 +11,7 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.fbiomes.common.blocks.BlockFBMushroom;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
 import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenSmallFBMushroom;
 import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenSmallFBMushroomBase;
 import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenSmallGlowshroom;
@@ -22,9 +23,9 @@ import java.util.Random;
 public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 	
 	final boolean isNatural;
-	IBlockState wood = Blocks.LOG2.getDefaultState().withProperty(BlockNewLog.VARIANT, BlockPlanks.EnumType.DARK_OAK);
-	IBlockState bark = wood.withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.NONE);
-	IBlockState leaves = Blocks.LEAVES2.getDefaultState().withProperty(BlockNewLeaf.VARIANT, BlockPlanks.EnumType.DARK_OAK);
+	IBlockState wood = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ELDERWOOD, BlockLog.EnumAxis.Y);
+	IBlockState bark = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ELDERWOOD, BlockLog.EnumAxis.NONE);
+	IBlockState leaves = FBiomesBlocks.WOOD.getLeavesState(EnumWoodType.ELDERWOOD);
 	IBlockState roots = FBiomesBlocks.ROOTS.getDefaultState();
 	
 	public WorldGenElderwoodTree(boolean notify, boolean isNatural) {

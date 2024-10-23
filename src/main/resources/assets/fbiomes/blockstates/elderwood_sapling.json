@@ -1,6 +1,6 @@
 {
   "variants": {
-    "": {
+    "default": {
       "model": "fbiomes:elderwood_sapling"
     }
   }
