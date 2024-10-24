@@ -1,6 +1,8 @@
 package net.smileycorp.fbiomes.common.world.gen.tree;
 
-import net.minecraft.block.*;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockLog;
+import net.minecraft.block.BlockSapling;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -22,15 +24,15 @@ import java.util.Random;
 
 public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 	
-	final boolean isNatural;
+	final boolean hasMushrooms;
 	IBlockState wood = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ELDERWOOD, BlockLog.EnumAxis.Y);
 	IBlockState bark = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ELDERWOOD, BlockLog.EnumAxis.NONE);
 	IBlockState leaves = FBiomesBlocks.WOOD.getLeavesState(EnumWoodType.ELDERWOOD);
 	IBlockState roots = FBiomesBlocks.ROOTS.getDefaultState();
 	
-	public WorldGenElderwoodTree(boolean notify, boolean isNatural) {
+	public WorldGenElderwoodTree(boolean notify, boolean hasMushrooms) {
 		super(notify);
-		this.isNatural = isNatural;
+		this.hasMushrooms = hasMushrooms;
 	}
 	
 	@Override
@@ -72,7 +74,7 @@ public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 								setBlock(world, rand, ground, rhpos, bark, h);
 								IBlockState rstate = world.getBlockState(rhpos.down());
 								if (rstate==Blocks.AIR||rstate instanceof BlockBush) world.setBlockState(rhpos.down(), bark, 18);
-								if (isNatural&&(rstate.getMaterial()==Material.GRASS||rstate.getMaterial()==Material.GROUND)) tryGenRoots(world, rand, rhpos.down());
+								if (hasMushrooms &&(rstate.getMaterial()==Material.GRASS||rstate.getMaterial()==Material.GROUND)) tryGenRoots(world, rand, rhpos.down());
 							}
 						}
 					}
@@ -235,15 +237,15 @@ public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 		if (world.isAirBlock(pos)&&rand.nextInt(3)==1){
 			int length = rand.nextInt(3);
 			for (int j = 0; j<length; j++) {
-				if (world.isAirBlock(pos.down(j))) world.setBlockState(pos, roots, 18);
+				if (world.isAirBlock(pos.down(j))) setBlockAndNotifyAdequately(world, pos, roots);
 				else break;
 			}
 		}
 	}
 
 	private void setBlock(World world, Random rand, BlockPos ground, BlockPos pos, IBlockState state, int height) {
-		world.setBlockState(pos, state, 18);
-		if (isNatural&&rand.nextInt(7)<3) {
+		setBlockAndNotifyAdequately(world, pos, state);
+		if (hasMushrooms &&rand.nextInt(7)<3) {
 			EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
 			BlockPos facePos = pos.offset(facing);
 			if (rand.nextInt(4)==0 && state!=bark && (pos.getY()-ground.getX())<(height-6)) {
@@ -252,8 +254,7 @@ public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 			} else {
 				IBlockState shroom = (rand.nextInt(3)==1 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
 					FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)]).getDefaultState();
-				
-				if (world.isAirBlock(facePos)) world.setBlockState(facePos, shroom.withProperty(BlockFBMushroom.FACING, facing));
+				if (world.isAirBlock(facePos)) setBlockAndNotifyAdequately(world, facePos, shroom.withProperty(BlockFBMushroom.FACING, facing));
 			}
 		}
 	}
@@ -272,7 +273,7 @@ public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 					if (((i*i)+(j*j)+(k*k))<(r*r)){
 						BlockPos newpos = pos.north(i).up(j).east(k);
 						if (world.isAirBlock(newpos) || world.getBlockState(newpos).getBlock() instanceof BlockFBMushroom) {
-							world.setBlockState(newpos, leaves, 18);
+							setBlockAndNotifyAdequately(world, newpos, leaves);
 						}
 					}
 				}

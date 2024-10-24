@@ -35,6 +35,8 @@ sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = co
 minecraft {
     mappings channel: 'snapshot', version: '20171003-1.12'
 
+    accessTransformer = file('src/main/resources/META-INF/fbiomes_at.cfg')
+
     // Default run configurations.
     // These can be tweaked, removed, or duplicated as needed.
     runs {
@@ -92,7 +94,7 @@ jar {
                 "Implementation-Vendor":"smileycorp",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "ForceLoadAsMod": true,
-                //"FMLAT": "fbiomes_at.cfg",
+                "FMLAT": "fbiomes_at.cfg",
                 "FMLCorePluginContainsFMLMod": true,
                 "TweakClass": "org.spongepowered.asm.launch.MixinTweaker",
                 "MixinConfigs": "mixins.fbiomes.json"

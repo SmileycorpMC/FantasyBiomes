@@ -49,6 +49,8 @@ tile.fbiomes.elderwood_fence.name=Elderwood Fence
 tile.fbiomes.elderwood_fence_gate.name=Elderwood Fence Gate
 tile.fbiomes.elderwood_door.name=Elderwood Door
 tile.fbiomes.elderwood_trapdoor.name=Elderwood Trapdoor
+tile.fbiomes.red_oak_leaves.name=Red Oak Leaves
+tile.fbiomes.gold_birch_leaves.name=Golden Birch Leaves
 
 material.fbiomes.mithril.name=Mithril
 material.fbiomes.star_silver.name=Star-Silver

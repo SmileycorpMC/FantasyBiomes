@@ -9,6 +9,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.atlas.api.block.BlockProperties;
+import net.smileycorp.atlas.api.item.ItemBlockMeta;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 
 import java.lang.reflect.Field;
@@ -29,14 +30,9 @@ public class FBiomesItems {
 		IForgeRegistry<Item> registry = event.getRegistry();
 		for (final Block block : FBiomesBlocks.BLOCKS) {
 			if (((BlockProperties)block).usesCustomItemHandler()) continue;
-			ItemBlock item = new ItemBlock(block);
-			item.setRegistryName(block.getRegistryName());
-			item.setUnlocalizedName(block.getUnlocalizedName());
-			register(registry, item);
+			register(registry, ((BlockProperties) block).getMaxMeta() > 1 ? new ItemBlockMeta(block) : itemBlock(block));
 		}
 		FBiomesBlocks.WOOD.registerItems(registry);
-		register(registry, new ItemBlockBigMushroom());
-		register(registry, new ItemBlockBigGlowshroom());
 		for (Field field : FBiomesItems.class.getDeclaredFields()) {
 			try {
 				Object object = field.get(null);
@@ -44,6 +40,13 @@ public class FBiomesItems {
 				register(registry, (Item) object);
 			} catch (Exception e) {}
 		}
+	}
+	
+	private static ItemBlock itemBlock(Block block) {
+		ItemBlock item = new ItemBlock(block);
+		item.setRegistryName(block.getRegistryName());
+		item.setUnlocalizedName(block.getUnlocalizedName());
+		return item;
 	}
 	
 	private static void register(IForgeRegistry<Item> registry, Item item) {

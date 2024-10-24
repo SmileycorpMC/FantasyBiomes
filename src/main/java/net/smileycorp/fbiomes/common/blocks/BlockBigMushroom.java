@@ -92,9 +92,4 @@ public class BlockBigMushroom extends BlockBase {
 		return 6;
 	}
 	
-	@Override
-	public boolean usesCustomItemHandler() {
-		return true;
-	}
-	
 }

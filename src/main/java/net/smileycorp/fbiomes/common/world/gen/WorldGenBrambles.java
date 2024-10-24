@@ -28,7 +28,7 @@ public class WorldGenBrambles extends WorldGenerator {
 	public boolean generateBramble(World world, Random rand, BlockPos pos, int bound) {
 	    if (world.isAirBlock(pos) && (!world.provider.isNether() || pos.getY() < 254) && FBiomesBlocks.BRAMBLES.canPlaceBlockAt(world, pos)){
     		int a = rand.nextInt(4);
-    		world.setBlockState(pos, FBiomesBlocks.BRAMBLES.getDefaultState().withProperty(BlockBrambleBush.AGE, a), 18);
+    		setBlockAndNotifyAdequately(world, pos, FBiomesBlocks.BRAMBLES.getDefaultState().withProperty(BlockBrambleBush.AGE, a));
     		if (rand.nextInt(bound)==0) {
     			generateBramble(world, rand, pos.north(), bound+2);
     		}

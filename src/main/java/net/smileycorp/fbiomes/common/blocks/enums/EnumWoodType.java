@@ -4,23 +4,27 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.smileycorp.atlas.api.block.wood.WoodEnum;
-import net.smileycorp.atlas.api.util.Func;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenElderwoodTree;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
 import java.util.Map;
-import java.util.function.Supplier;
+import java.util.Random;
+import java.util.function.Function;
 
 public enum EnumWoodType implements WoodEnum {
-    ELDERWOOD ("elderwood", () -> new WorldGenElderwoodTree(true, false), null,
-            MapColor.SILVER_STAINED_HARDENED_CLAY, MapColor.CYAN_STAINED_HARDENED_CLAY, MapColor.GREEN_STAINED_HARDENED_CLAY);
+    ELDERWOOD ("elderwood", rand -> new WorldGenElderwoodTree(true, false), null,
+            MapColor.SILVER_STAINED_HARDENED_CLAY, MapColor.CYAN_STAINED_HARDENED_CLAY, MapColor.ORANGE_STAINED_HARDENED_CLAY),
+    GNARLROOT("gnarlroot", null, null,
+            MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BROWN_STAINED_HARDENED_CLAY),
+    PINE("pine", null, null,
+            MapColor.WOOD, MapColor.SAND, MapColor.GRASS);
     
     private final String name;
-    private final Supplier<WorldGenerator> tree, largeTree;
+    private final Function<Random, WorldGenerator> tree, largeTree;
     private final MapColor plankColour, logColour, leavesColour;
     
-    EnumWoodType(String name, Supplier<WorldGenerator> tree, Supplier<WorldGenerator> largeTree, MapColor plankColour, MapColor logColour, MapColor leavesColour) {
+    EnumWoodType(String name, Function<Random, WorldGenerator> tree, Function<Random, WorldGenerator> largeTree, MapColor plankColour, MapColor logColour, MapColor leavesColour) {
         this.name = name;
         this.tree = tree;
         this.largeTree = largeTree;
@@ -31,13 +35,13 @@ public enum EnumWoodType implements WoodEnum {
     
     @Nullable
     @Override
-    public Supplier<WorldGenerator> getTree() {
+    public Function<Random, WorldGenerator> getTree() {
         return tree;
     }
     
     @Nullable
     @Override
-    public Supplier<WorldGenerator> getLargeTree() {
+    public Function<Random, WorldGenerator> getLargeTree() {
         return largeTree;
     }
     
@@ -62,7 +66,7 @@ public enum EnumWoodType implements WoodEnum {
     }
     
     @Override
-    public Map<Float, ItemStack> getLeafDrops() {
+    public Map<ItemStack, Float> getLeafDrops() {
         return Collections.emptyMap();
     }
     

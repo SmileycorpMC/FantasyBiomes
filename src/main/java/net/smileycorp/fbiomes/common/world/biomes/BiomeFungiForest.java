@@ -1,8 +1,6 @@
 package net.smileycorp.fbiomes.common.world.biomes;
 
 import net.minecraft.block.BlockDoublePlant;
-import net.minecraft.block.BlockOldLeaf;
-import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.BlockStone;
 import net.minecraft.entity.monster.EntitySkeleton;
 import net.minecraft.entity.monster.EntitySpider;
@@ -21,10 +19,12 @@ import net.minecraftforge.event.terraingen.DecorateBiomeEvent.Decorate.EventType
 import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
-import net.smileycorp.fbiomes.client.ClientProxy;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.world.gen.fungusforest.*;
+import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenBigRedOakTree;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenElderwoodTree;
+import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenGoldenBirchTree;
+import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenRedOakTree;
 
 import java.util.Random;
 
@@ -47,30 +47,19 @@ public class BiomeFungiForest extends Biome {
 	
 	@Override
 	public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-       int chance = rand.nextInt(10);
-       if (chance<4) {
-    	   return rand.nextInt(3)==1 ? new WorldGenBigTree(false) : new WorldGenTrees(false);
-       }
-       else {
-    	   return new WorldGenElderwoodTree(false, true);
-       }
+	   return rand.nextInt(10) < 4 ? rand.nextInt(3) == 0 ? new WorldGenRedOakTree(false, true) :
+				   new WorldGenGoldenBirchTree(false, false, true) : new WorldGenElderwoodTree(false, true);
     }
 	
 	@Override
 	@SideOnly(Side.CLIENT)
     public int getGrassColorAtPos(BlockPos pos) {
-        return getFoliageColorAtPos(pos);
+        return 0x06B700;
     }
 	
 	@Override
 	@SideOnly(Side.CLIENT)
 	public int getFoliageColorAtPos(BlockPos pos) {
-		if (ClientProxy.stateCache == null) return 0x06B700;
-		if (ClientProxy.stateCache.getBlock() == Blocks.LEAVES) {
-			BlockPlanks.EnumType variant = ClientProxy.stateCache.getValue(BlockOldLeaf.VARIANT);
-			if (variant == BlockPlanks.EnumType.BIRCH) return 0xF7AD00;;
-			if (variant == BlockPlanks.EnumType.OAK) return 0x9E1A06;
-		}
 	 	return 0x06B700;
 	}
 	
@@ -140,7 +129,7 @@ public class BiomeFungiForest extends Biome {
 	                        {
 	                            worldgenabstracttree.generateSaplings(world, rand, blockpos);
 	                        } else if (worldgenabstracttree instanceof WorldGenElderwoodTree) {
-	                        	worldgenabstracttree = rand.nextInt(3) == 0 ? new WorldGenCanopyTree(false) : new WorldGenBigTree(false);
+	                        	worldgenabstracttree = rand.nextInt(3) == 0 ? new WorldGenCanopyTree(false) : new WorldGenBigRedOakTree(false, true);
 		                        worldgenabstracttree.setDecorationDefaults();
 
 		                        if (worldgenabstracttree.generate(world, rand, blockpos))

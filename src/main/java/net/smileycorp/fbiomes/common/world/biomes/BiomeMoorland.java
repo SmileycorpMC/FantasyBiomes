@@ -4,6 +4,7 @@ import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.ChunkPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
@@ -67,8 +68,8 @@ public class BiomeMoorland extends Biome {
 	    	 }
 	     }
 	     System.out.println(x + ", " + y + ", " + z);
-	     if ((y < 82 && y > 75) || (y < 70 && y > 63)) {
-	    	 for (int j = y - 1; j <= y; j++) {
+	     if ((y < 82 && y > 78) || (y < 74 && y > 70) || (y < 66)) {
+	    	 for (int j = y - 2; j <= y; j++) {
 	    		 if (j<= 0 || j>=255) break;
 	    		// if (chunk.getBlockState(i, j, k).getBlock() == Blocks.DIRT || chunk.getBlockState(i, j, k).getBlock() == Blocks.GRASS) {
 	    			 chunk.setBlockState(i, j, k, FBiomesBlocks.PEAT.getDefaultState());
@@ -86,7 +87,7 @@ public class BiomeMoorland extends Biome {
 		
 		BiomeMoorDecorator(){
 			waterlilyPerChunk = 0;
-			treesPerChunk = 0;
+			treesPerChunk = 1;
 	        extraTreeChance = 0.5F;
 	        flowersPerChunk = 4;
 	        grassPerChunk = 25;
@@ -102,7 +103,7 @@ public class BiomeMoorland extends Biome {
 		}
 		
 		@Override
-	    public void decorate(World worldIn, Random rand, Biome biome, BlockPos pos)
+	    public void decorate(World world, Random rand, Biome biome, BlockPos pos)
 	    {
 	        if (this.decorating)
 	        {
@@ -111,7 +112,7 @@ public class BiomeMoorland extends Biome {
 	        else
 	        {
 	        	WorldGenerator BOULDER_GENERATOR = new WorldGenBoulder();
-	            this.chunkProviderSettings = ChunkGeneratorSettings.Factory.jsonToFactory(worldIn.getWorldInfo().getGeneratorOptions()).build();
+	            this.chunkProviderSettings = ChunkGeneratorSettings.Factory.jsonToFactory(world.getWorldInfo().getGeneratorOptions()).build();
 	            this.chunkPos = pos;
 	            this.dirtGen = new WorldGenMinable(Blocks.DIRT.getDefaultState(), this.chunkProviderSettings.dirtSize);
 	            this.gravelOreGen = new WorldGenMinable(Blocks.GRAVEL.getDefaultState(), this.chunkProviderSettings.gravelSize);
@@ -126,22 +127,35 @@ public class BiomeMoorland extends Biome {
 	            this.lapisGen = new WorldGenMinable(Blocks.LAPIS_ORE.getDefaultState(), this.chunkProviderSettings.lapisSize);
 	            DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
 	            WorldGenerator BRAMBLE_GENERATOR = new WorldGenBrambles();
-	            if(TerrainGen.decorate(worldIn, rand, new net.minecraft.util.math.ChunkPos(pos), EventType.GRASS)) {
+	            if(TerrainGen.decorate(world, rand, new net.minecraft.util.math.ChunkPos(pos), EventType.GRASS)) {
 	                for (int i = 0; i < 16; ++i) {
 	                    int j = rand.nextInt(16) + 8;
 	                    int k = rand.nextInt(16) + 8;
-	                    int l = rand.nextInt(worldIn.getHeight(pos.add(j, 0, k)).getY() + 32);
+	                    int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
 	                    
-	                    BRAMBLE_GENERATOR.generate(worldIn, rand, pos.add(j, l, k));
-	                    DOUBLE_PLANT_GENERATOR.generate(worldIn, rand, pos.add(j, l, k));
+	                    BRAMBLE_GENERATOR.generate(world, rand, pos.add(j, l, k));
+	                    DOUBLE_PLANT_GENERATOR.generate(world, rand, pos.add(j, l, k));
 	                }
 	            }
+				for (int i = 0; i < 128; ++i)
+				{
+					if (rand.nextInt(5) == 0 && TerrainGen.decorate(world, rand, new ChunkPos(pos), pos, EventType.GRASS)) {
+						int j = rand.nextInt(16) + 8;
+						int k = rand.nextInt(16) + 8;
+						int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
+						if (rand.nextInt(3)==1) {
+							DOUBLE_PLANT_GENERATOR.generate(world, rand, pos.add(j, l, k));
+						} else {
+							getRandomWorldGenForGrass(rand).generate(world, rand, pos.add(j, l, k));
+						}
+					}
+				}
 	            int j = rand.nextInt(16) + 8;
                 int k = rand.nextInt(16) + 8;
-                int l = rand.nextInt(worldIn.getHeight(pos.add(j, 0, k)).getY() + 32);
-                if (rand.nextInt(6)==0) BOULDER_GENERATOR.generate(worldIn, rand, pos.add(j, l, k));
-                else if (rand.nextInt(16)==0) circle.generate(worldIn, rand, pos.add(j, l, k));
-	            generateTrees(worldIn, biome, rand, pos);
+                int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
+                if (rand.nextInt(6)==0) BOULDER_GENERATOR.generate(world, rand, pos.add(j, l, k));
+                else if (rand.nextInt(16)==0) circle.generate(world, rand, pos.add(j, l, k));
+	            generateTrees(world, biome, rand, pos);
 	            this.decorating = false;
 	        }
 	    }

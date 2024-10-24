@@ -7,9 +7,12 @@ import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.atlas.api.block.ShapedBlock;
+import net.smileycorp.atlas.api.block.wood.BlockBaseLeaves;
+import net.smileycorp.atlas.api.block.wood.BlockBaseSapling;
 import net.smileycorp.atlas.api.block.wood.WoodBlock;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumVanillaWoodType;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
 
 import java.lang.reflect.Field;
@@ -46,6 +49,8 @@ public class FBiomesBlocks {
 	
 	//Trees
 	public static WoodBlock WOOD = new WoodBlock<>(Constants.MODID, FantasyBiomes.creativeTab, EnumWoodType.class);
+	public static BlockBaseSapling VANILLA_SAPLING = BlockBaseSapling.create("simple_sapling", Constants.MODID, FantasyBiomes.creativeTab, EnumVanillaWoodType.class, 0);
+	public static BlockBaseLeaves VANILLA_LEAVES = BlockBaseLeaves.create("simple_leaves", Constants.MODID, FantasyBiomes.creativeTab, null, EnumVanillaWoodType.class, 0);
 	
 	//Ores
 	//public static Block MYTHRIL_ORE;
