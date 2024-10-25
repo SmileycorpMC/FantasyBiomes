@@ -17,7 +17,7 @@ import java.util.Random;
 public class WorldGenRedOakTree extends WorldGenTrees {
     
     private static final IBlockState LEAVES = FBiomesBlocks.VANILLA_LEAVES.getDefaultState()
-            .withProperty(FBiomesBlocks.VANILLA_LEAVES.typeProperty(), EnumVanillaWoodType.RED_OAK)
+            .withProperty(FBiomesBlocks.VANILLA_LEAVES.getVariantProperty(), EnumVanillaWoodType.RED_OAK)
             .withProperty(BlockLeaves.DECAYABLE, true).withProperty(BlockLeaves.CHECK_DECAY, false);
     private final boolean hasMushrooms;
     

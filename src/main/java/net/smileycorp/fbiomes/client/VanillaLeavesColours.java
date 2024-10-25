@@ -17,7 +17,7 @@ public class VanillaLeavesColours implements IBlockColor, IItemColor {
     
     @Override
     public int colorMultiplier(IBlockState state, @Nullable IBlockAccess worldIn, @Nullable BlockPos pos, int tintIndex) {
-        return state.getValue(((WoodVariant<EnumVanillaWoodType>)state.getBlock()).typeProperty()).getColour();
+        return state.getValue(((WoodVariant<EnumVanillaWoodType>)state.getBlock()).getVariantProperty()).getColour();
     }
     
     @Override

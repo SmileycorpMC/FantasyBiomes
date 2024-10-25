@@ -17,7 +17,7 @@ import java.util.Random;
 public class WorldGenGoldenBirchTree extends WorldGenBirchTree {
     
     private static final IBlockState LEAVES = FBiomesBlocks.VANILLA_LEAVES.getDefaultState()
-            .withProperty(FBiomesBlocks.VANILLA_LEAVES.typeProperty(), EnumVanillaWoodType.GOLD_BIRCH)
+            .withProperty(FBiomesBlocks.VANILLA_LEAVES.getVariantProperty(), EnumVanillaWoodType.GOLD_BIRCH)
             .withProperty(BlockLeaves.DECAYABLE, true).withProperty(BlockLeaves.CHECK_DECAY, false);
     private final boolean hasMushrooms;
     
