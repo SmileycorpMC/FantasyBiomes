@@ -41,16 +41,6 @@ public class BlockBigMushroom extends BlockBase {
 	}
 	
 	@Override
-	public int quantityDropped(Random rand) {
-        return Math.max(0, rand.nextInt(10) - 7);
-    }
-	
-	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return state.getValue(VARIANT).getDrop();
-    }
-	
-	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, SHAPE, VARIANT);
 	}
@@ -62,24 +52,34 @@ public class BlockBigMushroom extends BlockBase {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		if (meta >= this.getMaxMeta()) return this.getDefaultState();
-		EnumBigMushroomShape shape = EnumBigMushroomShape.values()[meta % 3];
-		EnumBigMushroomVariant variant = EnumBigMushroomVariant.values()[(meta-(meta % 3)) / 3];
-		return this.getDefaultState().withProperty(VARIANT, variant).withProperty(SHAPE, shape);
+		return getDefaultState().withProperty(VARIANT, EnumBigMushroomVariant.values()[(meta-(meta % 3)) / 3])
+				.withProperty(SHAPE, EnumBigMushroomShape.values()[meta % 3]);
 	}
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		int variant = state.getValue(VARIANT).getMeta();
-		int shape = state.getValue(SHAPE).getMeta();
-		return  variant * 3 + shape;
+		return state.getValue(VARIANT).getMeta() * 3 + state.getValue(SHAPE).getMeta();
+	}
+	
+	@Override
+	public boolean canSilkHarvest(World p_canSilkHarvest_1_, BlockPos p_canSilkHarvest_2_, IBlockState p_canSilkHarvest_3_, EntityPlayer p_canSilkHarvest_4_) {
+		return true;
+	}
+	
+	@Override
+	public int quantityDropped(Random rand) {
+        return Math.max(0, rand.nextInt(10) - 7);
     }
 	
 	@Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return state.getValue(VARIANT).getDrop();
+    }
+	
+	
+	@Override
 	public void getSubBlocks(CreativeTabs item, NonNullList<ItemStack> items) {
-        for (int i = 0; i<this.getMaxMeta(); i++) {
-        	items.add(new ItemStack(this, 1, i));
-        }
+        for (int i = 0; i<this.getMaxMeta(); i++) items.add(new ItemStack(this, 1, i));
     }
 	
 	@Override

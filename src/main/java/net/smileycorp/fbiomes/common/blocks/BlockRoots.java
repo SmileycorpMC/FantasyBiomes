@@ -4,7 +4,6 @@ import net.minecraft.block.BlockBush;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.Minecraft;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
 import net.minecraft.util.EnumFacing;
@@ -30,21 +29,18 @@ public class BlockRoots extends BlockBush implements BlockProperties {
 	
 	@Override
 	public boolean canPlaceBlockOnSide(World world, BlockPos pos, EnumFacing side) {
-		 if (side == EnumFacing.DOWN){
-			 IBlockState state = world.getBlockState(pos.up());
-			 if (state.getMaterial() == Material.GROUND|| state.getMaterial() == Material.ROCK || state.getMaterial() == Material.GRASS || state.getBlock() == this) {
-				 return true;
-			 }
-		 }
-		 return false;
+		 if (side != EnumFacing.DOWN) return false;
+		 IBlockState state = world.getBlockState(pos.up());
+		 if (state.getBlock() == this) return true;
+		 return state.getMaterial() == Material.GROUND || state.getMaterial() == Material.ROCK
+				 || state.getMaterial() == Material.GRASS || state.getBlock() == this;
 	 }
 	 
 	@Override
 	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor){
 		 IBlockState state = world.getBlockState(pos.up());
-		 if (!(state.getMaterial() == Material.GROUND|| state.getMaterial() == Material.ROCK || state.getMaterial() == Material.GRASS || state.getBlock() == this)){
-			 Minecraft.getMinecraft().world.setBlockToAir(pos);
-		 }
+		 if (!(state.getMaterial() == Material.GROUND || state.getMaterial() == Material.ROCK || state.getMaterial() == Material.GRASS
+				 || state.getBlock() == this) && world instanceof World) ((World) world).setBlockToAir(pos);
 	 }
 	 
 	 @Override
@@ -64,10 +60,7 @@ public class BlockRoots extends BlockBush implements BlockProperties {
 	 
 	 @Override
 	 public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
-        if (state.getBlock() == this) {
-            return canPlaceBlockOnSide(world, pos, EnumFacing.DOWN);
-        }
-        return false;
+        return state.getBlock() == this && canPlaceBlockOnSide(world, pos, EnumFacing.DOWN);
     }
 
 }

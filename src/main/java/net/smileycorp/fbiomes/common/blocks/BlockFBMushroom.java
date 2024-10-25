@@ -5,7 +5,6 @@ import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.IProperty;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -40,18 +39,17 @@ public class BlockFBMushroom extends BlockBush implements BlockProperties {
 	
 	@Override
 	protected BlockStateContainer createBlockState() {
-		return new BlockStateContainer(this, new IProperty[]{FACING});
+		return new BlockStateContainer(this, FACING);
 	}
 	
 	@Override
 	public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-		return getStateFromMeta(placer.getHeldItem(hand).getMetadata())
-				.withProperty(FACING, getFacing(world, pos, facing));
+		return getStateFromMeta(placer.getHeldItem(hand).getMetadata()).withProperty(FACING, getFacing(world, pos, facing));
 	}
 	
 	private EnumFacing getFacing(World world, BlockPos pos, EnumFacing facing) {
 		if (canFacingSustain(world, pos, facing)) return facing;
-		for (EnumFacing facing0 : FACING.getAllowedValues()) if (facing0 != facing && canFacingSustain(world, pos, facing0)) return facing;
+		for (EnumFacing facing0 : FACING.getAllowedValues()) if (facing0 != facing && canFacingSustain(world, pos, facing0)) return facing0;
 		return EnumFacing.UP;
 	}
 
@@ -71,24 +69,12 @@ public class BlockFBMushroom extends BlockBush implements BlockProperties {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return this.getDefaultState().withProperty(FACING, getFacingFromMeta(meta));
+		return getDefaultState().withProperty(FACING, EnumFacing.values()[meta % 5 + 1]);
 	}
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		EnumFacing facing = (EnumFacing) state.getProperties().get(FACING);
-		switch (facing) {
-			case NORTH:
-				return 1;
-			case SOUTH:
-				return 2;
-			case EAST:
-				return 3;
-			case WEST:
-				return 4;
-			default:
-				return 0;
-			}
+		return state.getValue(FACING).ordinal() - 1;
     }
 	
 	@Override
@@ -121,26 +107,5 @@ public class BlockFBMushroom extends BlockBush implements BlockProperties {
 		if (!(facing == EnumFacing.UP && (soil.isFullBlock() && (soil.getMaterial() == Material.GRASS || soil.getMaterial() == Material.GROUND))))
 			if (world instanceof World) ((World) world).setBlockToAir(pos);
 	 }
-	
-	@Override
-	public int getMaxMeta(){
-		return 4;
-	}
-	
-	public EnumFacing getFacingFromMeta(int meta) {
-		switch (meta) {
-			case 1:
-				return EnumFacing.NORTH;
-			case 2:
-				return EnumFacing.SOUTH;
-			case 3:
-				return EnumFacing.EAST;
-			case 4:
-				return EnumFacing.WEST;
-			default:
-				return EnumFacing.UP;
-		}
-	}
-	
 
 }

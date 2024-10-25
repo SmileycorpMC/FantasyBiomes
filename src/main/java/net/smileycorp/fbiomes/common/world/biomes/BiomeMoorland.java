@@ -21,8 +21,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
-import net.smileycorp.fbiomes.common.world.gen.WorldGenBrambles;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenBoulder;
+import net.smileycorp.fbiomes.common.world.gen.features.WorldGenBrambles;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenStoneCircle;
 
 import java.util.Random;

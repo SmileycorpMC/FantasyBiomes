@@ -3,7 +3,10 @@ package net.smileycorp.fbiomes.common.blocks;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.World;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumBigMushroomShape;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumGlowshroomVariant;
 
@@ -20,29 +23,20 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	}
 	
 	@Override
-	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-		return state.getValue(VARIANT).getDrop();
-    }
-	
-	@Override
 	protected BlockStateContainer createBlockState() {
 		return new BlockStateContainer(this, SHAPE, VARIANT);
 	}
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		if (meta >= this.getMaxMeta()) return this.getDefaultState();
-		EnumBigMushroomShape shape = EnumBigMushroomShape.values()[meta % 2];
-		EnumGlowshroomVariant variant = EnumGlowshroomVariant.values()[(meta - (meta % 2)) / 2];
-		return this.getDefaultState().withProperty(VARIANT, variant).withProperty(SHAPE, shape);
+		return getDefaultState().withProperty(VARIANT, EnumGlowshroomVariant.values()[(meta - (meta % 2)) / 2])
+				.withProperty(SHAPE, EnumBigMushroomShape.values()[meta % 2]);
 	}
 	
 	@Override
 	public int getMetaFromState(IBlockState state) {
-		int variant = state.getValue(VARIANT).getMeta();
-		int shape = state.getValue(SHAPE).getMeta();
-		return  variant * 2 + shape;
-    }
+		return state.getValue(VARIANT).getMeta() * 2 + state.getValue(SHAPE).getMeta();
+	}
 	
 	@Override
 	public int getMaxMeta(){
@@ -51,7 +45,17 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	
 	@Override
 	public int getLightValue(IBlockState state) {
-		return state.getValue(SHAPE)== EnumBigMushroomShape.CAP ? 15 : 5;
+		return state.getValue(SHAPE) == EnumBigMushroomShape.CAP ? 15 : 5;
 	}
+	
+	@Override
+	public boolean canSilkHarvest(World p_canSilkHarvest_1_, BlockPos p_canSilkHarvest_2_, IBlockState p_canSilkHarvest_3_, EntityPlayer p_canSilkHarvest_4_) {
+		return true;
+	}
+	
+	@Override
+	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
+		return state.getValue(VARIANT).getDrop();
+    }
 	
 }

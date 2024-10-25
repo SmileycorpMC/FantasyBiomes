@@ -3,6 +3,8 @@ package net.smileycorp.fbiomes.client;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
+import net.minecraft.client.renderer.color.BlockColors;
+import net.minecraft.client.renderer.color.ItemColors;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
@@ -45,12 +47,14 @@ public class ClientProxy {
 	
 	@SubscribeEvent
 	public static void itemColour(ColorHandlerEvent.Item event) {
-		event.getItemColors().registerItemColorHandler(VanillaLeavesColours.INSTANCE, FBiomesBlocks.VANILLA_LEAVES);
+		ItemColors colours = event.getItemColors();
+		colours.registerItemColorHandler(VanillaLeavesColours.INSTANCE, FBiomesBlocks.VANILLA_LEAVES);
 	}
 	
 	@SubscribeEvent
 	public static void blockColour(ColorHandlerEvent.Block event) {
-		event.getBlockColors().registerBlockColorHandler(VanillaLeavesColours.INSTANCE, FBiomesBlocks.VANILLA_LEAVES);
+		BlockColors colours = event.getBlockColors();
+		colours.registerBlockColorHandler(VanillaLeavesColours.INSTANCE, FBiomesBlocks.VANILLA_LEAVES);
 	}
 	
 }

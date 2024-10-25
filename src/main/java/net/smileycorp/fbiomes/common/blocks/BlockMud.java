@@ -18,48 +18,32 @@ import net.smileycorp.fbiomes.common.FantasyBiomes;
 import javax.annotation.Nullable;
 
 public class BlockMud extends BlockBase {
-	
+    
+    protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D);
+    
 	public BlockMud(String name) {
-		super(name, Constants.MODID, Material.CLAY, SoundType.GROUND, 0.5f, 1f,  "shovel", 0, FantasyBiomes.TAB);
+		super(name, Constants.MODID, Material.CLAY, SoundType.GROUND, 0.5f, 1,  "shovel", 0, FantasyBiomes.TAB);
 	}
 	
 	@Override
 	public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable)	{
         EnumPlantType plantType = plantable.getPlantType(world, pos.offset(direction));
-        switch (plantType) {
-            case Plains: return true;
-            case Water:  return true;
-            case Beach:
-                return (world.getBlockState(pos.east()).getMaterial() == Material.WATER ||
-                                    world.getBlockState(pos.west()).getMaterial() == Material.WATER ||
-                                    world.getBlockState(pos.north()).getMaterial() == Material.WATER ||
-                                    world.getBlockState(pos.south()).getMaterial() == Material.WATER);
-			default:
-				break;
-        }
-
+        if (plantType == EnumPlantType.Plains || plantType == EnumPlantType.Water) return true;
+        if (plantType == EnumPlantType.Beach) for (EnumFacing facing : EnumFacing.Plane.HORIZONTAL.facings())
+            if (world.getBlockState(pos.offset(facing)).getMaterial() == Material.WATER) return true;
         return false;
     }
 	
-	//copied from BlockSoulSand
-	
-	static final AxisAlignedBB MUD_AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D);
-	
 	@Override
 	@Nullable
-    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos)
-    {
-        return MUD_AABB;
+    public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
+        return AABB;
     }
-
-    /**
-     * Called When an Entity Collided with the Block
-     */
+    
     @Override
-	public void onEntityCollidedWithBlock(World worldIn, BlockPos pos, IBlockState state, Entity entityIn)
-    {
-        entityIn.motionX *= 0.4D;
-        entityIn.motionZ *= 0.4D;
+	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity) {
+        entity.motionX *= 0.8D;
+        entity.motionZ *= 0.8D;
     }
 
 }
