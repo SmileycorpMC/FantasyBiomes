@@ -62,6 +62,21 @@ public class BlockBigMushroom extends BlockBase {
 	}
 	
 	@Override
+	public int getMaxMeta(){
+		return 6;
+	}
+	
+	@Override
+	public String byMeta(int meta) {
+		return byState(getStateFromMeta(meta));
+	}
+	
+	@Override
+	public String byState(IBlockState state) {
+		return "big_" + state.getValue(VARIANT).getName() + "_mushroom_" + state.getValue(SHAPE).getName();
+	}
+	
+	@Override
 	public boolean canSilkHarvest(World p_canSilkHarvest_1_, BlockPos p_canSilkHarvest_2_, IBlockState p_canSilkHarvest_3_, EntityPlayer p_canSilkHarvest_4_) {
 		return true;
 	}
@@ -86,10 +101,5 @@ public class BlockBigMushroom extends BlockBase {
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(this, 1, getMetaFromState(state));
     }
-	
-	@Override
-	public int getMaxMeta(){
-		return 6;
-	}
 	
 }

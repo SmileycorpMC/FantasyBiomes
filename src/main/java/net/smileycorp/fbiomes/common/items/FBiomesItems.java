@@ -21,9 +21,9 @@ public class FBiomesItems {
 	public static List<Item> ITEMS = Lists.newArrayList();
 	
 	public static Item BERRIES = new ItemBerries();
-	public static Item MITHRIL_INGOT = new ItemMithril("Ingot");
-	public static Item MITHRIL_NUGGET = new ItemMithril("Nugget");
-	public static Item MITHRIL_DUST = new ItemMithril("Dust");
+	public static Item MITHRIL_INGOT = new ItemMithril("ingot");
+	public static Item MITHRIL_NUGGET = new ItemMithril("nugget");
+	public static Item MITHRIL_DUST = new ItemMithril("dust");
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {

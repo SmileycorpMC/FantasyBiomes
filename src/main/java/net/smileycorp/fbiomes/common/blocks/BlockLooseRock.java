@@ -23,8 +23,8 @@ public class BlockLooseRock extends BlockFalling implements BlockProperties {
 		setHardness(1.5F);
 		setResistance(10.0F);
 		setSoundType(SoundType.STONE);
-		setUnlocalizedName(Constants.name("LooseRock"));
-		setRegistryName(Constants.loc("Loose_Rock"));
+		setUnlocalizedName(Constants.name("loose_rock"));
+		setRegistryName(Constants.loc("loose_rock"));
 	}
 	
 	@Override

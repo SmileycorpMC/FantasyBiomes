@@ -44,6 +44,16 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	}
 	
 	@Override
+	public String byMeta(int meta) {
+		return byState(getStateFromMeta(meta));
+	}
+	
+	@Override
+	public String byState(IBlockState state) {
+		return "big_" + state.getValue(VARIANT).getName() + "_glowshroom_" + state.getValue(SHAPE).getName();
+	}
+	
+	@Override
 	public int getLightValue(IBlockState state) {
 		return state.getValue(SHAPE) == EnumBigMushroomShape.CAP ? 15 : 5;
 	}
