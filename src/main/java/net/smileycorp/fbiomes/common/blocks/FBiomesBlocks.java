@@ -48,9 +48,9 @@ public class FBiomesBlocks {
 	//public static Block FAE_WATER_FLOWING;
 	
 	//Trees
-	public static WoodBlock WOOD = new WoodBlock<>(Constants.MODID, FantasyBiomes.creativeTab, EnumWoodType.class);
-	public static BlockBaseSapling VANILLA_SAPLING = BlockBaseSapling.create("simple_sapling", Constants.MODID, FantasyBiomes.creativeTab, EnumVanillaWoodType.class, 0);
-	public static BlockBaseLeaves VANILLA_LEAVES = BlockBaseLeaves.create("simple_leaves", Constants.MODID, FantasyBiomes.creativeTab, null, EnumVanillaWoodType.class, 0);
+	public static WoodBlock WOOD = new WoodBlock<>(Constants.MODID, FantasyBiomes.TAB, EnumWoodType.class);
+	public static BlockBaseSapling VANILLA_SAPLING = BlockBaseSapling.create("simple_sapling", Constants.MODID, FantasyBiomes.TAB, EnumVanillaWoodType.class, 0);
+	public static BlockBaseLeaves VANILLA_LEAVES = BlockBaseLeaves.create("simple_leaves", Constants.MODID, FantasyBiomes.TAB, null, EnumVanillaWoodType.class, 0);
 	
 	//Ores
 	//public static Block MYTHRIL_ORE;

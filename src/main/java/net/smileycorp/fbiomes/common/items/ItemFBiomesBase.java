@@ -8,7 +8,7 @@ public class ItemFBiomesBase extends Item {
 	
 	public ItemFBiomesBase(String name) {
 		setUnlocalizedName(Constants.name(name));
-		setCreativeTab(FantasyBiomes.creativeTab);
+		setCreativeTab(FantasyBiomes.TAB);
 		setRegistryName(Constants.loc(name));
 	}
 	

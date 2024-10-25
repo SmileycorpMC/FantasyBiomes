@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
 public class BlockMud extends BlockBase {
 	
 	public BlockMud(String name) {
-		super(name, Constants.MODID, Material.CLAY, SoundType.GROUND, 0.5f, 1f,  "shovel", 0, FantasyBiomes.creativeTab);
+		super(name, Constants.MODID, Material.CLAY, SoundType.GROUND, 0.5f, 1f,  "shovel", 0, FantasyBiomes.TAB);
 	}
 	
 	@Override

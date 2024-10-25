@@ -14,7 +14,7 @@ import net.smileycorp.fbiomes.common.world.biomes.FBiomes;
 @Mod(modid = "fbiomes")
 public class FantasyBiomes {
 	
-	public static CreativeTabs creativeTab = new CreativeTabs("TabFantasyBiomes"){
+	public static CreativeTabs TAB = new CreativeTabs("TabFantasyBiomes"){
 		 @Override
 		 public ItemStack getTabIconItem(){
 			 return new ItemStack(FBiomesBlocks.GREEN_SHROOM);

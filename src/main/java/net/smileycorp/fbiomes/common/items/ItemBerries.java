@@ -8,7 +8,7 @@ public class ItemBerries extends ItemFood {
 
 	public ItemBerries() {
 		super(1, 0.5f, false);
-		setCreativeTab(FantasyBiomes.creativeTab);
+		setCreativeTab(FantasyBiomes.TAB);
 		setUnlocalizedName(Constants.name("Berries"));
 		setRegistryName(Constants.loc("Berries"));
 	}

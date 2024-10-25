@@ -22,7 +22,7 @@ public class BlockRoots extends BlockBush implements BlockProperties {
 
 	public BlockRoots() {
 		super(Material.PLANTS);
-		setCreativeTab(FantasyBiomes.creativeTab);
+		setCreativeTab(FantasyBiomes.TAB);
 		setUnlocalizedName(Constants.name("Roots"));
 		setRegistryName(Constants.loc("Roots"));
 		setSoundType(SoundType.PLANT);

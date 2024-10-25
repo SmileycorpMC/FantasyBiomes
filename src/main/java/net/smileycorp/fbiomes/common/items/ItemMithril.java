@@ -13,7 +13,7 @@ public class ItemMithril extends Item {
 			setUnlocalizedName(Constants.name("Mithril"+name));
 		}
 		
-		setCreativeTab(FantasyBiomes.creativeTab);
+		setCreativeTab(FantasyBiomes.TAB);
 		setRegistryName(Constants.loc("Mithril_"+name));
 	}
 }

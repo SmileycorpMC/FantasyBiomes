@@ -15,7 +15,7 @@ import java.util.function.Function;
 public enum EnumWoodType implements WoodEnum {
     ELDERWOOD ("elderwood", rand -> new WorldGenElderwoodTree(true, false), null,
             MapColor.SILVER_STAINED_HARDENED_CLAY, MapColor.CYAN_STAINED_HARDENED_CLAY, MapColor.ORANGE_STAINED_HARDENED_CLAY),
-    GNARLROOT("gnarlroot", null, null,
+    GNARLWILLOW("gnarlwillow", null, null,
             MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BROWN_STAINED_HARDENED_CLAY),
     PINE("pine", null, null,
             MapColor.WOOD, MapColor.SAND, MapColor.GRASS);

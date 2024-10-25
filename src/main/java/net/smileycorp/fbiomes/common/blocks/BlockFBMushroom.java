@@ -31,7 +31,7 @@ public class BlockFBMushroom extends BlockBush implements BlockProperties {
 	public BlockFBMushroom(String name, float light) {
 		super(Material.PLANTS);
 		setLightLevel(light);
-		setCreativeTab(FantasyBiomes.creativeTab);
+		setCreativeTab(FantasyBiomes.TAB);
 		setSoundType(SoundType.PLANT);
 		setUnlocalizedName(Constants.name(name));
 		setRegistryName(Constants.loc(name.toLowerCase()));

@@ -30,7 +30,7 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, BlockPrope
 	public static PropertyInteger AGE = PropertyInteger.create("age", 0, 3);
 	
 	public BlockBrambleBush() {
-		setCreativeTab(FantasyBiomes.creativeTab);
+		setCreativeTab(FantasyBiomes.TAB);
 		setUnlocalizedName(Constants.name("Brambles"));
 		setRegistryName(Constants.loc("Brambles"));
 		setDefaultState(blockState.getBaseState().withProperty(AGE, 0));
@@ -40,10 +40,15 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, BlockPrope
 	
 	@Override
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-		System.out.println("trying to get berries of age " + state.getProperties().get(AGE));
-		Random rand = new Random();
-		if (((Integer)state.getProperties().get(AGE)).intValue()==3){
-			player.addItemStackToInventory(new ItemStack(FBiomesItems.BERRIES, rand.nextInt(3)+1));
+		if (state.getValue(AGE) == 3){
+            ItemStack stack = new ItemStack(FBiomesItems.BERRIES, world.rand.nextInt(2) + 1);
+			if (! world.isRemote) {
+                EntityItem item = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
+                item.motionX = world.rand.nextFloat();
+                item.motionY = 0.2f;
+                item.motionZ = world.rand.nextFloat();
+                world.spawnEntity(item);
+            }
 			world.setBlockState(pos, this.getDefaultState(), 3);
 			return true;
 		}
@@ -52,7 +57,7 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, BlockPrope
 	
 	@Override
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        if (((Integer)state.getProperties().get(AGE)).intValue()==3) return FBiomesItems.BERRIES;
+        if (((Integer)state.getProperties().get(AGE)).intValue( )== 3) return FBiomesItems.BERRIES;
         else return null;
 	}
 	 
@@ -62,22 +67,19 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, BlockPrope
     }
 	
 	@Override
-	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand)
-    {
+	public void updateTick(World worldIn, BlockPos pos, IBlockState state, Random rand) {
         super.updateTick(worldIn, pos, state, rand);
 
         if (!worldIn.isAreaLoaded(pos, 1)) return; // Forge: prevent loading unloaded chunks when checking neighbor's light
         if (worldIn.getLightFromNeighbors(pos.up()) >= 9)
         {
-            int i = ((Integer)state.getProperties().get(AGE)).intValue();
 
-            if (i < 3)
-            {
+            if (state.getValue(AGE) < 3) {
                 float f = getGrowthChance(this, worldIn, pos);
 
                 if(net.minecraftforge.common.ForgeHooks.onCropsGrowPre(worldIn, pos, state, rand.nextInt((int)(25.0F / f) + 1) == 0))
                 {
-                    worldIn.setBlockState(pos, this.getDefaultState().withProperty(AGE, i+1), 2);
+                    grow(worldIn, rand, pos, state);
                     net.minecraftforge.common.ForgeHooks.onCropsGrowPost(worldIn, pos, state, worldIn.getBlockState(pos));
                 }
             }
@@ -139,32 +141,23 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, BlockPrope
     }
 	
 	@Override
-	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state,
-			boolean isClient) {
+	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
 		return false;
 	}
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos,
-			IBlockState state) {
-		return false;
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+		return state.getValue(AGE) < 3 && rand.nextFloat() < 0.5;
 	}
 
 	@Override
-	public void grow(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-		
-	}
-	
-	@Override
-	public int getMaxMeta(){
-		return 3;
+	public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
+        world.setBlockState(pos, state.cycleProperty(AGE), 4);
 	}
 	
 	@Override
 	public void onEntityCollidedWithBlock(World world, BlockPos pos, IBlockState state, Entity entity){
-		if(entity.hurtResistantTime<=0&&!(entity instanceof EntityItem)){
-			entity.attackEntityFrom(DamageSource.CACTUS, 1);
-		}
+		if (entity.hurtResistantTime <= 0 &&!(entity instanceof EntityItem)) entity.attackEntityFrom(DamageSource.CACTUS, 1);
 	}
 	
 	@Override

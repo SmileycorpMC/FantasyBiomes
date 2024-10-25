@@ -19,7 +19,7 @@ public class BlockLooseRock extends BlockFalling implements BlockProperties {
 	
 	public BlockLooseRock() { 
 		super (Material.ROCK);
-		setCreativeTab(FantasyBiomes.creativeTab);
+		setCreativeTab(FantasyBiomes.TAB);
 		setHardness(1.5F);
 		setResistance(10.0F);
 		setSoundType(SoundType.STONE);

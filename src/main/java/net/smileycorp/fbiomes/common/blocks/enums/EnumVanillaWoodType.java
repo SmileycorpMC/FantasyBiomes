@@ -2,12 +2,10 @@ package net.smileycorp.fbiomes.common.blocks.enums;
 
 import com.google.common.collect.ImmutableMap;
 import net.minecraft.block.material.MapColor;
-import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.smileycorp.atlas.api.block.wood.WoodEnum;
-import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenBigRedOakTree;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenGoldenBirchTree;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenRedOakTree;

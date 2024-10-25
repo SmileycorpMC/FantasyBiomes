@@ -37,7 +37,7 @@ public class BlockBigMushroom extends BlockBase {
 	public BlockBigMushroom(String name) {
 		super(name, Constants.MODID, Material.WOOD, SoundType.WOOD, 0.2F, 0, "axe", 1, null);
 		isFlamable = false;
-		setCreativeTab(FantasyBiomes.creativeTab);
+		setCreativeTab(FantasyBiomes.TAB);
 	}
 	
 	@Override
