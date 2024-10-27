@@ -27,6 +27,7 @@ public class ClientProxy {
 	public static void registerModels(ModelRegistryEvent event) {
 		DefaultStateMapper mapper = new DefaultStateMapper();
 		ModelLoader.setCustomStateMapper(FBiomesBlocks.VANILLA_LEAVES, new WoodStateMapper(FBiomesBlocks.VANILLA_LEAVES));
+		ModelLoader.setCustomStateMapper(FBiomesBlocks.VANILLA_SAPLING, new WoodStateMapper(FBiomesBlocks.VANILLA_SAPLING));
 		for (Item item : FBiomesItems.ITEMS)
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName().toString()));
 		for (Block block : FBiomesBlocks.BLOCKS) for (int meta = 0; meta < ((BlockProperties) block).getMaxMeta(); meta++) {
@@ -37,7 +38,7 @@ public class ClientProxy {
 			}
 			if (block instanceof WoodVariant) {
 				ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta,
-						new ModelResourceLocation(Constants.loc(((WoodVariant<?>) block).byMeta(meta)).toString()));
+						new ModelResourceLocation(Constants.loc(((WoodVariant<?>) block).byMeta(meta)).toString(),"inventory"));
 				continue;
 			}
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, new ModelResourceLocation(block.getRegistryName(), state));
