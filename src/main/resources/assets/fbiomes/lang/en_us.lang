@@ -89,3 +89,10 @@ material.fbiomes.star_silver.name=Star-Silver
 
 fluid.tconstruct.mithril.name=Molten Mithril
 fluid.tconstruct.star_silver.name=Molten Star-Silver
+
+potion.effect.glowing=Potion of Glowing
+potion.effect.longer_glowing=Potion of Glowing
+splash_potion.effect.glowing=Splash Potion of Glowing
+splash_potion.effect.longer_glowing=Splash Potion of Glowing
+lingering_potion.effect.glowing=Lingering Potion of Glowing
+lingering_potion.effect.longer_glowing=Lingering Potion of Glowing
