@@ -9,6 +9,7 @@ import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -18,6 +19,7 @@ import net.smileycorp.atlas.api.client.WoodStateMapper;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.blocks.BlockFBMushroom;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
+import net.smileycorp.fbiomes.common.entities.EntityPixie;
 import net.smileycorp.fbiomes.common.items.FBiomesItems;
 
 @Mod.EventBusSubscriber(modid= Constants.MODID, value = Side.CLIENT)
@@ -44,6 +46,7 @@ public class ClientProxy {
 			ModelLoader.setCustomModelResourceLocation(Item.getItemFromBlock(block), meta, new ModelResourceLocation(block.getRegistryName(), state));
 		}
 		FBiomesBlocks.WOOD.registerModels();
+		RenderingRegistry.registerEntityRenderingHandler(EntityPixie.class, RenderPixie::new);
 	}
 	
 	@SubscribeEvent
