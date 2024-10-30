@@ -33,7 +33,7 @@ public class RenderPixie extends RenderLiving<EntityPixie> {
             GlStateManager.translate(0.0F, 0.1F, 0.0F);
             GlStateManager.rotate(180.0F - renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
             GlStateManager.rotate((float)(renderManager.options.thirdPersonView == 2 ? -1 : 1) * -renderManager.playerViewX, 1.0F, 0.0F, 0.0F);
-            float scale = 0.4F;
+            float scale = (float) (0.4f + 0.05f * Math.sin(0.1 * (entity.ticksExisted + pt)));
             GlStateManager.scale(scale, scale, scale);
             GlStateManager.enableNormalize();
             GlStateManager.enableBlend();

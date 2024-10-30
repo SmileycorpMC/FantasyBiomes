@@ -14,11 +14,11 @@ public class ModelPixie extends ModelBase {
         textureWidth = 16;
         textureHeight = 16;
         l_wing = new ModelRenderer(this);
-        l_wing.setRotationPoint(-2, 19, 0.0F);
+        l_wing.setRotationPoint(-1, 19, 0.0F);
         l_wing.cubeList.add(new ModelBox(l_wing, 0, 0, 0, 0, 0, 0, 5, 6, 0, true));
         l_wing.rotateAngleX = 0.6108652f;
         r_wing = new ModelRenderer(this);
-        r_wing.setRotationPoint(2, 19, 0);
+        r_wing.setRotationPoint(1, 19, 0);
         r_wing.cubeList.add(new ModelBox(r_wing, 0, 0, 0, 0, 0, 0, 5, 6, 0, false));
         r_wing.rotateAngleX = 0.6108652f;
     }
