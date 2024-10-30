@@ -12,8 +12,8 @@ import net.smileycorp.fbiomes.common.Constants;
 public class FBiomesEntities {
     
     private static int ID = 177;
-    public static final EntityEntry PIXIE = EntityEntryBuilder.create().entity(EntityPixie.class).id(Constants.loc("pixie"), ID++).name(Constants.name("pixie")).egg(0x68C0FF, 0xFFFFFF)
-            .tracker(64, 3, true).build();
+    public static final EntityEntry PIXIE = EntityEntryBuilder.create().entity(EntityPixie.class).id(Constants.loc("pixie"), ID++).name(Constants.name("pixie"))
+            .egg(0x68C0FF, 0xF3621F).tracker(64, 3, true).build();
     
     
     @SubscribeEvent

@@ -96,3 +96,5 @@ splash_potion.effect.glowing=Splash Potion of Glowing
 splash_potion.effect.longer_glowing=Splash Potion of Glowing
 lingering_potion.effect.glowing=Lingering Potion of Glowing
 lingering_potion.effect.longer_glowing=Lingering Potion of Glowing
+
+entity.fbiomes.pixie.name=Pixie

@@ -23,7 +23,7 @@ public class EntityPixie extends EntityLiving {
         super(world);
         moveHelper = new FlyingMoveControl(this);
         setSize(0.25f, 0.25f);
-        setVariant((byte)rand.nextInt(1));
+        setVariant((byte)rand.nextInt(3));
     }
     
     @Override
