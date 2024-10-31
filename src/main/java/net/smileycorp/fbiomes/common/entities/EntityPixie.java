@@ -2,6 +2,7 @@ package net.smileycorp.fbiomes.common.entities;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.client.renderer.EntityRenderer;
 import net.minecraft.entity.EntityLiving;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAISwimming;
@@ -22,7 +23,7 @@ public class EntityPixie extends EntityLiving {
     public EntityPixie(World world) {
         super(world);
         moveHelper = new FlyingMoveControl(this);
-        setSize(0.25f, 0.25f);
+        setSize(0.5f, 0.5f);
         setVariant((byte)rand.nextInt(3));
     }
     
@@ -61,6 +62,11 @@ public class EntityPixie extends EntityLiving {
     @Override
     public boolean hasNoGravity() {
         return true;
+    }
+    
+    @Override
+    public float getEyeHeight() {
+        return 0.25f;
     }
     
     public void setVariant(byte variant) {
