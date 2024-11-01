@@ -7,7 +7,8 @@ item.fbiomes.mithril_dust.name=Mithril Dust
 item.fbiomes.starsilver_nugget.name=Starsilver Nugget
 item.fbiomes.starsilver_ingot.name=Starsilver Ingot
 item.fbiomes.starsilver_dust.name=Starsilver Dust
-item.fbiomse.elderwood_boat.name=Elderwood Boat
+item.fbiomes.elderwood_boat.name=Elderwood Boat
+item.fbiomes.elderwood_door.name=Elderwood Door
 
 tile.fbiomes.mud.name=Mud
 tile.fbiomes.peat.name=Peat
