@@ -12,8 +12,12 @@ import net.smileycorp.atlas.api.block.wood.BlockBaseSapling;
 import net.smileycorp.atlas.api.block.wood.WoodBlock;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumGlowshroomVariant;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumVanillaWoodType;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
+import net.smileycorp.fbiomes.common.blocks.enums.MushroomVariant;
+import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenBigFBMushroom;
+import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenBigGlowshroom;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -31,14 +35,14 @@ public class FBiomesBlocks {
 	//Decorations
 	//public static Block FLOWER;
 	
-	public static BlockFBMushroom TOADSTOOL = new BlockFBMushroom("Toadstool", 0.1F);
-	public static BlockFBMushroom PURPLE_SHROOM = new BlockFBMushroom("Purple_Mushroom", 0.1F);
-	public static BlockFBMushroom GREEN_SHROOM = new BlockFBMushroom("Green_Mushroom", 0.1F);
-	public static BlockFBMushroom BLUE_GLOWSHROOM = new BlockFBMushroom("Blue_Glowshroom", 0.7F);
-	public static BlockFBMushroom GREEN_GLOWSHROOM = new BlockFBMushroom("Green_Glowshroom", 0.7F);
-	public static BlockFBMushroom ORANGE_GLOWSHROOM = new BlockFBMushroom("Orange_Glowshroom", 0.7F);
-	public static BlockFBMushroom PINK_GLOWSHROOM = new BlockFBMushroom("Pink_Glowshroom", 0.7F);
-	public static BlockFBMushroom PURPLE_GLOWSHROOM = new BlockFBMushroom("Purple_Glowshroom", 0.7F);
+	public static BlockFBMushroom TOADSTOOL = new BlockFBMushroom("Toadstool", 0.1F, null);
+	public static BlockFBMushroom PURPLE_SHROOM = new BlockFBMushroom("Purple_Mushroom", 0.1F, () -> new WorldGenBigFBMushroom(MushroomVariant.PURPLE));
+	public static BlockFBMushroom GREEN_SHROOM = new BlockFBMushroom("Green_Mushroom", 0.1f, () -> new WorldGenBigFBMushroom(MushroomVariant.GREEN));
+	public static BlockFBMushroom BLUE_GLOWSHROOM = new BlockFBMushroom("Blue_Glowshroom", 0.7F, () -> new WorldGenBigGlowshroom(EnumGlowshroomVariant.BLUE));
+	public static BlockFBMushroom GREEN_GLOWSHROOM = new BlockFBMushroom("Green_Glowshroom", 0.7F, () -> new WorldGenBigGlowshroom(EnumGlowshroomVariant.GREEN));
+	public static BlockFBMushroom ORANGE_GLOWSHROOM = new BlockFBMushroom("Orange_Glowshroom", 0.7F, () -> new WorldGenBigGlowshroom(EnumGlowshroomVariant.ORANGE));
+	public static BlockFBMushroom PINK_GLOWSHROOM = new BlockFBMushroom("Pink_Glowshroom", 0.7F, () -> new WorldGenBigGlowshroom(EnumGlowshroomVariant.PINK));
+	public static BlockFBMushroom PURPLE_GLOWSHROOM = new BlockFBMushroom("Purple_Glowshroom", 0.7F, () -> new WorldGenBigGlowshroom(EnumGlowshroomVariant.PURPLE));
 	public static Block BIG_SHROOM = new BlockBigMushroom();
 	public static Block BIG_GLOWSHROOM = new BlockBigGlowshroom();
 	public static Block LOOSE_ROCK = new BlockLooseRock();

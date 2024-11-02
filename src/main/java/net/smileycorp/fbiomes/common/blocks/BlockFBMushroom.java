@@ -1,9 +1,6 @@
 package net.smileycorp.fbiomes.common.blocks;
 
-import net.minecraft.block.Block;
-import net.minecraft.block.BlockBush;
-import net.minecraft.block.BlockLog;
-import net.minecraft.block.SoundType;
+import net.minecraft.block.*;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -22,12 +19,17 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
+import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenBigFBMushroomBase;
 
-public class BlockFBMushroom extends BlockBush implements BlockProperties {
+import java.util.Random;
+import java.util.function.Supplier;
+
+public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProperties {
 	
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", dir -> dir != EnumFacing.DOWN);
+	private final Supplier<WorldGenBigFBMushroomBase> bigShroom;
 	
-	public BlockFBMushroom(String name, float light) {
+	public BlockFBMushroom(String name, float light, Supplier<WorldGenBigFBMushroomBase> bigShroom) {
 		super(Material.PLANTS);
 		setLightLevel(light);
 		setCreativeTab(FantasyBiomes.TAB);
@@ -35,6 +37,7 @@ public class BlockFBMushroom extends BlockBush implements BlockProperties {
 		setUnlocalizedName(Constants.name(name));
 		setRegistryName(Constants.loc(name.toLowerCase()));
 		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
+		this.bigShroom = bigShroom;
 	}
 	
 	@Override
@@ -87,16 +90,17 @@ public class BlockFBMushroom extends BlockBush implements BlockProperties {
         IBlockState soil = world.getBlockState(pos.down());
         for (EnumFacing facing : FACING.getAllowedValues()) {
         	IBlockState state = world.getBlockState(pos.offset(facing.getOpposite()));
-        	if (state.isFullCube()&&(state.getBlock() instanceof BlockLog || state.getMaterial() == Material.GROUND || state.getMaterial() == Material.GRASS)) return true;
+        	if (state.isFullCube()&&(state.getBlock() instanceof BlockLog || state.getMaterial() == Material.GROUND
+					|| state.getMaterial() == Material.GRASS)) return true;
         }
-        return soil.isFullBlock() && (soil.getMaterial()==Material.GRASS || soil.getMaterial()==Material.GROUND);
+        return soil.isFullBlock() && (soil.getMaterial() == Material.GRASS || soil.getMaterial() == Material.GROUND);
     }
 	
 	@Override
 	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
 		IBlockState soil = world.getBlockState(pos.down());
         if (state.getBlock() == this) return canPlaceBlockAt(world, pos);
-        return soil.isFullBlock() && (soil.getMaterial()==Material.GRASS || soil.getMaterial()==Material.GROUND);
+        return soil.isFullBlock() && (soil.getMaterial() == Material.GRASS || soil.getMaterial() == Material.GROUND);
     }
 	 
 	@Override
@@ -107,5 +111,21 @@ public class BlockFBMushroom extends BlockBush implements BlockProperties {
 		if (!(facing == EnumFacing.UP && (soil.isFullBlock() && (soil.getMaterial() == Material.GRASS || soil.getMaterial() == Material.GROUND))))
 			if (world instanceof World) ((World) world).setBlockToAir(pos);
 	 }
-
+	
+	@Override
+	public boolean canGrow(World world, BlockPos blockPos, IBlockState iBlockState, boolean b) {
+		return false;
+	}
+	
+	@Override
+	public boolean canUseBonemeal(World world, Random rand, BlockPos blockPos, IBlockState state) {
+		return bigShroom != null && state.getValue(FACING) == EnumFacing.UP && rand.nextFloat() < 0.4;
+	}
+	
+	@Override
+	public void grow(World world, Random random, BlockPos pos, IBlockState state) {
+		world.setBlockToAir(pos);
+		if (bigShroom != null) if (!bigShroom.get().generate(world, world.rand, pos)) world.setBlockState(pos, state, 2);
+	}
+	
 }

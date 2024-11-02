@@ -19,19 +19,19 @@ import net.minecraft.world.World;
 import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import net.smileycorp.fbiomes.common.blocks.enums.EnumBigMushroomShape;
-import net.smileycorp.fbiomes.common.blocks.enums.EnumBigMushroomVariant;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomShape;
+import net.smileycorp.fbiomes.common.blocks.enums.MushroomVariant;
 
 import java.util.Random;
 
 public class BlockBigMushroom extends BlockBase {
 	
-	public static final PropertyEnum<EnumBigMushroomShape> SHAPE = PropertyEnum.create("shape", EnumBigMushroomShape.class);
-	public static final PropertyEnum<EnumBigMushroomVariant> VARIANT = PropertyEnum.create("variant", EnumBigMushroomVariant.class);
+	public static final PropertyEnum<EnumMushroomShape> SHAPE = PropertyEnum.create("shape", EnumMushroomShape.class);
+	public static final PropertyEnum<MushroomVariant> VARIANT = PropertyEnum.create("variant", MushroomVariant.class);
 	
 	public BlockBigMushroom() {
 		this("Big_Mushroom");
-		setDefaultState(blockState.getBaseState().withProperty(SHAPE, EnumBigMushroomShape.CAP).withProperty(VARIANT, EnumBigMushroomVariant.GREEN));
+		setDefaultState(blockState.getBaseState().withProperty(SHAPE, EnumMushroomShape.CAP).withProperty(VARIANT, MushroomVariant.GREEN));
 	}
 	
 	public BlockBigMushroom(String name) {
@@ -52,8 +52,8 @@ public class BlockBigMushroom extends BlockBase {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(VARIANT, EnumBigMushroomVariant.values()[(meta-(meta % 3)) / 3])
-				.withProperty(SHAPE, EnumBigMushroomShape.values()[meta % 3]);
+		return getDefaultState().withProperty(VARIANT, MushroomVariant.values()[(meta-(meta % 3)) / 3])
+				.withProperty(SHAPE, EnumMushroomShape.values()[meta % 3]);
 	}
 	
 	@Override

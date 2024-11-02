@@ -2,7 +2,7 @@ package net.smileycorp.fbiomes.common.blocks.enums;
 
 import net.minecraft.util.IStringSerializable;
 
-public enum EnumBigMushroomShape implements IStringSerializable {
+public enum EnumMushroomShape implements IStringSerializable {
     CAP("cap"),
     STEM("stem"),
     SPOT("spot");
@@ -10,7 +10,7 @@ public enum EnumBigMushroomShape implements IStringSerializable {
     final String name;
     final int meta;
     
-    EnumBigMushroomShape(String name) {
+    EnumMushroomShape(String name) {
         this.name = name;
         this.meta = this.ordinal();
     }

@@ -7,19 +7,19 @@ import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
-import net.smileycorp.fbiomes.common.blocks.enums.EnumBigMushroomShape;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumGlowshroomVariant;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomShape;
 
 import java.util.Random;
 
 public class BlockBigGlowshroom extends BlockBigMushroom {
 	
 	public static final PropertyEnum<EnumGlowshroomVariant> VARIANT = PropertyEnum.create("variant", EnumGlowshroomVariant.class);
-	public static final PropertyEnum<EnumBigMushroomShape> SHAPE = PropertyEnum.create("shape", EnumBigMushroomShape.class, EnumBigMushroomShape.CAP, EnumBigMushroomShape.STEM);
+	public static final PropertyEnum<EnumMushroomShape> SHAPE = PropertyEnum.create("shape", EnumMushroomShape.class, EnumMushroomShape.CAP, EnumMushroomShape.STEM);
 	
 	public BlockBigGlowshroom() {
 		super("Big_Glowshroom");
-		setDefaultState(blockState.getBaseState().withProperty(SHAPE, EnumBigMushroomShape.CAP).withProperty(VARIANT, EnumGlowshroomVariant.BLUE));
+		setDefaultState(blockState.getBaseState().withProperty(SHAPE, EnumMushroomShape.CAP).withProperty(VARIANT, EnumGlowshroomVariant.BLUE));
 	}
 	
 	@Override
@@ -30,7 +30,7 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
 		return getDefaultState().withProperty(VARIANT, EnumGlowshroomVariant.values()[(meta - (meta % 2)) / 2])
-				.withProperty(SHAPE, EnumBigMushroomShape.values()[meta % 2]);
+				.withProperty(SHAPE, EnumMushroomShape.values()[meta % 2]);
 	}
 	
 	@Override
@@ -55,7 +55,7 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	
 	@Override
 	public int getLightValue(IBlockState state) {
-		return state.getValue(SHAPE) == EnumBigMushroomShape.CAP ? 15 : 5;
+		return state.getValue(SHAPE) == EnumMushroomShape.CAP ? 15 : 5;
 	}
 	
 	@Override
