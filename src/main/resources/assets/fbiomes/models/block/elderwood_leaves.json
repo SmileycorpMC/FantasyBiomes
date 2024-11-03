@@ -1,6 +1,33 @@
 {
   "parent": "minecraft:block/leaves",
   "textures": {
-    "all": "fbiomes:blocks/elderwood_leaves"
-  }
+    "all": "fbiomes:blocks/elderwood_leaves",
+	"inner": "fbiomes:blocks/elderwood_leaves_inner"
+  },
+  "elements": [
+		{
+			"from": [0, 0, 0],
+			"to": [16, 16, 16],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#all"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#all"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#all"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#all"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#all"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#all"}
+			}
+		},
+		{
+			"from": [0.05, 0.05, 0.05],
+			"to": [15.05, 15.05, 15.05],
+			"faces": {
+				"north": {"uv": [0, 0, 16, 16], "texture": "#inner"},
+				"east": {"uv": [0, 0, 16, 16], "texture": "#inner"},
+				"south": {"uv": [0, 0, 16, 16], "texture": "#inner"},
+				"west": {"uv": [0, 0, 16, 16], "texture": "#inner"},
+				"up": {"uv": [0, 0, 16, 16], "texture": "#inner"},
+				"down": {"uv": [0, 0, 16, 16], "texture": "#inner"}
+			}
+		}
+	]
 }

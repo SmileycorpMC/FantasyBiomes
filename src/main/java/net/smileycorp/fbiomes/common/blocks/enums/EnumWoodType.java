@@ -75,4 +75,9 @@ public enum EnumWoodType implements WoodEnum {
         return name;
     }
     
+    @Override
+    public boolean solidLeaves() {
+        return this == ELDERWOOD;
+    }
+    
 }
