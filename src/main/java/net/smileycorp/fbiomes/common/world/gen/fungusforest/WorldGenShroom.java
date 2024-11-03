@@ -2,6 +2,7 @@ package net.smileycorp.fbiomes.common.world.gen.fungusforest;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -12,37 +13,23 @@ import java.util.Random;
 
 public class WorldGenShroom extends WorldGenerator {
 	
-	Block shroom;
-	
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
-		//boolean flag = false;
-	 	for (int i = 0; i < 16; ++i) {
-	 		getNextShroom(rand);
-            BlockPos newpos = pos.add(rand.nextInt(8) - rand.nextInt(8), rand.nextInt(4) - rand.nextInt(4), rand.nextInt(8) - rand.nextInt(8));
-
-            if ((world.getBlockState(newpos.down()).getMaterial()==Material.GRASS || world.getBlockState(newpos.down()).getMaterial()==Material.GROUND)
-            		&& world.isAirBlock(newpos) && (!world.provider.isNether() || newpos.getY() < 255)) {
-            	//IBlockState state;
-        		world.setBlockState(newpos, shroom.getDefaultState(), 18);
-            }
-       }
-
-        return true;
+	 	for (int i = 0; i < rand.nextInt(7) + 3; ++i) {
+            BlockPos newpos = pos.add(rand.nextInt(8) - rand.nextInt(8),
+					rand.nextInt(3) - rand.nextInt(3), rand.nextInt(8) - rand.nextInt(8));
+			IBlockState soil = world.getBlockState(newpos.down());
+            if ((soil.getMaterial() == Material.GRASS || soil.getMaterial() == Material.GROUND) && soil.isFullBlock() &&
+				world.isAirBlock(newpos) && (!world.provider.isNether() || newpos.getY() < world.getHeight()))
+            	setBlockAndNotifyAdequately(world, newpos, getRandomShroom(rand).getDefaultState());
+       	}
+	 	return true;
 	}
 
-	private void getNextShroom(Random rand) {
-		switch (rand.nextInt(3)) {
-		case 0:
-			shroom = FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)];
-			break;
-		case 1:
-			shroom = FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)];
-			break;
-		default:
-			shroom = rand.nextInt(2)==1 ? Blocks.RED_MUSHROOM : Blocks.BROWN_MUSHROOM;
-			break;
-		}
+	private Block getRandomShroom(Random rand) {
+		return rand.nextFloat() < 0.2 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)] :
+			rand.nextBoolean() ? FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)] :
+					rand.nextBoolean() ? Blocks.RED_MUSHROOM : Blocks.BROWN_MUSHROOM;
 	}
 
 }

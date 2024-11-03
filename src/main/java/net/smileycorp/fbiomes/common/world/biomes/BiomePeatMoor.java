@@ -27,11 +27,11 @@ import net.smileycorp.fbiomes.common.world.gen.features.WorldGenStoneCircle;
 
 import java.util.Random;
 
-public class BiomeMoorland extends Biome {
+public class BiomePeatMoor extends Biome {
 	
 	WorldGenStoneCircle circle = new WorldGenStoneCircle();
 
-	public BiomeMoorland() {
+	public BiomePeatMoor() {
 		super(new BiomeProperties("Moorland").setBaseHeight(1.1F).setHeightVariation(0.5F));
 		topBlock = Blocks.GRASS.getDefaultState();
 		fillerBlock = Blocks.DIRT.getDefaultState();

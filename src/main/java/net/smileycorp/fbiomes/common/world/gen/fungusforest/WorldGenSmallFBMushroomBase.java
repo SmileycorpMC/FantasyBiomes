@@ -1,12 +1,11 @@
 package net.smileycorp.fbiomes.common.world.gen.fungusforest;
 
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
-import net.minecraftforge.common.IPlantable;
+import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 
 import java.util.Random;
 
@@ -14,37 +13,21 @@ public abstract class WorldGenSmallFBMushroomBase extends WorldGenerator {
 	
 	protected IBlockState stem;
 	protected IBlockState cap;
-	protected EnumFacing facing;
 	
 	public WorldGenSmallFBMushroomBase(Random rand) {
 		pickType(rand);
 	}
 	
-	public WorldGenSmallFBMushroomBase(Random rand, EnumFacing facing) {
-		pickType(rand);
-	}
-	
 	public WorldGenSmallFBMushroomBase(IBlockState stem, IBlockState cap) {
-		this.stem=stem;
-		this.cap=cap;
+		this.stem = stem;
+		this.cap = cap;
 	}
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
-		int height;
-		if (facing==null) {
-			IBlockState soil = world.getBlockState(pos.down());
-			if (!soil.getBlock().canSustainPlant(soil, world, pos, EnumFacing.UP, (IPlantable) Blocks.SAPLING)) {
-				return false;
-			}
-			height = rand.nextInt(3)+ 2;
-		} else {
-			height = rand.nextInt(1)+ 2;
-			placeStem(world, rand, pos, pos, height);
-			placeStem(world, rand, pos, pos.offset(facing), height);
-			placeStem(world, rand, pos, pos.offset(facing).up(), height);
-			pos = pos.offset(facing, 2).up();
-		}
+		int height = rand.nextInt(3) + 2;
+		IBlockState soil = world.getBlockState(pos.down());
+		if (!soil.getBlock().canSustainPlant(soil, world, pos, EnumFacing.UP, FBiomesBlocks.TOADSTOOL)) return false;
 		
 		for (int j = 0; j<height+2; j++) {
 			IBlockState state = world.getBlockState(pos.up(j));

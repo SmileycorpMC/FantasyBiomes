@@ -22,19 +22,19 @@ public class FantasyBiomes {
 	 };
 	 
 	 @EventHandler
-	 public void preInit(FMLPreInitializationEvent event){
-	 	FBiomesConfig.config = new Configuration(event.getSuggestedConfigurationFile());
-	 	FBiomesConfig.syncConfig();
+	 public void preInit(FMLPreInitializationEvent event) {
+		FBiomesConfig.config = new Configuration(event.getSuggestedConfigurationFile());
+		FBiomesConfig.syncConfig();
+		FBiomes.init();
 	 }
 	 
 	 @EventHandler
-	 public void init(FMLInitializationEvent event){
-		 FBiomes.init();
+	 public void init(FMLInitializationEvent event) {
 		 //ItemRegistry.registerLateItems();
 		 RecipesRegistry.registerLateRegistry();
 	 }
 	 
 	@EventHandler
-	 public void postInit(FMLPostInitializationEvent event){
-	 }
+	public void postInit(FMLPostInitializationEvent event) {}
+	
 }
