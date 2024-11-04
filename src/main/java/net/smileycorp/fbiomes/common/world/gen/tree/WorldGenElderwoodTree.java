@@ -1,14 +1,13 @@
 package net.smileycorp.fbiomes.common.world.gen.tree;
 
-import net.minecraft.block.BlockBush;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockSapling;
-import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.smileycorp.atlas.api.util.DirectionUtils;
@@ -16,17 +15,16 @@ import net.smileycorp.fbiomes.common.blocks.BlockFBMushroom;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 	
-	final boolean natural;
-	IBlockState wood = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ELDERWOOD, BlockLog.EnumAxis.Y);
-	IBlockState bark = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ELDERWOOD, BlockLog.EnumAxis.NONE);
-	IBlockState leaves = FBiomesBlocks.WOOD.getLeavesState(EnumWoodType.ELDERWOOD);
-	IBlockState roots = FBiomesBlocks.ROOTS.getDefaultState();
+	protected static final IBlockState LOG = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ELDERWOOD, BlockLog.EnumAxis.Y);
+	protected static final IBlockState BARK = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ELDERWOOD, BlockLog.EnumAxis.NONE);
+	protected static final IBlockState LEAVES = FBiomesBlocks.WOOD.getLeavesState(EnumWoodType.ELDERWOOD)
+			.withProperty(BlockLeaves.DECAYABLE, true).withProperty(BlockLeaves.CHECK_DECAY, false);
+	
+	protected final boolean natural;
 	
 	public WorldGenElderwoodTree(boolean notify, boolean natural) {
 		super(notify);
@@ -36,217 +34,47 @@ public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 	public boolean canGenerate(World world, BlockPos pos) {
 		BlockPos ground = pos.down();
 		IBlockState soil = world.getBlockState(ground);
-		if (!soil.getBlock().canSustainPlant(soil, world, ground, EnumFacing.UP, (BlockSapling) Blocks.SAPLING)) return false;
-		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
-			BlockPos off = pos.offset(facing);
-			if (!world.isBlockFullCube(off.down())) return false;
-			for (int i = 0; i < 5; i++) {
-				BlockPos pos1 = off.up(i);
-				if (!world.isAirBlock(pos1) &! (world.getBlockState(pos1).getBlock() instanceof BlockLeaves)) return false;
-			}
-		}
-		return true;
+		return soil.getBlock().canSustainPlant(soil, world, ground, EnumFacing.UP, (BlockSapling) Blocks.SAPLING);
 	}
 	
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		if (!natural &! canGenerate(world, pos)) return false;
-		BlockPos ground = pos.down();
-		int h = rand.nextInt(5) + 13;
+		int h = rand.nextInt(5) + 16;
 		//trunk
-		for (int j = 0; j<=h; j++) setBlock(world, rand, ground, pos.up(j), wood, h);
+		for (int i = 0; i < h; i++) setBlock(world, rand, pos.up(i), LOG);
 		//roots
-		for (int r = 0; r <4; r++) {
-			BlockPos rpos = pos;
-			switch (r) {
-				case 0:
-					rpos=pos.north(1);
-					break;
-				case 1:
-					rpos=pos.south(1);
-					break;
-				case 2:
-					rpos=pos.east(1);
-					break;
-				case 3:
-					rpos=pos.west(1);
-					break;
-			}
-			int rh = rand.nextInt(2)+2;
-			if (rh==3) {
-				for (int k = -1; k<2; k++){
-					for (int i = -1; i<2; i++){
-						if (Math.abs(i*k)==0) {
-							BlockPos rhpos = rpos.north(k).west(i);
-							setBlock(world, rand, ground, rhpos, bark, h);
-							IBlockState rstate = world.getBlockState(rhpos.down());
-							if (rstate==Blocks.AIR||rstate instanceof BlockBush) world.setBlockState(rhpos.down(), bark, 18);
-							if (natural &&(rstate.getMaterial()==Material.GRASS||rstate.getMaterial()==Material.GROUND)) tryGenRoots(world, rand, rhpos.down());
-						}
-					}
-				}
-			}
-			for (int j = 0; j<rh; j++){
-				setBlock(world, rand, ground, rpos.up(j), bark, h);
-			}
-		}
-		
+		for (int i = 0; i < 4; i++) generateRoot(world, rand, pos, DirectionUtils.getXZDirection(i));
 		//branches
-		List<Integer> skips = new ArrayList<Integer>();
-		for(int s = 0; s < rand.nextInt(4); s++) {
-			skips.add(rand.nextInt(8));
-		}
-		for (int b = 0; b < 8; b++) {
-			if (skips.contains(b)) continue;
-			int h2 = h + rand.nextInt(3) - 2;
-			int o = 0;
-			int t = rand.nextInt(3) + 6;
-			BlockPos bpos = pos.up(h2);
-			int f = 1;
-			switch (b) {
-				//north
-				case 0:
-					for (int n = 0; n < t; n++) {
-						bpos = bpos.north(f).west(o);
-						if (rand.nextInt(t) < Math.floor(t / 3)) {
-							bpos = bpos.up(1);
-						}
-						world.setBlockState(bpos, bark, 18);
-						generateBranches(world, bpos, n, t);
-						if (n > 2) {
-							o = rand.nextInt(3) - 1;
-							f = rand.nextInt(t - n) - n;
-							if (f > 1) f = 1;
-						}
-					}
-					break;
-				//south
-				case 1:
-					for (int n = 0; n < t; n++) {
-						bpos = bpos.south(f).west(o);
-						if (rand.nextInt(t) < Math.floor(t / 3)) {
-							bpos = bpos.up(1);
-						}
-						world.setBlockState(bpos, bark, 18);
-						generateBranches(world, bpos, n, t);
-						if (n > 2) {
-							o = rand.nextInt(3) - 1;
-							f = rand.nextInt(t - n) - n;
-							if (f > 1) f = 1;
-						}
-					}
-					break;
-				//west
-				case 2:
-					for (int n = 0; n < t; n++) {
-						bpos = bpos.west(f).north(o);
-						if (rand.nextInt(t) < Math.floor(t / 3)) {
-							bpos = bpos.up(1);
-						}
-						generateBranches(world, bpos, n, t);
-						if (n > 2) {
-							o = rand.nextInt(3) - 1;
-							f = rand.nextInt(t - n) - n;
-							if (f > 1) f = 1;
-						}
-					}
-					break;
-				//east
-				case 3:
-					for (int n = 0; n < t; n++) {
-						bpos = bpos.east(f).north(o);
-						if (rand.nextInt(t) < Math.floor(t / 3)) {
-							bpos = bpos.up(1);
-						}
-						generateBranches(world, bpos, n, t);
-						if (n > 2) {
-							o = rand.nextInt(3) - 1;
-							f = rand.nextInt(t - n) - n;
-							if (f > 1) f = 1;
-						}
-					}
-					break;
-				
-				//neast
-				case 4:
-					for (int n = 0; n < t; n++) {
-						bpos = bpos.east((f + o) % 2).north(Math.abs((f - o) % 2));
-						if (rand.nextInt(t) < Math.floor(t / 3)) {
-							bpos = bpos.up(1);
-						}
-						generateBranches(world, bpos, n, t);
-						if (n > 2) {
-							o = rand.nextInt(3) - 1;
-							f = rand.nextInt(t - n) - n;
-							if (f > 1) f = 1;
-						}
-					}
-					break;
-				
-				//nwest
-				case 5:
-					for (int n = 0; n < t; n++) {
-						bpos = bpos.west((f + o) % 2).north(Math.abs((f - o) % 2));
-						if (rand.nextInt(t) < Math.floor(t / 3)) {
-							bpos = bpos.up(1);
-						}
-						generateBranches(world, bpos, n, t);
-						if (n > 2) {
-							o = rand.nextInt(3) - 1;
-							f = rand.nextInt(t - n) - n;
-							if (f > 1) f = 1;
-						}
-					}
-					break;
-				
-				//seast
-				case 6:
-					for (int n = 0; n < t; n++) {
-						bpos = bpos.east((f + o) % 2).south(Math.abs((f - o) % 2));
-						if (rand.nextInt(t) < Math.floor(t / 3)) {
-							bpos = bpos.up(1);
-						}
-						generateBranches(world, bpos, n, t);
-						if (n > 2) {
-							o = rand.nextInt(3) - 1;
-							f = rand.nextInt(t - n) - n;
-							if (f > 1) f = 1;
-						}
-					}
-					break;
-				
-				//swest
-				case 7:
-					for (int n = 0; n < t; n++) {
-						bpos = bpos.west((f + o) % 2).south(Math.abs((f - o) % 2));
-						if (rand.nextInt(t) < Math.floor(t / 3)) {
-							bpos = bpos.up(1);
-						}
-						generateBranches(world, bpos, n, t);
-						if (n > 2) {
-							o = rand.nextInt(3) - 1;
-							f = rand.nextInt(t - n) - n;
-							if (f > 1) f = 1;
-						}
-					}
-					break;
-			}
-		}
+		setBlockAndNotifyAdequately(world, pos.up(h), BARK);
+		for (int i = 0; i < rand.nextInt(4) + 5; i++) generateBranch(world, rand, new BlockPos.MutableBlockPos(pos.up(h)), rand.nextInt(4) + 6);
 		return true;
 	}
 
-	private void tryGenRoots(World world, Random rand, BlockPos soil) {
-		BlockPos pos = soil.down();
-		if (world.isAirBlock(pos)&&rand.nextInt(3)==1){
-			int length = rand.nextInt(3);
-			for (int j = 0; j<length; j++) {
-				if (world.isAirBlock(pos.down(j))) setBlockAndNotifyAdequately(world, pos, roots);
-				else break;
+	public void generateRoot(World world, Random rand, BlockPos pos, EnumFacing dir) {
+		BlockPos root = pos.offset(dir);
+		setBlock(world, rand, root, BARK);
+		setBlock(world, rand, root.up(), BARK);
+		int i = 1;
+		while (world.isAirBlock(root.down(i))) {
+			setBlock(world, rand, root.down(i), BARK);
+			i++;
+		}
+		//randomly spawn big roots
+		if (rand.nextBoolean()) {
+			setBlock(world, rand, root.up(2), BARK);
+			for (EnumFacing dir1 : EnumFacing.HORIZONTALS) if (dir1 != dir.getOpposite()) {
+				setBlock(world, rand, root.offset(dir1), BARK);
+				i = 1;
+				while (world.isAirBlock(root.offset(dir1).down(i))) {
+					setBlock(world, rand, root.offset(dir1).down(i), BARK);
+					i++;
+				}
 			}
 		}
 	}
 
-	private void setBlock(World world, Random rand, BlockPos ground, BlockPos pos, IBlockState state, int height) {
+	private void setBlock(World world, Random rand, BlockPos pos, IBlockState state) {
 		setBlockAndNotifyAdequately(world, pos, state);
 		if (natural && rand.nextFloat() < 0.1775) {
 			EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
@@ -257,25 +85,26 @@ public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 		}
 	}
 
-	private void generateBranches(World world, BlockPos pos, int n, int t) {
-		world.setBlockState(pos, bark, 18);
-		//if (n > t-3) {
-			generateLeaves(world, pos, 3);
-		//}
+	public void generateBranch(World world, Random rand, BlockPos pos, int length) {
+		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
+		Vec3d dir = DirectionUtils.getRandomDirectionVecXZ(rand).addVector(0, 0.1, 0);
+		Vec3d bpos = DirectionUtils.centerOf(pos);
+		for (int i = 0; i < length; i++) {
+			bpos = bpos.add(dir.normalize());
+			mutable.setPos(bpos.x, bpos.y, bpos.z);
+			if (world.isAirBlock(mutable)) setBlockAndNotifyAdequately(world, mutable, BARK);
+			generateLeaves(world, mutable, i < 2 ? 5 : i < 5 ? 4 : 3);
+			dir = dir.addVector(0.5 * (rand.nextFloat() - 0.5), 0.5 * (rand.nextFloat() - 0.5), 0.5 * (rand.nextFloat() - 0.5));
+		}
 	}
 	
 	private void generateLeaves(World world, BlockPos pos, int r) {
-		for (int i = -r; i<=r; i++){
-			for (int j = -r; j<=r; j++){
-				for (int k = -r; k<=r; k++){
-					if (((i*i)+(j*j)+(k*k))<(r*r)){
-						BlockPos newpos = pos.north(i).up(j).east(k);
-						if (world.isAirBlock(newpos) || world.getBlockState(newpos).getBlock() instanceof BlockFBMushroom) {
-							setBlockAndNotifyAdequately(world, newpos, leaves);
-						}
-					}
-				}
-			}
+		for (int i = -r; i <= r; i++) for (int j = -r; j<=r; j++) for (int k = -r; k<=r; k++) {
+			if (i * i + j * j + k * k >= r * r) continue;
+			BlockPos newpos = pos.north(i).up(j).east(k);
+			if (!world.isAirBlock(newpos) & !(world.getBlockState(newpos).getBlock() instanceof BlockFBMushroom)) continue;
+			setBlockAndNotifyAdequately(world, newpos, LEAVES);
 		}
-	}	
+	}
+	
 }	
