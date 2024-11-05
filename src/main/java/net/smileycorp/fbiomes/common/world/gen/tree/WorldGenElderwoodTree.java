@@ -2,7 +2,6 @@ package net.smileycorp.fbiomes.common.world.gen.tree;
 
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
-import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -13,6 +12,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.fbiomes.common.blocks.BlockFBMushroom;
+import net.smileycorp.fbiomes.common.blocks.BlockLichen;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
 
@@ -45,7 +45,7 @@ public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 		//trunk
 		for (int i = 0; i < h; i++) setBlock(world, rand, pos.up(i), LOG);
 		EnumFacing stump = DirectionUtils.getRandomDirectionXZ(rand);
-		setBlock(world, rand, pos.up(rand.nextInt(3) + 7).offset(stump),
+		setBlockAndNotifyAdequately(world, pos.up(rand.nextInt(3) + 7).offset(stump),
 				FBiomesBlocks.WOOD.getLogState(EnumWoodType.ELDERWOOD, BlockLog.EnumAxis.fromFacingAxis(stump.getAxis())));
 		//roots
 		for (int i = 0; i < 4; i++) generateRoot(world, rand, pos, DirectionUtils.getXZDirection(i));
@@ -80,10 +80,13 @@ public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 
 	private void setBlock(World world, Random rand, BlockPos pos, IBlockState state) {
 		setBlockAndNotifyAdequately(world, pos, state);
-		if (natural && rand.nextFloat() < 0.1775) {
+		if (!natural) return;
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) if (rand.nextBoolean() && world.isAirBlock(pos.offset(facing)))
+			setBlockAndNotifyAdequately(world, pos.offset(facing), FBiomesBlocks.LICHEN.getDefaultState().withProperty(BlockLichen.FACING, facing));
+		if (rand.nextFloat() < 0.1775) {
 			EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
 			BlockPos facePos = pos.offset(facing);
-			IBlockState shroom = (rand.nextFloat() < 0.2 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
+			IBlockState shroom = (rand.nextFloat() < 0.4 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
 				FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)]).getDefaultState();
 			if (world.isAirBlock(facePos)) setBlockAndNotifyAdequately(world, facePos, shroom.withProperty(BlockFBMushroom.FACING, facing));
 		}
@@ -106,7 +109,8 @@ public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 		for (int i = -r; i <= r; i++) for (int j = -r; j <= r; j++) for (int k = -r; k <= r; k++) {
 			if (i * i + j * j + k * k >= r * r) continue;
 			BlockPos newpos = pos.north(i).up(j).east(k);
-			if (!world.isAirBlock(newpos) &! (world.getBlockState(newpos).getBlock() instanceof BlockFBMushroom)) continue;
+			IBlockState state = world.getBlockState(newpos);
+			if (!state.getBlock().canBeReplacedByLeaves(state, world, newpos)) continue;
 			setBlockAndNotifyAdequately(world, newpos, LEAVES);
 		}
 	}

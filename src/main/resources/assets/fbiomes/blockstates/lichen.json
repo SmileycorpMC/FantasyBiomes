@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=west": {
+      "model": "fbiomes:lichen",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "fbiomes:lichen"
+    },
+    "facing=north": {
+      "model": "fbiomes:lichen",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "fbiomes:lichen",
+      "y": 270
+    },
+	"facing=up": {
+      "model": "fbiomes:lichen",
+      "x": 90
+    },
+	"facing=down": {
+      "model": "fbiomes:lichen",
+      "x": 270
+    }
+  }
+}

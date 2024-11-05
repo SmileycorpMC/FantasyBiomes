@@ -9,6 +9,7 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenBigTree;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.fbiomes.common.blocks.BlockFBMushroom;
+import net.smileycorp.fbiomes.common.blocks.BlockLichen;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumVanillaWoodType;
 
@@ -19,26 +20,27 @@ public class WorldGenBigRedOakTree extends WorldGenBigTree {
     private static final IBlockState LEAVES = FBiomesBlocks.VANILLA_LEAVES.getDefaultState()
             .withProperty(FBiomesBlocks.VANILLA_LEAVES.getVariantProperty(), EnumVanillaWoodType.RED_OAK)
             .withProperty(BlockLeaves.DECAYABLE, true).withProperty(BlockLeaves.CHECK_DECAY, false);
-    private final boolean hasMushrooms;
+    private final boolean isNatural;
     
-    public WorldGenBigRedOakTree(boolean notify, boolean hasMushrooms) {
+    public WorldGenBigRedOakTree(boolean notify, boolean isNatural) {
         super(notify);
-        this.hasMushrooms = hasMushrooms;
+        this.isNatural = isNatural;
     }
     
     @Override
     protected void setBlockAndNotifyAdequately(World world, BlockPos pos, IBlockState state) {
         if (state.getBlock() == Blocks.LEAVES) state = LEAVES;
         super.setBlockAndNotifyAdequately(world, pos, state);
-        if (hasMushrooms && state.getBlock() == Blocks.LOG) {
-            Random rand = world.rand;
-            if (rand.nextFloat() < 0.1775) {
-                EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
-                BlockPos facePos = pos.offset(facing);
-                IBlockState shroom = (rand.nextFloat() < 0.2 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
-                        FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)]).getDefaultState();
-                if (world.isAirBlock(facePos)) setBlockAndNotifyAdequately(world, facePos, shroom.withProperty(BlockFBMushroom.FACING, facing));
-            }
+        if (!isNatural || state.getBlock() != Blocks.LOG) return;
+        Random rand = world.rand;
+        for (EnumFacing facing : EnumFacing.HORIZONTALS) if (rand.nextBoolean() && world.isAirBlock(pos.offset(facing)))
+            setBlockAndNotifyAdequately(world, pos.offset(facing), FBiomesBlocks.LICHEN.getDefaultState().withProperty(BlockLichen.FACING, facing));
+        if (rand.nextFloat() < 0.1775) {
+            EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
+            BlockPos facePos = pos.offset(facing);
+            IBlockState shroom = (rand.nextFloat() < 0.4 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
+                    FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)]).getDefaultState();
+            if (world.isAirBlock(facePos)) setBlockAndNotifyAdequately(world, facePos, shroom.withProperty(BlockFBMushroom.FACING, facing));
         }
     }
 }

@@ -45,6 +45,7 @@ public class FBiomesBlocks {
 	public static BlockFBMushroom PURPLE_GLOWSHROOM = new BlockFBMushroom("Purple_Glowshroom", 0.7F, () -> new WorldGenSmallGlowshroom(EnumGlowshroomVariant.PURPLE));
 	public static Block BIG_SHROOM = new BlockBigMushroom();
 	public static Block BIG_GLOWSHROOM = new BlockBigGlowshroom();
+	public static Block LICHEN = new BlockLichen();
 	public static Block BRAMBLES = new BlockBrambleBush();
 	public static Block ROOTS = new BlockRoots();
 	//public static Block FAE_WATER;
