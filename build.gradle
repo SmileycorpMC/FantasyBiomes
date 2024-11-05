@@ -76,9 +76,8 @@ configurations {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
-	//implementation "curse.maven:atlas-463826:3816069"
+	implementation "curse.maven:atlas-463826:5877784"
     implementation "org.spongepowered:mixin:0.8"
-	implementation files("libs/Atlas-Lib-1.12.2-1.1.6.jar")
     implementation "io.github.llamalad7:mixinextras-common:0.4.1"
 }
 
