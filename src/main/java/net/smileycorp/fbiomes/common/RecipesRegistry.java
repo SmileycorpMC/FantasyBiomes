@@ -10,12 +10,10 @@ import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.FuelHandler;
 import net.smileycorp.fbiomes.common.blocks.BlockFBMushroom;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
-import net.smileycorp.fbiomes.common.items.FBiomesItems;
 import net.smileycorp.fbiomes.common.potion.FBiomesPotionTypes;
 
 import javax.annotation.Nullable;
@@ -38,13 +36,6 @@ public class RecipesRegistry {
 	}
 	
 	private static void registerOredict() {
-		if(FBiomesConfig.changedMithrilName){
-			OreDictionary.registerOre("ingotAstralSilver", FBiomesItems.MITHRIL_INGOT);
-			OreDictionary.registerOre("nuggetAstralSilver", FBiomesItems.MITHRIL_NUGGET);
-		} else {
-			OreDictionary.registerOre("ingotMithril", FBiomesItems.MITHRIL_INGOT);
-			OreDictionary.registerOre("nuggetMithril", FBiomesItems.MITHRIL_NUGGET);
-		}
 		for (BlockFBMushroom glowshroom : FBiomesBlocks.glowshrooms) OreDictionary.registerOre("glowshroom", glowshroom);
 	}
 	
@@ -97,13 +88,7 @@ public class RecipesRegistry {
 	}
 	
 	public static void registerLateRegistry() {
-		if (OreDictionary.doesOreNameExist("dustIron")){
-			GameRegistry.addSmelting(FBiomesItems.MITHRIL_DUST, new ItemStack(FBiomesItems.MITHRIL_INGOT), 0.9f);
-			if(FBiomesConfig.changedMithrilName){
-				OreDictionary.registerOre("dustAstralSilver", FBiomesItems.MITHRIL_DUST);
-			} else {
-				OreDictionary.registerOre("dustMithril", FBiomesItems.MITHRIL_DUST);
-			}
-		}
+	
 	}
+	
 }

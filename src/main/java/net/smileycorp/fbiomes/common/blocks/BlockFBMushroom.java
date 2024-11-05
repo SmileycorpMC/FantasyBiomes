@@ -19,7 +19,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenBigFBMushroomBase;
+import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenSmallFBMushroomBase;
 
 import java.util.Random;
 import java.util.function.Supplier;
@@ -27,9 +27,9 @@ import java.util.function.Supplier;
 public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProperties {
 	
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", dir -> dir != EnumFacing.DOWN);
-	private final Supplier<WorldGenBigFBMushroomBase> bigShroom;
+	private final Supplier<WorldGenSmallFBMushroomBase> bigShroom;
 	
-	public BlockFBMushroom(String name, float light, Supplier<WorldGenBigFBMushroomBase> bigShroom) {
+	public BlockFBMushroom(String name, float light, Supplier<WorldGenSmallFBMushroomBase> bigShroom) {
 		super(Material.PLANTS);
 		setLightLevel(light);
 		setCreativeTab(FantasyBiomes.TAB);
@@ -63,6 +63,11 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 		if (state.isFullBlock() && (block instanceof BlockLog || state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND)) return true;
 		for (int id : OreDictionary.getOreIDs(new ItemStack(block))) if (OreDictionary.getOreName(id).equals("stone")) return true;
 		return false;
+	}
+	
+	@Override
+	public boolean canBeReplacedByLeaves(IBlockState state, IBlockAccess world, BlockPos pos_) {
+		return true;
 	}
 
 	@Override
@@ -113,13 +118,13 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 	 }
 	
 	@Override
-	public boolean canGrow(World world, BlockPos blockPos, IBlockState iBlockState, boolean b) {
-		return false;
+	public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean remote) {
+		return bigShroom != null && state.getValue(FACING) == EnumFacing.UP;
 	}
 	
 	@Override
 	public boolean canUseBonemeal(World world, Random rand, BlockPos blockPos, IBlockState state) {
-		return bigShroom != null && state.getValue(FACING) == EnumFacing.UP && rand.nextFloat() < 0.4;
+		return rand.nextFloat() < 0.4;
 	}
 	
 	@Override

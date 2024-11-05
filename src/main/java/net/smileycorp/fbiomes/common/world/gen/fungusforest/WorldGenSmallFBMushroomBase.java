@@ -28,17 +28,14 @@ public abstract class WorldGenSmallFBMushroomBase extends WorldGenerator {
 		int height = rand.nextInt(3) + 2;
 		IBlockState soil = world.getBlockState(pos.down());
 		if (!soil.getBlock().canSustainPlant(soil, world, pos, EnumFacing.UP, FBiomesBlocks.TOADSTOOL)) return false;
-		
 		for (int j = 0; j<height+2; j++) {
 			IBlockState state = world.getBlockState(pos.up(j));
-			if (!state.getBlock().canBeReplacedByLeaves(state, world, pos)) {
-				return false;
-			}
+			if (!state.getBlock().canBeReplacedByLeaves(state, world, pos)) return false;
 		}
 		BlockPos startPos = pos;
 		//stem
 		for (int j = 0; j<height+1; j++) {
-			if(j>0)pos = pos.up();
+			if(j > 0) pos = pos.up();
 			placeStem(world, rand, startPos, pos, height);
 		}
 		//cap
@@ -47,11 +44,8 @@ public abstract class WorldGenSmallFBMushroomBase extends WorldGenerator {
 			for (int k = -2; k<6; k++) {
 				BlockPos newPos = pos.east(i).north(k);
 				double distance = pos.getDistance(newPos.getX(), newPos.getY(), newPos.getZ());
-				if (distance < 1.5) {
-					placeCap(world, rand, startPos, newPos, height);
-				} else if (distance < 2.5) {
-					placeCap(world, rand, startPos, newPos.down(), height);
-				}
+				if (distance < 1.5) placeCap(world, rand, startPos, newPos, height);
+				else if (distance < 2.5) placeCap(world, rand, startPos, newPos.down(), height);
 			}
 		}
 		return true;
@@ -59,16 +53,12 @@ public abstract class WorldGenSmallFBMushroomBase extends WorldGenerator {
 	
 	protected void placeStem(World world, Random rand, BlockPos startPos, BlockPos currentPos, int height) {
 		IBlockState state = world.getBlockState(currentPos);
-		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) {
-			world.setBlockState(currentPos, stem, 18);
-		}
+		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) world.setBlockState(currentPos, stem, 18);
 	}
 	
 	protected void placeCap(World world, Random rand, BlockPos startPos, BlockPos currentPos, int height) {
 		IBlockState state = world.getBlockState(currentPos);
-		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) {
-			world.setBlockState(currentPos, cap, 18);
-		}
+		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) world.setBlockState(currentPos, cap, 18);
 	}
 	
 	protected abstract void pickType(Random random);

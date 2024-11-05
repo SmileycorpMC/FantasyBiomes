@@ -97,15 +97,15 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, BlockPrope
         return (this == world.getBlockState(west.north()).getBlock() || this == world.getBlockState(east.north()).getBlock()
                 || this == world.getBlockState(east.south()).getBlock() || this == world.getBlockState(west.south()).getBlock()) ? f/2f : f;
     }
-	
-	@Override
-	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
-		return false;
-	}
+    
+    @Override
+    public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean remote) {
+        return state.getValue(AGE) < 3;
+    }
 
 	@Override
-	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
-		return state.getValue(AGE) < 3 && rand.nextFloat() < 0.5;
+	public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
+		return rand.nextFloat() < 0.5;
 	}
 
 	@Override
