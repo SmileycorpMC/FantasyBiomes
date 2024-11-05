@@ -14,23 +14,25 @@ import java.util.function.Function;
 
 public enum EnumWoodType implements WoodEnum {
     ELDERWOOD ("elderwood", rand -> new WorldGenElderwoodTree(true, false), null,
-            MapColor.SILVER_STAINED_HARDENED_CLAY, MapColor.CYAN_STAINED_HARDENED_CLAY, MapColor.ORANGE_STAINED_HARDENED_CLAY)/*,
+            MapColor.SILVER_STAINED_HARDENED_CLAY, MapColor.CYAN_STAINED_HARDENED_CLAY, MapColor.ORANGE_STAINED_HARDENED_CLAY, 0.02f)/*,
     GNARLWILLOW("gnarlwillow", null, null,
-            MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BROWN_STAINED_HARDENED_CLAY),
+            MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BROWN_STAINED_HARDENED_CLAY, 0.05f),
     PINE("pine", null, null,
-            MapColor.WOOD, MapColor.SAND, MapColor.GRASS)*/;
+            MapColor.WOOD, MapColor.SAND, MapColor.GRASS, 0.02f)*/;
     
     private final String name;
     private final Function<Random, WorldGenerator> tree, largeTree;
     private final MapColor plankColour, logColour, leavesColour;
+    private final float saplingDropChance;
     
-    EnumWoodType(String name, Function<Random, WorldGenerator> tree, Function<Random, WorldGenerator> largeTree, MapColor plankColour, MapColor logColour, MapColor leavesColour) {
+    EnumWoodType(String name, Function<Random, WorldGenerator> tree, Function<Random, WorldGenerator> largeTree, MapColor plankColour, MapColor logColour, MapColor leavesColour, float saplingDropChance) {
         this.name = name;
         this.tree = tree;
         this.largeTree = largeTree;
         this.plankColour = plankColour;
         this.logColour = logColour;
         this.leavesColour = leavesColour;
+        this.saplingDropChance = saplingDropChance;
     }
     
     @Nullable
@@ -62,7 +64,7 @@ public enum EnumWoodType implements WoodEnum {
     
     @Override
     public float saplingDropChance() {
-        return 0.05f;
+        return saplingDropChance;
     }
     
     @Override
