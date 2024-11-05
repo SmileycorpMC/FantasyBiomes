@@ -92,17 +92,17 @@ public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 		for (int i = 0; i < length; i++) {
 			bpos = bpos.add(dir.normalize());
 			mutable.setPos(bpos.x, bpos.y, bpos.z);
-			if (world.isAirBlock(mutable)) setBlockAndNotifyAdequately(world, mutable, BARK);
+			if (world.isAirBlock(mutable) || world.getBlockState(mutable) == LEAVES) setBlockAndNotifyAdequately(world, mutable, BARK);
 			generateLeaves(world, mutable, i < 2 ? 5 : i < 5 ? 4 : 3);
 			dir = dir.addVector(0.5 * (rand.nextFloat() - 0.5), 0.5 * (rand.nextFloat() - 0.5), 0.5 * (rand.nextFloat() - 0.5));
 		}
 	}
 	
 	private void generateLeaves(World world, BlockPos pos, int r) {
-		for (int i = -r; i <= r; i++) for (int j = -r; j<=r; j++) for (int k = -r; k<=r; k++) {
+		for (int i = -r; i <= r; i++) for (int j = -r; j <= r; j++) for (int k = -r; k <= r; k++) {
 			if (i * i + j * j + k * k >= r * r) continue;
 			BlockPos newpos = pos.north(i).up(j).east(k);
-			if (!world.isAirBlock(newpos) & !(world.getBlockState(newpos).getBlock() instanceof BlockFBMushroom)) continue;
+			if (!world.isAirBlock(newpos) &! (world.getBlockState(newpos).getBlock() instanceof BlockFBMushroom)) continue;
 			setBlockAndNotifyAdequately(world, newpos, LEAVES);
 		}
 	}
