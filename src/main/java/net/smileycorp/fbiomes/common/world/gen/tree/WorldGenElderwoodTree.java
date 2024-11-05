@@ -2,6 +2,7 @@ package net.smileycorp.fbiomes.common.world.gen.tree;
 
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
+import net.minecraft.block.BlockRotatedPillar;
 import net.minecraft.block.BlockSapling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
@@ -43,6 +44,9 @@ public class WorldGenElderwoodTree extends WorldGenAbstractTree {
 		int h = rand.nextInt(5) + 16;
 		//trunk
 		for (int i = 0; i < h; i++) setBlock(world, rand, pos.up(i), LOG);
+		EnumFacing stump = DirectionUtils.getRandomDirectionXZ(rand);
+		setBlock(world, rand, pos.up(rand.nextInt(3) + 7).offset(stump),
+				FBiomesBlocks.WOOD.getLogState(EnumWoodType.ELDERWOOD, BlockLog.EnumAxis.fromFacingAxis(stump.getAxis())));
 		//roots
 		for (int i = 0; i < 4; i++) generateRoot(world, rand, pos, DirectionUtils.getXZDirection(i));
 		//branches

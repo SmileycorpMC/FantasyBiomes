@@ -47,7 +47,7 @@ public class EnchantedThicket extends Biome {
 	@Override
 	@SideOnly(Side.CLIENT)
     public int getGrassColorAtPos(BlockPos pos) {
-        return 0x214720;
+        return 0x5A9158;
     }
 	
 	@Override
