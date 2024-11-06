@@ -19,7 +19,7 @@ import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
 import net.smileycorp.fbiomes.common.world.gen.fungusforest.*;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenBigRedOakTree;
-import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenElderwoodTree;
+import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenOrantikkuTree;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenGoldenBirchTree;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenRedOakTree;
 
@@ -99,7 +99,7 @@ public class EnchantedThicket extends Biome {
 				lapisGen = new WorldGenMinable(Blocks.LAPIS_ORE.getDefaultState(), this.chunkProviderSettings.lapisSize);
 				DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
 				WorldGenerator SHROOM_GENERATOR = new WorldGenShroom();
-				WorldGenElderwoodTree CANOPY_TREE_GENERATOR = new WorldGenElderwoodTree(false, true);
+				WorldGenOrantikkuTree CANOPY_TREE_GENERATOR = new WorldGenOrantikkuTree(false, true);
 				Set<BlockPos> canopy_trees = Sets.newHashSet();
 				//canopy trees
 				for (int i = 0; i < 2; ++i) for (int j = 0; j < 2; ++j) {

@@ -4,7 +4,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.smileycorp.atlas.api.block.wood.WoodEnum;
-import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenElderwoodTree;
+import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenOrantikkuTree;
 
 import javax.annotation.Nullable;
 import java.util.Collections;
@@ -13,7 +13,7 @@ import java.util.Random;
 import java.util.function.Function;
 
 public enum EnumWoodType implements WoodEnum {
-    ELDERWOOD ("elderwood", rand -> new WorldGenElderwoodTree(true, false), null,
+    ORANTIKKU("orantikku", rand -> new WorldGenOrantikkuTree(true, false), null,
             MapColor.SILVER_STAINED_HARDENED_CLAY, MapColor.CYAN_STAINED_HARDENED_CLAY, MapColor.ORANGE_STAINED_HARDENED_CLAY, 0.02f)/*,
     GNARLWILLOW("gnarlwillow", null, null,
             MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BROWN_STAINED_HARDENED_CLAY, 0.05f),
@@ -79,7 +79,7 @@ public enum EnumWoodType implements WoodEnum {
     
     @Override
     public boolean solidLeaves() {
-        return this == ELDERWOOD;
+        return this == ORANTIKKU;
     }
     
 }

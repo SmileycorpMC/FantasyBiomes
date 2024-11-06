@@ -1,0 +1,8 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "side": "fbiomes:blocks/orantikku_log_side",
+		"end": "fbiomes:blocks/orantikku_log_top",
+		"particle": "#side"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "fbiomes:blocks/orantikku_planks",
+		"particle": "#all"
+    }
+}

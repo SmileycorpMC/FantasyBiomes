@@ -1,7 +1,0 @@
-{
-  "parent": "minecraft:block/door_top_rh",
-  "textures": {
-    "top": "fbiomes:blocks/elderwood_door_top",
-    "bottom": "fbiomes:blocks/elderwood_door_bottom"
-  }
-}

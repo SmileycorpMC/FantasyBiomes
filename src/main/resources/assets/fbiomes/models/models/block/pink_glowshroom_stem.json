@@ -1,8 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "side": "fbiomes:blocks/pink_glowshroom_stem_side",
-		"end": "fbiomes:blocks/pink_glowshroom_stem_top",
-		"particle": "#side"
-    }
-}

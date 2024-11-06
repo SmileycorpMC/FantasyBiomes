@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom",
+  "textures": {
+    "top": "fbiomes:blocks/orantikku_door_top",
+    "bottom": "fbiomes:blocks/orantikku_door_bottom"
+  }
+}

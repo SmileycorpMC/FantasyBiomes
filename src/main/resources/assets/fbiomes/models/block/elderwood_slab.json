@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/half_slab",
-  "textures": {
-    "bottom": "fbiomes:blocks/elderwood_planks",
-    "top": "fbiomes:blocks/elderwood_planks",
-    "side": "fbiomes:blocks/elderwood_planks"
-  }
-}

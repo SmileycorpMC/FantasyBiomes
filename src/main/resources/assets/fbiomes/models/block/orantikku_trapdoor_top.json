@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/trapdoor_top",
+  "textures": {
+    "texture": "fbiomes:blocks/orantikku_trapdoor"
+  }
+}

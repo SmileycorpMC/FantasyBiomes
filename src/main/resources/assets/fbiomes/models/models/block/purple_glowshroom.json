@@ -1,7 +1,0 @@
-{
-    "parent": "block/cross",
-    "textures": {
-        "cross": "fbiomes:blocks/purple_glowshroom",
-		"particle": "#cross"
-    }
-}
