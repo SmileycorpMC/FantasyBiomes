@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
+import net.smileycorp.fbiomes.common.world.gen.features.WorldGenWitchCottage;
 import net.smileycorp.fbiomes.common.world.gen.fungusforest.*;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenBigRedOakTree;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenOrantikkuTree;
@@ -107,6 +108,12 @@ public class EnchantedThicket extends Biome {
 					if (TerrainGen.decorate(world, rand, new ChunkPos(blockpos), blockpos, EventType.TREE)
 							&& CANOPY_TREE_GENERATOR.canGenerate(world, blockpos)) canopy_trees.add(blockpos);
 				}
+				//features
+				if (rand.nextInt(5) == 0) {
+					BlockPos pos1 = world.getHeight(pos.add(rand.nextInt(16) - rand.nextInt(16), 0, rand.nextInt(16) - rand.nextInt(16)));
+					WorldGenerator feature = getRandomFeature(world, pos1, rand, canopy_trees);
+					if (feature != null) feature.generate(world, rand, pos1);
+				}
 				//trees and big mushrooms
 				for (int i = 0; i < 8; ++i) for (int j = 0; j < 8; ++j) {
 					BlockPos blockpos =  world.getHeight(pos.add(i * 2 + 1 + 8 + rand.nextInt(2), 0, j * 2 + 1 + 8 + rand.nextInt(2)));
@@ -159,6 +166,10 @@ public class EnchantedThicket extends Biome {
 				if (dx < 6 || dz < 6) canHuge = false;
 			}
 			getRandomBigMushroom(rand, canHuge).generate(world, rand, pos);
+		}
+		
+		private WorldGenerator getRandomFeature(World world, BlockPos pos, Random rand, Set<BlockPos> canopyTrees) {
+			return new WorldGenWitchCottage();
 		}
 		
 		private WorldGenerator getRandomBigMushroom(Random rand, boolean canHuge) {
