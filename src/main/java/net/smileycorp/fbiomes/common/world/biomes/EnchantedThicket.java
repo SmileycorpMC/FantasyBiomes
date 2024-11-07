@@ -17,6 +17,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
+import net.smileycorp.fbiomes.common.world.gen.features.WorldGenMushroomLog;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenWitchCottage;
 import net.smileycorp.fbiomes.common.world.gen.fungusforest.*;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenBigRedOakTree;
@@ -169,7 +170,7 @@ public class EnchantedThicket extends Biome {
 		}
 		
 		private WorldGenerator getRandomFeature(World world, BlockPos pos, Random rand, Set<BlockPos> canopyTrees) {
-			return new WorldGenWitchCottage();
+			return rand.nextInt(3) == 1 ? new WorldGenWitchCottage() : new WorldGenMushroomLog();
 		}
 		
 		private WorldGenerator getRandomBigMushroom(Random rand, boolean canHuge) {

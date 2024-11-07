@@ -60,9 +60,10 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 		setBlock(world, rand, root, BARK);
 		setBlock(world, rand, root.up(), BARK);
 		int i = 1;
-		while (world.isAirBlock(root.down(i))) {
+		IBlockState state = world.getBlockState(root.down(i));
+		while (state.getBlock().canBeReplacedByLeaves(state, world, root.down(i))) {
 			setBlock(world, rand, root.down(i), BARK);
-			i++;
+			state = world.getBlockState(root.down(i++));
 		}
 		//randomly spawn big roots
 		if (rand.nextBoolean()) {
@@ -70,9 +71,9 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 			for (EnumFacing dir1 : EnumFacing.HORIZONTALS) if (dir1 != dir.getOpposite()) {
 				setBlock(world, rand, root.offset(dir1), BARK);
 				i = 1;
-				while (world.isAirBlock(root.offset(dir1).down(i))) {
-					setBlock(world, rand, root.offset(dir1).down(i), BARK);
-					i++;
+				while (state.getBlock().canBeReplacedByLeaves(state, world, root.down(i))) {
+					setBlock(world, rand, root.down(i), BARK);
+					state = world.getBlockState(root.down(i++));
 				}
 			}
 		}
