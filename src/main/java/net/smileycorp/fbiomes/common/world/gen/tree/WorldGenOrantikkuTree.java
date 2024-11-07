@@ -35,7 +35,17 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 	public boolean canGenerate(World world, BlockPos pos) {
 		BlockPos ground = pos.down();
 		IBlockState soil = world.getBlockState(ground);
-		return soil.getBlock().canSustainPlant(soil, world, ground, EnumFacing.UP, (BlockSapling) Blocks.SAPLING);
+		if (!soil.getBlock().canSustainPlant(soil, world, ground, EnumFacing.UP, (BlockSapling) Blocks.SAPLING)) return false;
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+			if (blocksPlacement(world, pos.offset(facing))) return false;
+			if (blocksPlacement(world, pos.offset(facing).up())) return false;
+		}
+		return true;
+	}
+	
+	private boolean blocksPlacement(World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		return !state.getBlock().canBeReplacedByLeaves(state, world, pos);
 	}
 	
 	@Override
@@ -43,6 +53,13 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 		if (!natural &! canGenerate(world, pos)) return false;
 		int h = rand.nextInt(5) + 16;
 		//trunk
+		for (int i = 0; i < h; i++) if (blocksPlacement(world, pos.up(i))) {
+			if (h > 16) {
+				h = 13;
+				break;
+			}
+			return false;
+		}
 		for (int i = 0; i < h; i++) setBlock(world, rand, pos.up(i), LOG);
 		EnumFacing stump = DirectionUtils.getRandomDirectionXZ(rand);
 		setBlockAndNotifyAdequately(world, pos.up(rand.nextInt(3) + 7).offset(stump),
@@ -51,7 +68,11 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 		for (int i = 0; i < 4; i++) generateRoot(world, rand, pos, DirectionUtils.getXZDirection(i));
 		//branches
 		setBlockAndNotifyAdequately(world, pos.up(h), BARK);
-		for (int i = 0; i < rand.nextInt(4) + 5; i++) generateBranch(world, rand, new BlockPos.MutableBlockPos(pos.up(h)), rand.nextInt(4) + 6);
+		generateLeaves(world, pos.up(h - 1), 7);
+		int branches = rand.nextInt(4) + 5;
+		for (int i = 0; i < branches; i++) generateBranch(world, rand, new BlockPos.MutableBlockPos(pos.up(h)), rand.nextInt(5) + 7,
+					DirectionUtils.getDirectionVecXZ(2f * Math.PI * (float) i / (float) branches).addVector((rand.nextFloat() - 0.5f) * 0.2f,
+							0.1f, (rand.nextFloat() - 0.5f) * 0.2f));
 		return true;
 	}
 
@@ -93,15 +114,14 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 		}
 	}
 
-	public void generateBranch(World world, Random rand, BlockPos pos, int length) {
+	public void generateBranch(World world, Random rand, BlockPos pos, int length, Vec3d dir) {
 		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos();
-		Vec3d dir = DirectionUtils.getRandomDirectionVecXZ(rand).addVector(0, 0.1, 0);
 		Vec3d bpos = DirectionUtils.centerOf(pos);
 		for (int i = 0; i < length; i++) {
 			bpos = bpos.add(dir.normalize());
 			mutable.setPos(bpos.x, bpos.y, bpos.z);
 			if (world.isAirBlock(mutable) || world.getBlockState(mutable) == LEAVES) setBlockAndNotifyAdequately(world, mutable, BARK);
-			generateLeaves(world, mutable, i < 2 ? 5 : i < 5 ? 4 : 3);
+			generateLeaves(world, mutable, i < 2 ? 6 : 5);
 			dir = dir.addVector(0.5 * (rand.nextFloat() - 0.5), 0.5 * (rand.nextFloat() - 0.5), 0.5 * (rand.nextFloat() - 0.5));
 		}
 	}
@@ -111,6 +131,7 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 			if (i * i + j * j + k * k >= r * r) continue;
 			BlockPos newpos = pos.north(i).up(j).east(k);
 			IBlockState state = world.getBlockState(newpos);
+			if (state == LEAVES) continue;
 			if (!state.getBlock().canBeReplacedByLeaves(state, world, newpos)) continue;
 			setBlockAndNotifyAdequately(world, newpos, LEAVES);
 		}
