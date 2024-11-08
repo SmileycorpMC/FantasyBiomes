@@ -1,6 +1,7 @@
 package net.smileycorp.fbiomes.common.world.biomes;
 
 import net.minecraft.block.BlockStone;
+import net.minecraft.block.material.Material;
 import net.minecraft.entity.passive.EntityDonkey;
 import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Blocks;
@@ -8,6 +9,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.BiomeDecorator;
+import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.ChunkGeneratorSettings;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraft.world.gen.feature.WorldGenBigTree;
@@ -26,11 +28,9 @@ public class BiomeDeadMarsh extends Biome {
 
 	public BiomeDeadMarsh() {
 		super(new BiomeProperties("Dead Marsh").setBaseHeight(-0.2F).setHeightVariation(0F));
-		topBlock=FBiomesBlocks.MUD.getDefaultState();
-		fillerBlock=FBiomesBlocks.MUD.getDefaultState();
+		topBlock = FBiomesBlocks.MUD.getDefaultState();
+		fillerBlock = FBiomesBlocks.MUD.getDefaultState();
 		setRegistryName(Constants.loc("Dead_Marsh"));
-		this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityHorse.class, 5, 2, 6));
-        this.spawnableCreatureList.add(new Biome.SpawnListEntry(EntityDonkey.class, 1, 1, 3));
 	}
 	
 	@Override
@@ -52,14 +52,32 @@ public class BiomeDeadMarsh extends Biome {
 	
 	@Override
     public BiomeDecorator createBiomeDecorator(){
-        return getModdedBiomeDecorator(new BiomeFenDecorator());
+        return getModdedBiomeDecorator(new Decorator());
     }
 	
+	@Override
+	public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunk, int x, int z, double noise) {
+		double variation = GRASS_COLOR_NOISE.getValue((double)x * 0.25D, (double)z * 0.25D);
+		if (variation > 0) {
+			int i = x & 15;
+			int j = z & 15;
+			for (int k = 255; k >= 0; --k)
+				if (chunk.getBlockState(j, k, i).getMaterial() != Material.AIR) {
+					if (k == 62 && chunk.getBlockState(j, k, i).getBlock() != Blocks.WATER)
+						chunk.setBlockState(j, k, i, WATER);
+					break;
+				}
+		}
+		boolean mud = GRASS_COLOR_NOISE.getValue((double)x * 0.7D, (double)z * 0.7D) > 0;
+		topBlock = (mud ? FBiomesBlocks.MUD : Blocks.GRASS).getDefaultState();
+		fillerBlock = (mud ? FBiomesBlocks.MUD : Blocks.DIRT).getDefaultState();
+		super.genTerrainBlocks(world, rand, chunk, x, z, noise);
+	}
 	
 	
-	public class BiomeFenDecorator extends BiomeDecorator {
+	protected static class Decorator extends BiomeDecorator {
 		
-		BiomeFenDecorator(){
+		private Decorator() {
 			waterlilyPerChunk = 0;
 			treesPerChunk = 0;
 	        extraTreeChance = 0.5F;
@@ -103,7 +121,7 @@ public class BiomeDeadMarsh extends Biome {
 	                    int j = rand.nextInt(16) + 8;
 	                    int k = rand.nextInt(16) + 8;
 	                    int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
-	                    getRandomWorldGenForGrass(rand).generate(world, rand, pos.add(j, l, k));
+	                    biome.getRandomWorldGenForGrass(rand).generate(world, rand, pos.add(j, l, k));
 	                }
 	            }	
 	            generateTrees(world, biome, rand, pos);

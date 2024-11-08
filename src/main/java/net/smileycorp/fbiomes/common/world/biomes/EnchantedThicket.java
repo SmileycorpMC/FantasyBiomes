@@ -21,8 +21,8 @@ import net.smileycorp.fbiomes.common.world.gen.features.WorldGenMushroomLog;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenWitchCottage;
 import net.smileycorp.fbiomes.common.world.gen.fungusforest.*;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenBigRedOakTree;
-import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenOrantikkuTree;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenGoldenBirchTree;
+import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenOrantikkuTree;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenRedOakTree;
 
 import java.util.Collection;

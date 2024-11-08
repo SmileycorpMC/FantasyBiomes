@@ -25,17 +25,17 @@ public class FBiomes {
         registry.register(DEAD_MARSH);
         registry.register(PEAT_MOOR);
         registry.register(ENCHANTED_THICKET);
-        initBiome(DEAD_MARSH, false, BiomeType.COOL, 15,
+        initBiome(DEAD_MARSH, false, BiomeType.COOL, 5,
                 BiomeDictionary.Type.PLAINS,
                 BiomeDictionary.Type.SWAMP,
                 BiomeDictionary.Type.SPARSE
         );
-        initBiome(PEAT_MOOR, true, BiomeType.COOL, 15,
+        initBiome(PEAT_MOOR, true, BiomeType.COOL, 7,
                 BiomeDictionary.Type.HILLS,
                 BiomeDictionary.Type.SWAMP,
                 BiomeDictionary.Type.SPARSE
         );
-        initBiome(ENCHANTED_THICKET, false, BiomeType.WARM, 5,
+        initBiome(ENCHANTED_THICKET, false, BiomeType.WARM, 3,
                 BiomeDictionary.Type.FOREST,
                 BiomeDictionary.Type.DENSE,
                 BiomeDictionary.Type.MAGICAL,
@@ -61,7 +61,7 @@ public class FBiomes {
 	private static void initBiome(Biome biome, boolean hasVillages, BiomeType biomeType, int weight, BiomeDictionary.Type... types) {
 		BiomeManager.addStrongholdBiome(biome);
         BiomeDictionary.addTypes(biome, types);
-        BiomeManager.addVillageBiome(biome, hasVillages);
+        if (hasVillages) BiomeManager.addVillageBiome(biome, true);
 		BiomeManager.addBiome(biomeType, new BiomeEntry(biome, weight));
         BiomeManager.addSpawnBiome(biome);
 	}

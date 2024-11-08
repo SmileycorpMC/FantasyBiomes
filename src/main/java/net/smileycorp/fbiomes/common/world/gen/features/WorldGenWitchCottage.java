@@ -3,13 +3,11 @@ package net.smileycorp.fbiomes.common.world.gen.features;
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.init.Blocks;
-import net.minecraft.tileentity.TileEntity;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
-import net.minecraft.world.storage.loot.functions.LootFunction;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
 
