@@ -9,16 +9,16 @@ import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 
 import java.util.Random;
 
-public abstract class WorldGenSmallFBMushroomBase extends WorldGenerator {
+public abstract class WorldGenBigMushroomBase extends WorldGenerator {
 	
 	protected IBlockState stem;
 	protected IBlockState cap;
 	
-	public WorldGenSmallFBMushroomBase(Random rand) {
+	public WorldGenBigMushroomBase(Random rand) {
 		pickType(rand);
 	}
 	
-	public WorldGenSmallFBMushroomBase(IBlockState stem, IBlockState cap) {
+	public WorldGenBigMushroomBase(IBlockState stem, IBlockState cap) {
 		this.stem = stem;
 		this.cap = cap;
 	}

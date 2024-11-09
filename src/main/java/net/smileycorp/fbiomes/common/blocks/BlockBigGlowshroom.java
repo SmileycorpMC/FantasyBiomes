@@ -69,16 +69,9 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 		return state.getValue(VARIANT).getDrop();
     }
 	
-	@Override
-	public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance) {
-		if (entity.isSneaking() |! world.getBlockState(pos).getValue(SHAPE).isBouncy()) super.onFallenUpon(world, pos, entity, fallDistance);
-		else entity.fall(fallDistance, 0.0F);
-	}
-	
-	@Override
-	public void onLanded(World world, Entity entity) {
-		if (entity.isSneaking() |! world.getBlockState(entity.getPosition().down()).getValue(SHAPE).isBouncy()) super.onLanded(world, entity);
-		else if (entity.motionY < 0.0) entity.motionY = -Math.min(entity.motionY * 1.01, 2);
+	protected boolean isBouncy(IBlockState state) {
+		if (state.getBlock() != this) return false;
+		return state.getValue(SHAPE).isBouncy();
 	}
 	
 }

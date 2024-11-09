@@ -11,16 +11,16 @@ import net.smileycorp.atlas.api.util.DirectionUtils;
 
 import java.util.Random;
 
-public abstract class WorldGenBigFBMushroomBase extends WorldGenerator {
+public abstract class WorldGenHugeMushroomBase extends WorldGenerator {
 	
 	protected IBlockState stem;
 	protected IBlockState cap;
 	
-	public WorldGenBigFBMushroomBase(Random rand) {
+	public WorldGenHugeMushroomBase(Random rand) {
 		pickType(rand);
 	}
 	
-	public WorldGenBigFBMushroomBase(IBlockState stem, IBlockState cap) {
+	public WorldGenHugeMushroomBase(IBlockState stem, IBlockState cap) {
 		this.stem = stem;
 		this.cap =  cap;
 	}

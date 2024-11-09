@@ -20,7 +20,9 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
+import scala.tools.cmd.gen.AnyValReps;
 
+import java.util.Optional;
 import java.util.Random;
 import java.util.function.Supplier;
 
@@ -28,8 +30,9 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 	
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", dir -> dir != EnumFacing.DOWN);
 	private final Supplier<WorldGenerator> bigShroom;
+	private final Supplier<WorldGenerator> hugeShroom;
 	
-	public BlockFBMushroom(String name, float light, Supplier<WorldGenerator> bigShroom) {
+	public BlockFBMushroom(String name, float light, Supplier<WorldGenerator> bigShroom, Supplier<WorldGenerator> hugeShroom) {
 		super(Material.PLANTS);
 		setLightLevel(light);
 		setCreativeTab(FantasyBiomes.TAB);
@@ -38,6 +41,7 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 		setRegistryName(Constants.loc(name.toLowerCase()));
 		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
 		this.bigShroom = bigShroom;
+		this.hugeShroom = hugeShroom;
 	}
 	
 	@Override
@@ -129,8 +133,30 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 	
 	@Override
 	public void grow(World world, Random random, BlockPos pos, IBlockState state) {
+		if (hugeShroom != null) {
+			Optional<BlockPos> center = getHugeCenter(world, pos, state);
+			if (center.isPresent()) {
+				hugeShroom.get().generate(world, random, center.get());
+				return;
+			}
+		}
 		world.setBlockToAir(pos);
 		if (bigShroom != null) if (!bigShroom.get().generate(world, world.rand, pos)) world.setBlockState(pos, state, 2);
+	}
+	
+	private Optional<BlockPos> getHugeCenter(World world, BlockPos pos, IBlockState state) {
+		if (isCenter(world, pos)) return Optional.of(pos);
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
+			BlockPos pos1 = pos.offset(facing);
+			if (state.equals(world.getBlockState(pos1)) && isCenter(world, pos1)) return Optional.of(pos1);
+		}
+		return Optional.empty();
+	}
+	
+	private boolean isCenter(World world, BlockPos pos) {
+		IBlockState state = world.getBlockState(pos);
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) if (!state.equals(world.getBlockState(pos.offset(facing)))) return false;
+		return true;
 	}
 	
 }
