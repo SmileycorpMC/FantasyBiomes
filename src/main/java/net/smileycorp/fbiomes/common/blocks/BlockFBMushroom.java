@@ -20,7 +20,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import scala.tools.cmd.gen.AnyValReps;
 
 import java.util.Optional;
 import java.util.Random;
