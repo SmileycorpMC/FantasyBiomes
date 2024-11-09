@@ -8,7 +8,7 @@ import net.minecraft.world.World;
 import net.smileycorp.fbiomes.common.blocks.BlockBigMushroom;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomShape;
-import net.smileycorp.fbiomes.common.blocks.enums.MushroomVariant;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomVariant;
 
 import java.util.List;
 import java.util.Random;
@@ -24,7 +24,7 @@ public class WorldGenSmallFBMushroom extends WorldGenSmallFBMushroomBase {
 		super(rand);
 	}
 	
-	public WorldGenSmallFBMushroom(MushroomVariant type) {
+	public WorldGenSmallFBMushroom(EnumMushroomVariant type) {
 		super(FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.STEM).withProperty(BlockBigMushroom.VARIANT, type)
 				, FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.CAP).withProperty(BlockBigMushroom.VARIANT, type));
 		spot = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.SPOT).withProperty(BlockBigMushroom.VARIANT, type);
@@ -32,7 +32,7 @@ public class WorldGenSmallFBMushroom extends WorldGenSmallFBMushroomBase {
 	
 	@Override
 	protected void pickType(Random rand) {
-		MushroomVariant variant = MushroomVariant.values()[rand.nextInt(MushroomVariant.values().length)];
+		EnumMushroomVariant variant = EnumMushroomVariant.values()[rand.nextInt(EnumMushroomVariant.values().length)];
 		stem = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.STEM).withProperty(BlockBigMushroom.VARIANT, variant);
 		cap = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.CAP).withProperty(BlockBigMushroom.VARIANT, variant);
 		spot = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.SPOT).withProperty(BlockBigMushroom.VARIANT, variant);

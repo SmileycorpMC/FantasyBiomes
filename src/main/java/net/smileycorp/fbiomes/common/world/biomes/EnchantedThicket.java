@@ -176,7 +176,8 @@ public class EnchantedThicket extends Biome {
 		private WorldGenerator getRandomBigMushroom(Random rand, boolean canHuge) {
 			return rand.nextFloat() < 0.3 ? canHuge ? new WorldGenBigGlowshroom(rand)
 					: new WorldGenSmallGlowshroom(rand) : rand.nextFloat() < 0.4 ? canHuge ?
-					new WorldGenBigFBMushroom(rand) : new WorldGenSmallFBMushroom(rand) : new WorldGenBigMushroom();
+					new WorldGenBigFBMushroom(rand) : rand.nextInt(3) == 0 ? new WorldGenSmallToadstool() :
+					new WorldGenSmallFBMushroom(rand) : new WorldGenBigMushroom();
 		}
 		
 		public WorldGenAbstractTree getRandomTreeFeature(Random rand, boolean canHuge) {

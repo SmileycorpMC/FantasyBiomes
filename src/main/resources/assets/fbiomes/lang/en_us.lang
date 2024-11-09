@@ -38,10 +38,13 @@ tile.fbiomes.big_orange_glowshroom_stem.name=Orange Glowshroom Stem
 tile.fbiomes.big_pink_glowshroom_stem.name=Pink Glowshroom Stem
 tile.fbiomes.big_purple_glowshroom_stem.name=Purple Glowshroom Stem
 
+tile.fbiomes.big_toadstool_mushroom_cap.name=Toadstool Cap
 tile.fbiomes.big_green_mushroom_cap.name=Green Mushroom Cap
 tile.fbiomes.big_purple_mushroom_cap.name=Purple Mushroom Cap
+tile.fbiomes.big_toadstool_mushroom_stem.name=Toadstool Stem
 tile.fbiomes.big_green_mushroom_stem.name=Green Mushroom Stem
 tile.fbiomes.big_purple_mushroom_stem.name=Purple Mushroom Stem
+tile.fbiomes.big_toadstool_mushroom_spot.name=Toadstool Spot
 tile.fbiomes.big_green_mushroom_spot.name=Green Mushroom Spot
 tile.fbiomes.big_purple_mushroom_spot.name=Purple Mushroom Spot
 

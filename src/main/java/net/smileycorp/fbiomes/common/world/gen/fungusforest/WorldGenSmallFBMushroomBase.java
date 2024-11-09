@@ -34,7 +34,7 @@ public abstract class WorldGenSmallFBMushroomBase extends WorldGenerator {
 		}
 		BlockPos startPos = pos;
 		//stem
-		for (int j = 0; j<height+1; j++) {
+		for (int j = 0; j < height + 1; j++) {
 			if(j > 0) pos = pos.up();
 			placeStem(world, rand, startPos, pos, height);
 		}

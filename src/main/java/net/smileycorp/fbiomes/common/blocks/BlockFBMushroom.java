@@ -15,6 +15,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
@@ -27,9 +28,9 @@ import java.util.function.Supplier;
 public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProperties {
 	
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", dir -> dir != EnumFacing.DOWN);
-	private final Supplier<WorldGenSmallFBMushroomBase> bigShroom;
+	private final Supplier<WorldGenerator> bigShroom;
 	
-	public BlockFBMushroom(String name, float light, Supplier<WorldGenSmallFBMushroomBase> bigShroom) {
+	public BlockFBMushroom(String name, float light, Supplier<WorldGenerator> bigShroom) {
 		super(Material.PLANTS);
 		setLightLevel(light);
 		setCreativeTab(FantasyBiomes.TAB);
