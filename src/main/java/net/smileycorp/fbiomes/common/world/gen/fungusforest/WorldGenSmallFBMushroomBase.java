@@ -53,12 +53,12 @@ public abstract class WorldGenSmallFBMushroomBase extends WorldGenerator {
 	
 	protected void placeStem(World world, Random rand, BlockPos startPos, BlockPos currentPos, int height) {
 		IBlockState state = world.getBlockState(currentPos);
-		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) world.setBlockState(currentPos, stem, 18);
+		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) setBlockAndNotifyAdequately(world, currentPos, stem);
 	}
 	
 	protected void placeCap(World world, Random rand, BlockPos startPos, BlockPos currentPos, int height) {
 		IBlockState state = world.getBlockState(currentPos);
-		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) world.setBlockState(currentPos, cap, 18);
+		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) setBlockAndNotifyAdequately(world, currentPos, cap);
 	}
 	
 	protected abstract void pickType(Random random);

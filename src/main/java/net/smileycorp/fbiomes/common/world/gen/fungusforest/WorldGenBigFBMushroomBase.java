@@ -21,8 +21,8 @@ public abstract class WorldGenBigFBMushroomBase extends WorldGenerator {
 	}
 	
 	public WorldGenBigFBMushroomBase(IBlockState stem, IBlockState cap) {
-		this.stem=stem;
-		this.cap=cap;
+		this.stem = stem;
+		this.cap =  cap;
 	}
 
 	@Override
@@ -82,14 +82,14 @@ public abstract class WorldGenBigFBMushroomBase extends WorldGenerator {
 	protected void placeStem(World world, Random rand, BlockPos startPos, BlockPos currentPos, int height, EnumFacing bendDir) {
 		IBlockState state = world.getBlockState(currentPos);
 		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) {
-			world.setBlockState(currentPos, stem, 18);
+			setBlockAndNotifyAdequately(world, currentPos, stem);
 		}
 	}
 	
 	protected void placeCap(World world, Random rand, BlockPos startPos, BlockPos currentPos, int height, EnumFacing bendDir) {
 		IBlockState state = world.getBlockState(currentPos);
 		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) {
-			world.setBlockState(currentPos, cap, 18);
+			setBlockAndNotifyAdequately(world, currentPos, cap);
 		}
 	}
 	

@@ -44,8 +44,8 @@ public class WorldGenSmallFBMushroom extends WorldGenSmallFBMushroomBase {
 		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) {
 			if (spots.isEmpty()) genSpots(rand);
 			Vec3i vec = new Vec3i(currentPos.getX()-startPos.getX(), 0, currentPos.getZ()-startPos.getZ());
-			if (spots.contains(vec)) world.setBlockState(currentPos, spot);
-			else world.setBlockState(currentPos, cap);
+			if (spots.contains(vec)) setBlockAndNotifyAdequately(world, currentPos, spot);
+			else setBlockAndNotifyAdequately(world, currentPos, cap);
 		}
 	}
 
