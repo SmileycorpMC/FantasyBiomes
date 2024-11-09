@@ -6,6 +6,7 @@ import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
@@ -91,7 +92,6 @@ public class BlockBigMushroom extends BlockBase {
 		return state.getValue(VARIANT).getDrop();
     }
 	
-	
 	@Override
 	public void getSubBlocks(CreativeTabs item, NonNullList<ItemStack> items) {
         for (int i = 0; i<this.getMaxMeta(); i++) items.add(new ItemStack(this, 1, i));
@@ -101,5 +101,17 @@ public class BlockBigMushroom extends BlockBase {
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
         return new ItemStack(this, 1, getMetaFromState(state));
     }
+	
+	@Override
+	public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance) {
+		if (entity.isSneaking() |! world.getBlockState(pos).getValue(SHAPE).isBouncy()) super.onFallenUpon(world, pos, entity, fallDistance);
+		else entity.fall(fallDistance, 0.0F);
+	}
+	
+	@Override
+	public void onLanded(World world, Entity entity) {
+		if (entity.isSneaking() |! world.getBlockState(entity.getPosition().down()).getValue(SHAPE).isBouncy()) super.onLanded(world, entity);
+		else if (entity.motionY < 0.0) entity.motionY = -Math.min(entity.motionY * 1.01, 2);
+	}
 	
 }

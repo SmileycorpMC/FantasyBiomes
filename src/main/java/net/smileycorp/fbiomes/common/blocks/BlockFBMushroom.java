@@ -20,7 +20,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import net.smileycorp.fbiomes.common.world.gen.fungusforest.WorldGenSmallFBMushroomBase;
 
 import java.util.Random;
 import java.util.function.Supplier;

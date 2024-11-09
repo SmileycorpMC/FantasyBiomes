@@ -3,6 +3,7 @@ package net.smileycorp.fbiomes.common.blocks;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
@@ -67,5 +68,17 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	public Item getItemDropped(IBlockState state, Random rand, int fortune) {
 		return state.getValue(VARIANT).getDrop();
     }
+	
+	@Override
+	public void onFallenUpon(World world, BlockPos pos, Entity entity, float fallDistance) {
+		if (entity.isSneaking() |! world.getBlockState(pos).getValue(SHAPE).isBouncy()) super.onFallenUpon(world, pos, entity, fallDistance);
+		else entity.fall(fallDistance, 0.0F);
+	}
+	
+	@Override
+	public void onLanded(World world, Entity entity) {
+		if (entity.isSneaking() |! world.getBlockState(entity.getPosition().down()).getValue(SHAPE).isBouncy()) super.onLanded(world, entity);
+		else if (entity.motionY < 0.0) entity.motionY = -Math.min(entity.motionY * 1.01, 2);
+	}
 	
 }

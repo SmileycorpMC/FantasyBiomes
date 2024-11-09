@@ -24,4 +24,8 @@ public enum EnumMushroomShape implements IStringSerializable {
         return meta;
     }
     
+    public boolean isBouncy() {
+        return this != STEM;
+    }
+    
 }

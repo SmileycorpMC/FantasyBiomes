@@ -2,8 +2,6 @@ package net.smileycorp.fbiomes.common.world.biomes;
 
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.Material;
-import net.minecraft.entity.passive.EntityDonkey;
-import net.minecraft.entity.passive.EntityHorse;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
