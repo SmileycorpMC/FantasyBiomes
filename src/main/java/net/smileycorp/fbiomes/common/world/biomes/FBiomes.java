@@ -25,17 +25,17 @@ public class FBiomes {
         registry.register(DEAD_MARSH);
         registry.register(PEAT_MOOR);
         registry.register(ENCHANTED_THICKET);
-        initBiome(DEAD_MARSH, false, BiomeType.COOL, 5,
+        initBiome(DEAD_MARSH, false, BiomeType.COOL, 7,
                 BiomeDictionary.Type.PLAINS,
                 BiomeDictionary.Type.SWAMP,
                 BiomeDictionary.Type.SPARSE
         );
-        initBiome(PEAT_MOOR, true, BiomeType.COOL, 7,
+        initBiome(PEAT_MOOR, true, BiomeType.COOL, 8,
                 BiomeDictionary.Type.HILLS,
                 BiomeDictionary.Type.SWAMP,
                 BiomeDictionary.Type.SPARSE
         );
-        initBiome(ENCHANTED_THICKET, false, BiomeType.WARM, 3,
+        initBiome(ENCHANTED_THICKET, false, BiomeType.WARM, 5,
                 BiomeDictionary.Type.FOREST,
                 BiomeDictionary.Type.DENSE,
                 BiomeDictionary.Type.MAGICAL,
