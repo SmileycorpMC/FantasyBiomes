@@ -16,8 +16,8 @@ public class WorldGenHugeGlowshroom extends WorldGenHugeMushroomBase {
 	}
 	
 	public WorldGenHugeGlowshroom(EnumGlowshroomVariant type) {
-		super(FBiomesBlocks.BIG_GLOWSHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.STEM).withProperty(BlockBigGlowshroom.VARIANT, type)
-				, FBiomesBlocks.BIG_GLOWSHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.CAP).withProperty(BlockBigGlowshroom.VARIANT, type));
+		super(FBiomesBlocks.BIG_GLOWSHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.STEM).withProperty(BlockBigGlowshroom.VARIANT, type),
+				FBiomesBlocks.BIG_GLOWSHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.CAP).withProperty(BlockBigGlowshroom.VARIANT, type));
 	}
 
 	@Override

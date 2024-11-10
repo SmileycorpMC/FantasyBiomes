@@ -30,7 +30,7 @@ public class WorldGenStoneCircle extends WorldGenerator {
 			pillars.add(newpos);
 		}
 		for (BlockPos pillar : pillars) for (int h = 0; h < rand.nextInt(3) + 3; h++)
-			setBlockAndNotifyAdequately(world, pillar.up(h), (rand.nextBoolean() ? Blocks.COBBLESTONE : Blocks.STONE).getDefaultState());
+			setBlockAndNotifyAdequately(world, pillar.up(h), (rand.nextBoolean() ? Blocks.COBBLESTONE : Blocks.MOSSY_COBBLESTONE).getDefaultState());
 		return true;
 	}
 
