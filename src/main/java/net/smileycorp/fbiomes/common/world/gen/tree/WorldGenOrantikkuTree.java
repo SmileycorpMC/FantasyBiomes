@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
@@ -71,8 +72,7 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 		generateLeaves(world, pos.up(h - 1), 7);
 		int branches = rand.nextInt(4) + 5;
 		for (int i = 0; i < branches; i++) generateBranch(world, rand, new BlockPos.MutableBlockPos(pos.up(h)), rand.nextInt(5) + 7,
-					DirectionUtils.getDirectionVecXZ(2f * Math.PI * (float) i / (float) branches).addVector((rand.nextFloat() - 0.5f) * 0.2f,
-							0.1f, (rand.nextFloat() - 0.5f) * 0.2f));
+					getBranchDir(2f * Math.PI * (float) i / (float) branches, rand));
 		return true;
 	}
 
@@ -135,6 +135,11 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 			if (!state.getBlock().canBeReplacedByLeaves(state, world, newpos)) continue;
 			setBlockAndNotifyAdequately(world, newpos, LEAVES);
 		}
+	}
+	
+	private Vec3d getBranchDir(double angle, Random rand) {
+		return new Vec3d(MathHelper.cos((float) angle) + (rand.nextFloat() - 0.5f) * 0.2f, 0.1,
+				MathHelper.sin((float) angle) + (rand.nextFloat() - 0.5f) * 0.2f);
 	}
 	
 }	
