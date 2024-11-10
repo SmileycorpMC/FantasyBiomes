@@ -67,7 +67,7 @@ public class BiomePeatMoor extends Biome {
 	    		 break;
 	    	 }
 	     }
-	     System.out.println(x + ", " + y + ", " + z);
+	     //System.out.println(x + ", " + y + ", " + z);
 	     if ((y < 82 && y > 78) || (y < 74 && y > 70) || (y < 66)) {
 	    	 for (int j = y - 2; j <= y; j++) {
 	    		 if (j<= 0 || j>=255) break;
