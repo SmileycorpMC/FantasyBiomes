@@ -1,6 +1,6 @@
 {
     "parent": "fbiomes:block/wall_shroom",
     "textures": {
-        "cross": "fbiomes:blocks/toadstool"
+        "cross": "fbiomes:blocks/wall_toadstool"
     }
 }

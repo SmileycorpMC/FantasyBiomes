@@ -1,6 +1,6 @@
 {
     "parent": "fbiomes:block/wall_shroom",
     "textures": {
-        "cross": "fbiomes:blocks/blue_glowshroom"
+        "cross": "fbiomes:blocks/blue_wall_glowshroom"
     }
 }
