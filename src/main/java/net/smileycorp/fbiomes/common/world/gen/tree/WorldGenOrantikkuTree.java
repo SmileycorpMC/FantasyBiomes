@@ -24,7 +24,7 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 	protected static final IBlockState LOG = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ORANTIKKU, BlockLog.EnumAxis.Y);
 	protected static final IBlockState BARK = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ORANTIKKU, BlockLog.EnumAxis.NONE);
 	protected static final IBlockState LEAVES = FBiomesBlocks.WOOD.getLeavesState(EnumWoodType.ORANTIKKU)
-			.withProperty(BlockLeaves.DECAYABLE, true).withProperty(BlockLeaves.CHECK_DECAY, false);
+			.withProperty(BlockLeaves.DECAYABLE, false).withProperty(BlockLeaves.CHECK_DECAY, false);
 	
 	protected final boolean natural;
 	

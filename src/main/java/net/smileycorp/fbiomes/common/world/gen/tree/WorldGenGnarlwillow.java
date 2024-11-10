@@ -29,7 +29,7 @@ public class WorldGenGnarlwillow extends WorldGenAbstractTree {
 	protected static final IBlockState LOG = FBiomesBlocks.WOOD.getLogState(EnumWoodType.GNARLWILLOW, BlockLog.EnumAxis.Y);
 	protected static final IBlockState BARK = FBiomesBlocks.WOOD.getLogState(EnumWoodType.GNARLWILLOW, BlockLog.EnumAxis.NONE);
 	protected static final IBlockState LEAVES = FBiomesBlocks.WOOD.getLeavesState(EnumWoodType.GNARLWILLOW)
-			.withProperty(BlockLeaves.DECAYABLE, true).withProperty(BlockLeaves.CHECK_DECAY, false);
+			.withProperty(BlockLeaves.DECAYABLE, false).withProperty(BlockLeaves.CHECK_DECAY, false);
 	
 	protected final Map<BlockPos, EnumFacing> vines = Maps.newHashMap();
 	
