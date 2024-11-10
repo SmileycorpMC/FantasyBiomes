@@ -61,7 +61,7 @@ public class FBiomesBlocks {
 	public static WoodBlock WOOD = new WoodBlock<>(Constants.MODID, FantasyBiomes.TAB, EnumWoodType.class, true);
 	public static BlockBaseSapling VANILLA_SAPLING = BlockBaseSapling.create("simple_sapling", Constants.MODID, FantasyBiomes.TAB, EnumVanillaWoodType.class, 0);
 	public static BlockBaseLeaves VANILLA_LEAVES = BlockBaseLeaves.create("simple_leaves", Constants.MODID, FantasyBiomes.TAB, null, EnumVanillaWoodType.class, 0);
-	
+	public static BlockTwistedGnarlwillow TWISTED_GNARLWILLOW = new BlockTwistedGnarlwillow();
 	//Ores
 	//public static Block MYTHRIL_ORE;
 	

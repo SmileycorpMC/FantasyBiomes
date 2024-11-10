@@ -19,6 +19,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
+import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenGnarlwillow;
 
 import java.util.Random;
 
@@ -33,19 +34,19 @@ public class BiomeDeadMarsh extends Biome {
 	
 	@Override
     public WorldGenAbstractTree getRandomTreeFeature(Random rand) {
-	        return new WorldGenBigTree(false);
+		return new WorldGenGnarlwillow(false);
 	}
 	
 	@Override
 	@SideOnly(Side.CLIENT)
     public int getGrassColorAtPos(BlockPos pos) {
-        return getFoliageColorAtPos(pos);
+        return 0x858B3E;
     }
 	
 	 @Override
 	@SideOnly(Side.CLIENT)
 	 public int getFoliageColorAtPos(BlockPos pos) {
-		 return 0x858B3E;
+		 return 0x492519;
 	 }
 	
 	@Override

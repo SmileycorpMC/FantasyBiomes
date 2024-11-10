@@ -4,6 +4,7 @@ import net.minecraft.block.material.MapColor;
 import net.minecraft.item.ItemStack;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.smileycorp.atlas.api.block.wood.WoodEnum;
+import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenGnarlwillow;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenOrantikkuTree;
 
 import javax.annotation.Nullable;
@@ -14,9 +15,9 @@ import java.util.function.Function;
 
 public enum EnumWoodType implements WoodEnum {
     ORANTIKKU("orantikku", rand -> new WorldGenOrantikkuTree(true, false), null,
-            MapColor.SILVER_STAINED_HARDENED_CLAY, MapColor.CYAN_STAINED_HARDENED_CLAY, MapColor.ORANGE_STAINED_HARDENED_CLAY, 0.02f)/*,
-    GNARLWILLOW("gnarlwillow", null, null,
-            MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BLACK_STAINED_HARDENED_CLAY, MapColor.BROWN_STAINED_HARDENED_CLAY, 0.05f),
+            MapColor.SILVER_STAINED_HARDENED_CLAY, MapColor.CYAN_STAINED_HARDENED_CLAY, MapColor.ORANGE_STAINED_HARDENED_CLAY, 0.02f),
+    GNARLWILLOW("gnarlwillow", rand -> new WorldGenGnarlwillow(true), null,
+            MapColor.STONE, MapColor.GRAY_STAINED_HARDENED_CLAY, MapColor.BROWN_STAINED_HARDENED_CLAY, 0.05f)/*,
     PINE("pine", null, null,
             MapColor.WOOD, MapColor.SAND, MapColor.GRASS, 0.02f)*/;
     

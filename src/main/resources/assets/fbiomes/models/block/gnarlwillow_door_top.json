@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top",
+  "textures": {
+    "top": "fbiomes:blocks/gnarlwillow_door_top",
+    "bottom": "fbiomes:blocks/gnarlwillow_door_bottom"
+  }
+}

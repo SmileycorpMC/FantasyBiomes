@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "half=bottom": {
+      "model": "fbiomes:gnarlwillow_slab"
+    },
+    "half=both": {
+      "model": "fbiomes:gnarlwillow_planks"
+    },
+    "half=top": {
+      "model": "fbiomes:gnarlwillow_slab_top"
+    }
+  }
+}
