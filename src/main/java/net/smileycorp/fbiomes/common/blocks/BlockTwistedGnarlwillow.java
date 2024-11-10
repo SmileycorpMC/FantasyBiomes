@@ -16,6 +16,7 @@ import net.minecraft.world.World;
 import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
 
 public class BlockTwistedGnarlwillow extends BlockBase {
     
@@ -62,7 +63,7 @@ public class BlockTwistedGnarlwillow extends BlockBase {
     
     @Override
     public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
-        //drops.add(FBiomesBlocks.WOOD.getLogStack(WoodEnum.GNARLWILLOW));
+        drops.add(FBiomesBlocks.WOOD.getLogStack(EnumWoodType.GNARLWILLOW, 1));
     }
     
 }
