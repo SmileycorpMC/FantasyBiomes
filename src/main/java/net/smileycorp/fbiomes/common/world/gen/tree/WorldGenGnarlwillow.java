@@ -46,7 +46,7 @@ public class WorldGenGnarlwillow extends WorldGenAbstractTree {
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		if (!canGenerate(world, pos)) return false;
-		int h = rand.nextInt(4) + 5;
+		int h = rand.nextInt(3) + 5;
 		int face = rand.nextInt(3) + 1;
 		List<EnumFacing> facings = Lists.newArrayList(EnumFacing.HORIZONTALS);
 		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
