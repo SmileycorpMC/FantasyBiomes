@@ -1,7 +1,6 @@
 {
     "parent": "block/cube_all",
     "textures": {
-        "all": "fbiomes:blocks/purple_glowshroom_cap",
-		"particle": "#all"
+        "all": "fbiomes:blocks/purple_glowshroom_cap"
     }
 }

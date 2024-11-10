@@ -4,6 +4,6 @@
         "top": "fbiomes:blocks/gnarlwillow_log_top",
         "front": "fbiomes:blocks/twisted_gnarlwillow",
         "side": "fbiomes:blocks/gnarlwillow_log_side",
-		"particle": "#side"
+		"particle": "fbiomes:blocks/gnarlwillow_log_side" 
     }
 }

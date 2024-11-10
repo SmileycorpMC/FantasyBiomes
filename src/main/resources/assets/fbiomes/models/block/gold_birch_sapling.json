@@ -1,7 +1,6 @@
 {
     "parent": "block/cross",
     "textures": {
-        "cross": "fbiomes:blocks/gold_birch_sapling",
-		"particle": "#cross"
+        "cross": "fbiomes:blocks/gold_birch_sapling"
     }
 }

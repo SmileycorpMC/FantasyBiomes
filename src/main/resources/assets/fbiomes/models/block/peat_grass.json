@@ -2,7 +2,6 @@
     "parent": "atlaslib:block/grassy_cube",
     "textures": {
         "base": "fbiomes:blocks/peat",
-		"particle": "#base",
 		"top": "minecraft:block/grass_block_top",
 		"side": "minecraft:block/grass_block_side_overlay"
     }
