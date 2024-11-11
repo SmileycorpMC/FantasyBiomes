@@ -27,7 +27,7 @@ public abstract class WorldGenBigMushroomBase extends WorldGenerator {
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		int height = rand.nextInt(3) + 2;
 		IBlockState soil = world.getBlockState(pos.down());
-		if (!soil.getBlock().canSustainPlant(soil, world, pos, EnumFacing.UP, FBiomesBlocks.TOADSTOOL)) return false;
+		if (!soil.getBlock().canSustainPlant(soil, world, pos.down(), EnumFacing.UP, FBiomesBlocks.TOADSTOOL)) return false;
 		for (int j = 0; j<height+2; j++) {
 			IBlockState state = world.getBlockState(pos.up(j));
 			if (!state.getBlock().canBeReplacedByLeaves(state, world, pos)) return false;
