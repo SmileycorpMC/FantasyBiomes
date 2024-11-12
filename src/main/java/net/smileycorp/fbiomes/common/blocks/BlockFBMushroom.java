@@ -16,6 +16,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
+import net.minecraftforge.common.EnumPlantType;
 import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
@@ -53,6 +54,11 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 		return getStateFromMeta(placer.getHeldItem(hand).getMetadata()).withProperty(FACING, getFacing(world, pos, facing));
 	}
 	
+	@Override
+	public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
+		return EnumPlantType.Cave;
+	}
+	
 	private EnumFacing getFacing(World world, BlockPos pos, EnumFacing facing) {
 		if (canFacingSustain(world, pos, facing)) return facing;
 		for (EnumFacing facing0 : FACING.getAllowedValues()) if (facing0 != facing && canFacingSustain(world, pos, facing0)) return facing0;
@@ -61,11 +67,7 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 
 	private boolean canFacingSustain(World world, BlockPos pos, EnumFacing facing) {
 		if (facing == EnumFacing.DOWN) return false;
-		IBlockState state = world.getBlockState(pos.offset(facing, -1));
-		Block block = state.getBlock();
-		if (state.isFullBlock() && (block instanceof BlockLog || state.getMaterial() == Material.GRASS || state.getMaterial() == Material.GROUND)) return true;
-		for (int id : OreDictionary.getOreIDs(new ItemStack(block))) if (OreDictionary.getOreName(id).equals("stone")) return true;
-		return false;
+		return canSustain(world, pos, facing);
 	}
 	
 	@Override
@@ -95,29 +97,24 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 	
 	@Override
 	public boolean canPlaceBlockAt(World world, BlockPos pos){
-        IBlockState soil = world.getBlockState(pos.down());
-        for (EnumFacing facing : FACING.getAllowedValues()) {
-        	IBlockState state = world.getBlockState(pos.offset(facing.getOpposite()));
-        	if (state.isFullCube()&&(state.getBlock() instanceof BlockLog || state.getMaterial() == Material.GROUND
-					|| state.getMaterial() == Material.GRASS)) return true;
-        }
-        return soil.isFullBlock() && (soil.getMaterial() == Material.GRASS || soil.getMaterial() == Material.GROUND);
+        for (EnumFacing facing : FACING.getAllowedValues()) if (canSustain(world, pos, facing)) return true;
+        return false;
     }
-	
+		
 	@Override
 	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
-		IBlockState soil = world.getBlockState(pos.down());
-        if (state.getBlock() == this) return canPlaceBlockAt(world, pos);
-        return soil.isFullBlock() && (soil.getMaterial() == Material.GRASS || soil.getMaterial() == Material.GROUND);
+		return canSustain(world, pos, state.getValue(FACING));
     }
 	 
+	protected boolean canSustain(IBlockAccess world, BlockPos pos, EnumFacing facing) {
+		IBlockState state = world.getBlockState(pos.offset(facing));
+		return (state.isFullCube() && state.getBlock() instanceof BlockLog) ||
+				state.getBlock().canSustainPlant(state, world, pos, facing, this);
+	}
+	
 	@Override
 	public void onNeighborChange(IBlockAccess world, BlockPos pos, BlockPos neighbor){
-		IBlockState soil = world.getBlockState(pos.down());
-		EnumFacing facing = world.getBlockState(pos).getValue(FACING);
-    	if ((world.getBlockState(pos.offset(facing.getOpposite())).getBlock() instanceof BlockLog)) return;
-		if (!(facing == EnumFacing.UP && (soil.isFullBlock() && (soil.getMaterial() == Material.GRASS || soil.getMaterial() == Material.GROUND))))
-			if (world instanceof World) ((World) world).setBlockToAir(pos);
+		if (world instanceof World) if (!canBlockStay((World) world, pos, world.getBlockState(pos))) ((World) world).setBlockToAir(pos);
 	 }
 	
 	@Override
