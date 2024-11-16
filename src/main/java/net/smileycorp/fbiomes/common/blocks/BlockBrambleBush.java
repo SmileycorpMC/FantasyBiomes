@@ -105,7 +105,7 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, BlockPrope
 
 	@Override
 	public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
-		return rand.nextFloat() < 0.5;
+        return true;
 	}
 
 	@Override
