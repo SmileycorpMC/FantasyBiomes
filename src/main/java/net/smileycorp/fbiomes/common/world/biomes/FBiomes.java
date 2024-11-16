@@ -28,12 +28,14 @@ public class FBiomes {
         initBiome(DEAD_MARSH, false, BiomeType.COOL, 7,
                 BiomeDictionary.Type.PLAINS,
                 BiomeDictionary.Type.SWAMP,
-                BiomeDictionary.Type.SPARSE
+                BiomeDictionary.Type.SPARSE,
+                BiomeDictionary.Type.SPOOKY
         );
         initBiome(PEAT_MOOR, true, BiomeType.COOL, 8,
                 BiomeDictionary.Type.HILLS,
                 BiomeDictionary.Type.SWAMP,
-                BiomeDictionary.Type.SPARSE
+                BiomeDictionary.Type.SPARSE,
+                BiomeDictionary.Type.SPOOKY
         );
         initBiome(ENCHANTED_THICKET, false, BiomeType.WARM, 5,
                 BiomeDictionary.Type.FOREST,
