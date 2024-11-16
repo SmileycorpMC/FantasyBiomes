@@ -18,17 +18,13 @@ public class FBiomes {
 	public final static Biome FLOATING_MOUNTAIN = new BiomeFloatingMountain();
 	public final static Biome IRON_HILLS = new BiomeIronHills();
 	public final static Biome ENCHANTED_THICKET = new EnchantedThicket();
-    public final static Biome ABYSS = new BiomeAbyss();
     
     @SubscribeEvent
     public static void registerBiomes(final RegistryEvent.Register<Biome> event) {
         final IForgeRegistry<Biome> registry = event.getRegistry();
         registry.register(DEAD_MARSH);
         registry.register(PEAT_MOOR);
-        registry.register(FLOATING_MOUNTAIN);
-        registry.register(IRON_HILLS);
         registry.register(ENCHANTED_THICKET);
-        registry.register(ABYSS);
         initBiome(DEAD_MARSH, false, BiomeType.COOL, 7,
                 BiomeDictionary.Type.PLAINS,
                 BiomeDictionary.Type.SWAMP,
@@ -58,7 +54,6 @@ public class FBiomes {
                 BiomeDictionary.Type.COLD,
                 BiomeDictionary.Type.SNOWY,
                 BiomeDictionary.Type.HILLS);*/
-        initBiome(ABYSS, false, BiomeType.COOL, 5, BiomeDictionary.Type.OCEAN);
     }
 	
 	public static void init() {
