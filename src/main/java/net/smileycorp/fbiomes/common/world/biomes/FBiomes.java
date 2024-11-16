@@ -25,6 +25,8 @@ public class FBiomes {
         registry.register(DEAD_MARSH);
         registry.register(PEAT_MOOR);
         registry.register(ENCHANTED_THICKET);
+        //registry.register(FLOATING_MOUNTAIN);
+        //registry.register(IRON_HILLS);
         initBiome(DEAD_MARSH, false, BiomeType.COOL, 7,
                 BiomeDictionary.Type.PLAINS,
                 BiomeDictionary.Type.SWAMP,

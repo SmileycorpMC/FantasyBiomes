@@ -1,6 +1,9 @@
 package net.smileycorp.fbiomes.common.blocks;
 
-import net.minecraft.block.*;
+import net.minecraft.block.BlockBush;
+import net.minecraft.block.BlockLog;
+import net.minecraft.block.IGrowable;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.properties.PropertyDirection;
 import net.minecraft.block.state.BlockStateContainer;
@@ -17,7 +20,6 @@ import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.minecraftforge.common.EnumPlantType;
-import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
