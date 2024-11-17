@@ -47,7 +47,7 @@ public class WorldGenGnarlwillow extends WorldGenAbstractTree {
 		List<EnumFacing> facings = Lists.newArrayList(EnumFacing.HORIZONTALS);
 		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
 		for (int i = 0; i <= h; i++) {
-			setBlockAndNotifyAdequately(world, mutable, i == face && rand.nextInt(4) == 0 ?
+			setBlockAndNotifyAdequately(world, mutable, i == face && rand.nextInt(3) == 0 ?
 					FBiomesBlocks.TWISTED_GNARLWILLOW.getDefaultState().withProperty(BlockTwistedGnarlwillow.FACING, EnumFacing.HORIZONTALS[rand.nextInt(4)]) : LOG);
 			if (i > 3 && rand.nextBoolean() &! facings.isEmpty()) {
 				int x = rand.nextInt(facings.size());
