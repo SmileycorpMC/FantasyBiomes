@@ -31,6 +31,13 @@ import java.util.function.Supplier;
 public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProperties {
 	
 	public static final PropertyDirection FACING = PropertyDirection.create("facing", dir -> dir != EnumFacing.DOWN);
+	private static final AxisAlignedBB[] AABBS = {
+		new AxisAlignedBB(0.3, 0, 0.3, 0.7, 0.7, 0.7),
+			new AxisAlignedBB(0.3, 0.2, 0.6, 0.7, 0.9, 1),
+			new AxisAlignedBB(0.3, 0.2, 0, 0.7, 0.9, 0.4),
+			new AxisAlignedBB(0.6, 0.2, 0.3, 1, 0.9, 0.7),
+			new AxisAlignedBB(0, 0.2, 0.3, 0.4, 0.9, 0.7)
+	};
 	private final Supplier<WorldGenerator> bigShroom;
 	private final Supplier<WorldGenerator> hugeShroom;
 	
@@ -57,6 +64,11 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 	}
 	
 	@Override
+	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+		return AABBS[state.getValue(FACING).ordinal() - 1];
+	}
+	
+	@Override
 	public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
 		return EnumPlantType.Cave;
 	}
@@ -76,11 +88,6 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 	public boolean canBeReplacedByLeaves(IBlockState state, IBlockAccess world, BlockPos pos_) {
 		return true;
 	}
-
-	@Override
-	public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
-        return BUSH_AABB;
-    }
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
