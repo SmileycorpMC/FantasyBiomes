@@ -1,15 +1,18 @@
 package net.smileycorp.fbiomes.common.items;
 
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
@@ -35,7 +38,9 @@ public class ItemBerries extends ItemFood {
 				player.canPlayerEdit(pos.offset(side), side, stack)) return EnumActionResult.PASS;
 		world.setBlockState(up, FBiomesBlocks.BRAMBLES.getDefaultState());
 		if (player instanceof EntityPlayerMP) CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos.up(), stack);
-		stack.shrink(1);
+		if (!player.isCreative()) stack.shrink(1);
+		world.playSound(null, up, SoundEvents.BLOCK_GRASS_PLACE, SoundCategory.BLOCKS,
+				(SoundType.PLANT.getVolume() + 1) / 2f, SoundType.PLANT.getPitch() * 0.8f);
 		return EnumActionResult.SUCCESS;
 	}
 	
