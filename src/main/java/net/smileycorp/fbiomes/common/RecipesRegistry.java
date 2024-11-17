@@ -14,7 +14,7 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.FuelHandler;
 import net.smileycorp.fbiomes.common.blocks.BlockFBMushroom;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
-import net.smileycorp.fbiomes.common.potion.FBiomesPotionTypes;
+import net.smileycorp.fbiomes.common.potion.FBiomesPotions;
 
 import javax.annotation.Nullable;
 
@@ -44,7 +44,7 @@ public class RecipesRegistry {
 	}
 	
 	private static void registerBrewing() {
-		registerPotion("glowshroom", FBiomesPotionTypes.GLOWING, FBiomesPotionTypes.LONGER_GLOWING, null);
+		registerPotion("glowshroom", FBiomesPotions.GLOWING, FBiomesPotions.LONGER_GLOWING, null);
 	}
 	
 	private static void registerPotion(String ingredient, PotionType basic, @Nullable PotionType extended, @Nullable PotionType stronger) {

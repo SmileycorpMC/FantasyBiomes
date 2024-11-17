@@ -12,7 +12,7 @@ import net.smileycorp.fbiomes.common.Constants;
 import java.lang.reflect.Field;
 
 @Mod.EventBusSubscriber(modid = Constants.MODID)
-public class FBiomesPotionTypes {
+public class FBiomesPotions {
     
     public static final PotionType GLOWING = register("glowing", new PotionEffect(MobEffects.GLOWING, 3600));
     public static final PotionType LONGER_GLOWING = register("longer_glowing", new PotionEffect(MobEffects.GLOWING, 9600));
@@ -26,7 +26,7 @@ public class FBiomesPotionTypes {
     @SubscribeEvent
     public static void registerPotionTypes(RegistryEvent.Register<PotionType> event) {
         IForgeRegistry<PotionType> registry = event.getRegistry();
-        for (Field field : FBiomesPotionTypes.class.getDeclaredFields()) {
+        for (Field field : FBiomesPotions.class.getDeclaredFields()) {
             try {
                 Object object = field.get(null);
                 if (!(object instanceof PotionType) || object == null) continue;

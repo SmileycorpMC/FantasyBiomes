@@ -43,8 +43,8 @@ public class FBiomesBlocks {
 			() -> new WorldGenBigGlowshroom(EnumGlowshroomVariant.BLUE), () -> new WorldGenHugeGlowshroom(EnumGlowshroomVariant.BLUE));
 	public static BlockFBMushroom GREEN_GLOWSHROOM = new BlockFBMushroom("Green_Glowshroom", 0.7F,
 			() -> new WorldGenBigGlowshroom(EnumGlowshroomVariant.GREEN),  () -> new WorldGenHugeGlowshroom(EnumGlowshroomVariant.GREEN));
-	public static BlockFBMushroom ORANGE_GLOWSHROOM = new BlockFBMushroom("Orange_Glowshroom", 0.7F,
-			() -> new WorldGenBigGlowshroom(EnumGlowshroomVariant.ORANGE),  () -> new WorldGenHugeGlowshroom(EnumGlowshroomVariant.ORANGE));
+	public static BlockFBMushroom YELLOW_GLOWSHROOM = new BlockFBMushroom("Yellow_Glowshroom", 0.7F,
+			() -> new WorldGenBigGlowshroom(EnumGlowshroomVariant.YELLOW),  () -> new WorldGenHugeGlowshroom(EnumGlowshroomVariant.YELLOW));
 	public static BlockFBMushroom PINK_GLOWSHROOM = new BlockFBMushroom("Pink_Glowshroom", 0.7F,
 			() -> new WorldGenBigGlowshroom(EnumGlowshroomVariant.PINK),  () -> new WorldGenHugeGlowshroom(EnumGlowshroomVariant.PINK));
 	public static BlockFBMushroom PURPLE_GLOWSHROOM = new BlockFBMushroom("Purple_Glowshroom", 0.7F,
@@ -66,7 +66,7 @@ public class FBiomesBlocks {
 	//public static Block MYTHRIL_ORE;
 	
 	public final static BlockFBMushroom[] shrooms = {TOADSTOOL, PURPLE_SHROOM, GREEN_SHROOM};
-	public final static BlockFBMushroom[] glowshrooms = {BLUE_GLOWSHROOM, GREEN_GLOWSHROOM, ORANGE_GLOWSHROOM, PINK_GLOWSHROOM, PURPLE_GLOWSHROOM};
+	public final static BlockFBMushroom[] glowshrooms = {BLUE_GLOWSHROOM, GREEN_GLOWSHROOM, YELLOW_GLOWSHROOM, PINK_GLOWSHROOM, PURPLE_GLOWSHROOM};
 	
 	@SubscribeEvent
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
