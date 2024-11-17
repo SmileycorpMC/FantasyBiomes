@@ -14,8 +14,8 @@ import java.lang.reflect.Field;
 @Mod.EventBusSubscriber(modid = Constants.MODID)
 public class FBiomesPotions {
     
-    public static final PotionType GLOWING = register("glowing", new PotionEffect(MobEffects.GLOWING, 3600));
-    public static final PotionType LONGER_GLOWING = register("longer_glowing", new PotionEffect(MobEffects.GLOWING, 9600));
+    //public static final PotionType GLOWING = register("glowing", new PotionEffect(MobEffects.GLOWING, 3600));
+    //public static final PotionType LONGER_GLOWING = register("longer_glowing", new PotionEffect(MobEffects.GLOWING, 9600));
     
     private static PotionType register(String name, PotionEffect... effects) {
         PotionType type = new PotionType(name, effects);

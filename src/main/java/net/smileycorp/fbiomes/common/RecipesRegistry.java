@@ -44,7 +44,7 @@ public class RecipesRegistry {
 	}
 	
 	private static void registerBrewing() {
-		registerPotion("glowshroom", FBiomesPotions.GLOWING, FBiomesPotions.LONGER_GLOWING, null);
+		//registerPotion("glowshroom", FBiomesPotions.GLOWING, FBiomesPotions.LONGER_GLOWING, null);
 	}
 	
 	private static void registerPotion(String ingredient, PotionType basic, @Nullable PotionType extended, @Nullable PotionType stronger) {
