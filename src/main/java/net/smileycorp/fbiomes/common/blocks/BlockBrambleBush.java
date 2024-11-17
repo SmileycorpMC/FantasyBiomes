@@ -14,7 +14,9 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
 import net.minecraftforge.common.ForgeHooks;
 import net.smileycorp.atlas.api.block.BlockProperties;
@@ -25,8 +27,9 @@ import net.smileycorp.fbiomes.common.items.FBiomesItems;
 import java.util.Random;
 
 public class BlockBrambleBush extends BlockBush implements IGrowable, BlockProperties {
-	
-	public static PropertyInteger AGE = PropertyInteger.create("age", 0, 3);
+    
+    protected static final AxisAlignedBB AABB = new AxisAlignedBB(0.15, 0.0D, 0.15, 0.85, 0.7, 0.85);
+    public static PropertyInteger AGE = PropertyInteger.create("age", 0, 3);
 	
 	public BlockBrambleBush() {
 		setCreativeTab(FantasyBiomes.TAB);
@@ -61,6 +64,11 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, BlockPrope
 	@Override
 	public int quantityDropped(Random rand) {
         return rand.nextInt(2) + 1;
+    }
+    
+    @Override
+    public AxisAlignedBB getBoundingBox(IBlockState state, IBlockAccess source, BlockPos pos) {
+        return AABB;
     }
 	
 	@Override
