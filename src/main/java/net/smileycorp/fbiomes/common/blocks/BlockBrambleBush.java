@@ -60,7 +60,7 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, BlockPrope
 	 
 	@Override
 	public int quantityDropped(Random rand) {
-        return rand.nextInt(3) + 1;
+        return rand.nextInt(2) + 1;
     }
 	
 	@Override
@@ -131,7 +131,6 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, BlockPrope
     @Override
 	public int getMetaFromState(IBlockState state) {
         return state.getValue(AGE);
-    }	 
-	 
+    }
 
 }

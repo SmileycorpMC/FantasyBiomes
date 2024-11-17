@@ -14,7 +14,6 @@ import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.FuelHandler;
 import net.smileycorp.fbiomes.common.blocks.BlockFBMushroom;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
-import net.smileycorp.fbiomes.common.potion.FBiomesPotions;
 
 import javax.annotation.Nullable;
 

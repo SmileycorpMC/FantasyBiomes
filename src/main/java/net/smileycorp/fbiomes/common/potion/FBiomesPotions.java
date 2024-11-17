@@ -1,6 +1,5 @@
 package net.smileycorp.fbiomes.common.potion;
 
-import net.minecraft.init.MobEffects;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraftforge.event.RegistryEvent;
