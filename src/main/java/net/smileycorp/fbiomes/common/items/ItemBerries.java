@@ -1,9 +1,14 @@
 package net.smileycorp.fbiomes.common.items;
 
+import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.init.Blocks;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
+import net.minecraft.item.ItemSeeds;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -26,9 +31,13 @@ public class ItemBerries extends ItemFood {
 	@Override
 	public EnumActionResult onItemUseFirst(EntityPlayer player, World world, BlockPos pos, EnumFacing side, float hitX, float hitY, float hitZ, EnumHand hand) {
 		IBlockState state = world.getBlockState(pos);
-		if (!state.getBlock().canSustainPlant(state, world, pos.down(), EnumFacing.UP, (IPlantable)Blocks.WHEAT)) return EnumActionResult.PASS;
-		world.setBlockState(pos, FBiomesBlocks.BRAMBLES.getDefaultState(), 8);
-		player.getHeldItem(hand).shrink(1);
+		ItemStack stack = player.getHeldItem(hand);
+		BlockPos up = pos.up();
+		if (!world.isAirBlock(up) |!state.getBlock().canSustainPlant(state, world, pos, EnumFacing.UP, (IPlantable)Blocks.WHEAT) |!
+				player.canPlayerEdit(pos.offset(side), side, stack)) return EnumActionResult.PASS;
+		world.setBlockState(up, FBiomesBlocks.BRAMBLES.getDefaultState());
+		if (player instanceof EntityPlayerMP) CriteriaTriggers.PLACED_BLOCK.trigger((EntityPlayerMP)player, pos.up(), stack);
+		stack.shrink(1);
 		return EnumActionResult.SUCCESS;
 	}
 	
