@@ -12,6 +12,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
+import net.smileycorp.fbiomes.common.blocks.BlockGnarledVines;
 import net.smileycorp.fbiomes.common.blocks.BlockTwistedGnarlwillow;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
@@ -61,7 +62,8 @@ public class WorldGenGnarlwillow extends WorldGenAbstractTree {
 			mutable.setPos(entry.getKey());
 			for (int j = 1; j >= -world.rand.nextInt(3) - 2; j--) {
 				if (!world.isAirBlock(mutable)) break;
-				setBlockAndNotifyAdequately(world, mutable, Blocks.VINE.getDefaultState().withProperty(BlockVine.getPropertyFor(entry.getValue()), true));
+				setBlockAndNotifyAdequately(world, mutable, FBiomesBlocks.GNARLED_VINES.getDefaultState()
+						.withProperty(BlockVine.getPropertyFor(entry.getValue()), true));
 				mutable.move(EnumFacing.DOWN);
 			}
 		}
