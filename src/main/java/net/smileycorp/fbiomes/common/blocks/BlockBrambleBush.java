@@ -44,11 +44,11 @@ public class BlockBrambleBush extends BlockBush implements IGrowable, BlockPrope
 	public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
 		if (state.getValue(AGE) < 3) return false;
         ItemStack stack = new ItemStack(FBiomesItems.BERRIES, world.rand.nextInt(2) + 1);
-        if (! world.isRemote) {
+        if (!world.isRemote) {
             EntityItem item = new EntityItem(world, pos.getX() + 0.5, pos.getY() + 0.5, pos.getZ() + 0.5, stack);
-            item.motionX = world.rand.nextFloat();
-            item.motionY = 0.2f;
-            item.motionZ = world.rand.nextFloat();
+            item.motionX = (0.5f - world.rand.nextFloat()) * 0.1f;
+            item.motionY = 0.1f;
+            item.motionZ = (0.5f - world.rand.nextFloat()) * 0.1f;
             world.spawnEntity(item);
         }
         world.setBlockState(pos, this.getDefaultState(), 3);
