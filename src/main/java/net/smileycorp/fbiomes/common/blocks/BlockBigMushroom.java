@@ -110,13 +110,21 @@ public class BlockBigMushroom extends BlockBase {
 	
 	@Override
 	public void onLanded(World world, Entity entity) {
-		if (entity.isSneaking() |! isBouncy(world.getBlockState(entity.getPosition().down()))) super.onLanded(world, entity);
-		else if (entity.motionY < 0.0) entity.motionY = -Math.min(entity.motionY * 1.5, 0.3);
+		IBlockState state = world.getBlockState(entity.getPosition().down());
+		if (entity.isSneaking() |! isBouncy(state)) super.onLanded(world, entity);
+		else if (entity.motionY < 0.0) entity.motionY = Math.min(-entity.motionY * getBounceSpeed(state), getMaxBounce(state));
 	}
 	
 	protected boolean isBouncy(IBlockState state) {
-		if (state.getBlock() != this) return false;
-		return state.getValue(SHAPE).isBouncy();
+		return state.getBlock() == this ? state.getValue(SHAPE).isBouncy() : false;
+	}
+	
+	protected float getMaxBounce(IBlockState state) {
+		return state.getBlock() == this ? state.getValue(VARIANT).getMaxBounce() : 0;
+	}
+	
+	protected float getBounceSpeed(IBlockState state) {
+		return state.getBlock() == this ? state.getValue(VARIANT).getBounceSpeed() : 0;
 	}
 	
 }

@@ -73,4 +73,12 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 		return state.getValue(SHAPE).isBouncy();
 	}
 	
+	protected float getMaxBounce(IBlockState state) {
+		return state.getBlock() == this ? 1.5f : 0;
+	}
+	
+	protected float getBounceSpeed(IBlockState state) {
+		return state.getBlock() == this ? 1.25f : 0;
+	}
+	
 }
