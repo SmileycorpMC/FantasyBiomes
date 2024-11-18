@@ -2,7 +2,6 @@ package net.smileycorp.fbiomes.common.blocks;
 
 import net.minecraft.block.BlockVine;
 import net.minecraft.block.IGrowable;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
