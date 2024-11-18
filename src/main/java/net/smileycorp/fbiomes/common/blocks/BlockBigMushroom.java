@@ -78,7 +78,7 @@ public class BlockBigMushroom extends BlockBase {
 	}
 	
 	@Override
-	public boolean canSilkHarvest(World p_canSilkHarvest_1_, BlockPos p_canSilkHarvest_2_, IBlockState p_canSilkHarvest_3_, EntityPlayer p_canSilkHarvest_4_) {
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 		return true;
 	}
 	
@@ -112,7 +112,7 @@ public class BlockBigMushroom extends BlockBase {
 	public void onLanded(World world, Entity entity) {
 		IBlockState state = world.getBlockState(entity.getPosition().down());
 		if (entity.isSneaking() |! isBouncy(state)) super.onLanded(world, entity);
-		else if (entity.motionY < 0.0) entity.motionY = Math.min(-entity.motionY * getBounceSpeed(state), getMaxBounce(state));
+		else if (entity.motionY < 0.02) entity.motionY = Math.min(-entity.motionY * getBounceSpeed(state), getMaxBounce(state));
 	}
 	
 	protected boolean isBouncy(IBlockState state) {

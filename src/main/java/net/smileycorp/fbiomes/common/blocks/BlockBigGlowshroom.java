@@ -59,7 +59,7 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	}
 	
 	@Override
-	public boolean canSilkHarvest(World p_canSilkHarvest_1_, BlockPos p_canSilkHarvest_2_, IBlockState p_canSilkHarvest_3_, EntityPlayer p_canSilkHarvest_4_) {
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 		return true;
 	}
 	
@@ -68,17 +68,20 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 		return state.getValue(VARIANT).getDrop();
     }
 	
+	@Override
 	protected boolean isBouncy(IBlockState state) {
 		if (state.getBlock() != this) return false;
 		return state.getValue(SHAPE).isBouncy();
 	}
 	
+	@Override
 	protected float getMaxBounce(IBlockState state) {
-		return state.getBlock() == this ? 1.5f : 0;
+		return state.getBlock() == this ? 0.9f : 0;
 	}
 	
+	@Override
 	protected float getBounceSpeed(IBlockState state) {
-		return state.getBlock() == this ? 1.25f : 0;
+		return state.getBlock() == this ? 1.3f : 0;
 	}
 	
 }

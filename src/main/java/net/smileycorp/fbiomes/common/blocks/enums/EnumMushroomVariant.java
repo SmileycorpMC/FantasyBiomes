@@ -34,11 +34,11 @@ public enum EnumMushroomVariant implements IStringSerializable {
     }
     
     public float getMaxBounce() {
-        return this == TOADSTOOL ? 3.5f : 2;
+        return this == TOADSTOOL ? 1.5f : 1.1f;
     }
     
     public float getBounceSpeed() {
-        return this == TOADSTOOL ? 1.75f : 1.5f;
+        return this == TOADSTOOL ? 1.5f : 1.25f;
     }
     
 }

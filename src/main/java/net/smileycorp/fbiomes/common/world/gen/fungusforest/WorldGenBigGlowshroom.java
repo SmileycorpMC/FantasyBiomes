@@ -26,5 +26,4 @@ public class WorldGenBigGlowshroom extends WorldGenBigMushroomBase {
 		cap = FBiomesBlocks.BIG_GLOWSHROOM.getDefaultState().withProperty(BlockBigGlowshroom.SHAPE, EnumMushroomShape.CAP).withProperty(BlockBigGlowshroom.VARIANT, variant);
 	}
 	
-
 }
