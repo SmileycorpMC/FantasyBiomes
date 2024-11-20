@@ -34,7 +34,7 @@ public class BlockGnarledVines extends BlockVine implements IGrowable, BlockProp
     @Override
     public IBlockState getActualState(IBlockState state, IBlockAccess world, BlockPos pos) {
         if (!state.getValue(UP) && world.getBlockState(pos.down()).getBlock() != this) return state.withProperty(BOTTOM, true);
-        return state;
+        return super.getActualState(state, world, pos);
     }
     
     @Override

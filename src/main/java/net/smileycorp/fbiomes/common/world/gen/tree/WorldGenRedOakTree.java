@@ -35,12 +35,12 @@ public class WorldGenRedOakTree extends WorldGenTrees {
         Random rand = world.rand;
         for (EnumFacing facing : EnumFacing.HORIZONTALS) if (rand.nextBoolean() && world.isAirBlock(pos.offset(facing)))
             setBlockAndNotifyAdequately(world, pos.offset(facing), FBiomesBlocks.LICHEN.getDefaultState().withProperty(BlockLichen.FACING, facing));
-        if (rand.nextFloat() < 0.1775) {
-            EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
-            BlockPos facePos = pos.offset(facing);
-            IBlockState shroom = (rand.nextFloat() < 0.4 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
-                    FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)]).getDefaultState();
-            if (world.isAirBlock(facePos)) setBlockAndNotifyAdequately(world, facePos, shroom.withProperty(BlockFBMushroom.FACING, facing));
-        }
+        if (rand.nextFloat() > 0.1775) return;
+        EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
+        BlockPos facePos = pos.offset(facing);
+        IBlockState shroom = (rand.nextFloat() < 0.4 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
+                FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)]).getDefaultState();
+        if (world.isAirBlock(facePos)) setBlockAndNotifyAdequately(world, facePos, shroom.withProperty(BlockFBMushroom.FACING, facing));
     }
+    
 }

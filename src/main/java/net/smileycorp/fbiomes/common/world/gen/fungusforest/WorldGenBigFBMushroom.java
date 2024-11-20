@@ -64,24 +64,21 @@ public class WorldGenBigFBMushroom extends WorldGenerator {
 			mutable.move(EnumFacing.UP);
 		}
 		//cap
-		for (int i = -2; i < 3; i++) {
-			for (int k = -2; k < 3; k++) {
-				mutable.setPos(pos.getX() + i, pos.getY() + height + 1, pos.getZ() + k);
-				double distance = startPos.getDistance(mutable.getX(), mutable.getY(), mutable.getZ());
-				if (distance < 1.5) placeCap(world, startPos, mutable, spots);
-				else if (distance < 2.5) placeCap(world, startPos, mutable.move(EnumFacing.DOWN), spots);
-			}
+		for (int i = -2; i < 3; i++) for (int k = -2; k < 3; k++) {
+			mutable.setPos(pos.getX() + i, pos.getY() + height + 1, pos.getZ() + k);
+			double distance = startPos.getDistance(mutable.getX(), mutable.getY(), mutable.getZ());
+			if (distance < 1.5) placeCap(world, startPos, mutable, spots);
+			else if (distance < 2.5) placeCap(world, startPos, mutable.move(EnumFacing.DOWN), spots);
 		}
 		return true;
 	}
 	
 	public void placeCap(World world, BlockPos startPos, BlockPos currentPos, List<Vec3i> spots) {
 		IBlockState state = world.getBlockState(currentPos);
-		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) {
-			Vec3i vec = new Vec3i(currentPos.getX() - startPos.getX(), 0, currentPos.getZ() - startPos.getZ());
-			if (spots.contains(vec)) setBlockAndNotifyAdequately(world, currentPos, spot);
-			else setBlockAndNotifyAdequately(world, currentPos, cap);
-		}
+		if (!state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) return;
+		Vec3i vec = new Vec3i(currentPos.getX() - startPos.getX(), 0, currentPos.getZ() - startPos.getZ());
+		if (spots.contains(vec)) setBlockAndNotifyAdequately(world, currentPos, spot);
+		else setBlockAndNotifyAdequately(world, currentPos, cap);
 	}
 
 }

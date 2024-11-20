@@ -26,8 +26,8 @@ public class WorldGenHugeFBMushroom extends WorldGenHugeMushroomBase {
 	}
 	
 	public WorldGenHugeFBMushroom(EnumMushroomVariant type) {
-		super(FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.STEM).withProperty(BlockBigMushroom.VARIANT, type)
-				, FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.CAP).withProperty(BlockBigMushroom.VARIANT, type));
+		super(FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.STEM).withProperty(BlockBigMushroom.VARIANT, type),
+				FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.CAP).withProperty(BlockBigMushroom.VARIANT, type));
 		spot = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.SPOT).withProperty(BlockBigMushroom.VARIANT, type);
 	}
 	
@@ -42,13 +42,12 @@ public class WorldGenHugeFBMushroom extends WorldGenHugeMushroomBase {
 	@Override
 	public void placeCap(World world, Random rand, BlockPos startPos, BlockPos currentPos, int height, EnumFacing bendDir) {
 		IBlockState state = world.getBlockState(currentPos);
-		if (state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) {
-			if (spots.isEmpty()) genSpots(rand);
-			BlockPos center = startPos.offset(bendDir);
-			Vec3i vec = new Vec3i(currentPos.getX()-center.getX(), 0, currentPos.getZ()-center.getZ());
-			if (spots.contains(vec)) world.setBlockState(currentPos, spot);
-			else world.setBlockState(currentPos, cap);
-		}
+		if (!state.getBlock().canBeReplacedByLeaves(state, world, currentPos)) return;
+		if (spots.isEmpty()) genSpots(rand);
+		BlockPos center = startPos.offset(bendDir);
+		Vec3i vec = new Vec3i(currentPos.getX()-center.getX(), 0, currentPos.getZ()-center.getZ());
+		if (spots.contains(vec)) world.setBlockState(currentPos, spot);
+		else world.setBlockState(currentPos, cap);
 	}
 
 	private void genSpots(Random rand) {
@@ -71,9 +70,7 @@ public class WorldGenHugeFBMushroom extends WorldGenHugeMushroomBase {
 					if (!localVecs.contains(vec)) localVecs.add(vec);
 				}
 			}
-			for (Vec3i vec : localVecs) {
-				spots.add(new Vec3i(vec.getX()+x, 0, vec.getZ()+z));
-			}
+			for (Vec3i vec : localVecs) spots.add(new Vec3i(vec.getX() + x, 0, vec.getZ() + z));
 		}
 		spots.addAll(vecs);
 	}
@@ -81,13 +78,13 @@ public class WorldGenHugeFBMushroom extends WorldGenHugeMushroomBase {
 	private Vec3i selectDir(Random rand, Vec3i start) {
 		switch (rand.nextInt(4)) {
 		case 0:
-			return new Vec3i(start.getX()+1, 0, start.getZ());
+			return new Vec3i(start.getX() + 1, 0, start.getZ());
 		case 1:
-			return new Vec3i(start.getX()-1, 0, start.getZ());
+			return new Vec3i(start.getX() - 1, 0, start.getZ());
 		case 2:
-			return new Vec3i(start.getX(), 0, start.getZ()+1);
+			return new Vec3i(start.getX(), 0, start.getZ() + 1);
 		case 3:
-			return new Vec3i(start.getX(), 0, start.getZ()-1);
+			return new Vec3i(start.getX(), 0, start.getZ() - 1);
 		}
 		return start;
 	}
