@@ -70,7 +70,7 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 	
 	@Override
 	public EnumPlantType getPlantType(IBlockAccess world, BlockPos pos) {
-		return EnumPlantType.Cave;
+		return EnumPlantType.Plains;
 	}
 	
 	private EnumFacing getFacing(World world, BlockPos pos, EnumFacing facing) {
