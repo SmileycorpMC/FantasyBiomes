@@ -9,6 +9,9 @@ item.fbiomes.starsilver_ingot.name=Starsilver Ingot
 item.fbiomes.starsilver_dust.name=Starsilver Dust
 item.fbiomes.orantikku_boat.name=Orantikku Boat
 item.fbiomes.orantikku_door.name=Orantikku Door
+item.fbiomes.gnarlwillow_boat.name=Gnarlwillow Boat
+item.fbiomes.gnarlwillow_door.name=Gnarlwillow Door
+
 
 tile.fbiomes.mud.name=Mud
 tile.fbiomes.peat.name=Peat
