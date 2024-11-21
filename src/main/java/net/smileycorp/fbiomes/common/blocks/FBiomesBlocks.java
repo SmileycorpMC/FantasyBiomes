@@ -54,6 +54,7 @@ public class FBiomesBlocks {
 	public static Block LICHEN = new BlockLichen();
 	public static Block BRAMBLES = new BlockBrambleBush();
 	public static Block ROOTS = new BlockRoots();
+	public static Block WEB_COVER = new BlockWebCover();
 	//public static Block FAE_WATER;
 	//public static Block FAE_WATER_FLOWING;
 	

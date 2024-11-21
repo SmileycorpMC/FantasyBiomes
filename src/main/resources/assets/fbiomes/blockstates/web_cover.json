@@ -1,0 +1,27 @@
+{
+  "variants": {
+    "facing=west": {
+      "model": "fbiomes:web_cover",
+      "y": 90
+    },
+    "facing=south": {
+      "model": "fbiomes:web_cover"
+    },
+    "facing=north": {
+      "model": "fbiomes:web_cover",
+      "y": 180
+    },
+    "facing=east": {
+      "model": "fbiomes:web_cover",
+      "y": 270
+    },
+	"facing=up": {
+      "model": "fbiomes:web_cover",
+      "x": 90
+    },
+	"facing=down": {
+      "model": "fbiomes:web_cover",
+      "x": 270
+    }
+  }
+}

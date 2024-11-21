@@ -92,6 +92,8 @@ tile.fbiomes.gold_birch_sapling.name=Golden Birch Sapling
 
 tile.fbiomes.gnarled_vine.name=Gnarled Vines
 
+tile.fbiomes.web_cover.name=Web Cover
+
 material.fbiomes.mithril.name=Mithril
 material.fbiomes.star_silver.name=Star-Silver
 
