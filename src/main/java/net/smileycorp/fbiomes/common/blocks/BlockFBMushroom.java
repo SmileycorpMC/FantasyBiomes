@@ -118,7 +118,7 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 	protected boolean canSustain(IBlockAccess world, BlockPos pos, EnumFacing facing) {
 		IBlockState state = world.getBlockState(pos.offset(facing.getOpposite()));
 		return (state.isFullCube() && state.getBlock() instanceof BlockLog) ||
-				state.getBlock().canSustainPlant(state, world, pos, facing, this);
+				state.getBlock().canSustainPlant(state, world, pos.offset(facing.getOpposite()), facing, this);
 	}
 	
 	@Override
