@@ -20,7 +20,9 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.fbiomes.common.Constants;
+import net.smileycorp.fbiomes.common.blocks.BlockMud;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumMudType;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenBoulder;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenBrambles;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenStoneCircle;
@@ -72,7 +74,7 @@ public class BiomePeatMoor extends Biome {
 	    	 for (int j = y - 2; j <= y; j++) {
 	    		 if (j<= 0 || j>=255) break;
 	    		// if (chunk.getBlockState(i, j, k).getBlock() == Blocks.DIRT || chunk.getBlockState(i, j, k).getBlock() == Blocks.GRASS) {
-	    			 chunk.setBlockState(i, j, k, FBiomesBlocks.PEAT.getDefaultState());
+	    			 chunk.setBlockState(i, j, k, FBiomesBlocks.MUD.getDefaultState().withProperty(BlockMud.VARIANT, EnumMudType.PEAT));
 	    		 //}
 	    	 }
 	     }

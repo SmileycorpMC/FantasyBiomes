@@ -31,7 +31,7 @@ public class RecipesRegistry {
 	
 	private static void registerFuel() {
 		FuelHandler fuel = FuelHandler.getInstance();
-		fuel.registerFuel(FBiomesBlocks.PEAT, 400);
+		fuel.registerFuel(new ItemStack(FBiomesBlocks.MUD, 1, 1), 400);
 	}
 	
 	private static void registerOredict() {

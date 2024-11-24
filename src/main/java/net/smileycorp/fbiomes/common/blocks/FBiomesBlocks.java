@@ -28,8 +28,7 @@ public class FBiomesBlocks {
 	public static List<Block> BLOCKS = Lists.newArrayList();
 	
 	//Surface Blocks
-	public static Block MUD = new BlockMud("Mud");
-	public static Block PEAT = new BlockMud("Peat");
+	public static Block MUD = new BlockMud();
 	
 	//Decorations
 	//public static Block FLOWER;
