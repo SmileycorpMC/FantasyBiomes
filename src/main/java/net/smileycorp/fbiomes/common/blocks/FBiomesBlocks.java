@@ -29,6 +29,7 @@ public class FBiomesBlocks {
 	
 	//Surface Blocks
 	public static Block MUD = new BlockMud();
+	public static Block GRASSY_MUD = new BlockGrassyMud();
 	
 	//Decorations
 	//public static Block FLOWER;

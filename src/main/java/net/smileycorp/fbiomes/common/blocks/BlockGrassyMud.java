@@ -1,8 +1,5 @@
 package net.smileycorp.fbiomes.common.blocks;
 
-import net.minecraft.block.SoundType;
-import net.minecraft.block.material.Material;
-import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
@@ -16,35 +13,29 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
-import net.minecraftforge.common.EnumPlantType;
-import net.minecraftforge.common.IPlantable;
-import net.smileycorp.atlas.api.block.BlockBase;
-import net.smileycorp.atlas.api.block.GrowsGrass;
+import net.smileycorp.atlas.api.block.BlockGrassBase;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMudType;
 
 import javax.annotation.Nullable;
-import java.util.Random;
 
-public class BlockMud extends BlockBase implements GrowsGrass {
+public class BlockGrassyMud extends BlockGrassBase {
     
-    public static final PropertyEnum<EnumMudType> VARIANT = PropertyEnum.create("variant", EnumMudType.class);
-    public static final AxisAlignedBB AABB = new AxisAlignedBB(0.0D, 0.0D, 0.0D, 1.0D, 0.875D, 1.0D);
-    
-	public BlockMud() {
-		super("mud", Constants.MODID, Material.CLAY, SoundType.GROUND, 0.5f, 1,  "shovel", 0, FantasyBiomes.TAB);
-        setDefaultState(blockState.getBaseState().withProperty(VARIANT, EnumMudType.MUD));
+	public BlockGrassyMud() {
+		super("grassy_mud", Constants.MODID, FantasyBiomes.TAB, BlockGrassyMud::removeGrass);
+        setDefaultState(blockState.getBaseState().withProperty(BlockMud.VARIANT, EnumMudType.MUD));
 	}
+    
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
         ItemStack stack = placer.getHeldItem(hand);
-        return getDefaultState().withProperty(VARIANT, EnumMudType.get(stack.getMetadata()));
+        return getDefaultState().withProperty(BlockMud.VARIANT, EnumMudType.get(stack.getMetadata()));
     }
     
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, VARIANT);
+        return new BlockStateContainer(this, BlockMud.VARIANT);
     }
     
     @Override
@@ -54,12 +45,12 @@ public class BlockMud extends BlockBase implements GrowsGrass {
     
     @Override
     public int getMetaFromState(IBlockState state) {
-        return state.getValue(VARIANT).ordinal();
+        return state.getValue(BlockMud.VARIANT).ordinal();
     }
     
     @Override
     public IBlockState getStateFromMeta(int meta) {
-        return getDefaultState().withProperty(VARIANT, EnumMudType.get(meta));
+        return getDefaultState().withProperty(BlockMud.VARIANT, EnumMudType.get(meta));
     }
     
     @Override
@@ -76,20 +67,11 @@ public class BlockMud extends BlockBase implements GrowsGrass {
     public String byMeta(int meta) {
         return EnumMudType.get(meta).getName();
     }
-	
-	@Override
-	public boolean canSustainPlant(IBlockState state, IBlockAccess world, BlockPos pos, EnumFacing direction, IPlantable plantable)	{
-        EnumPlantType plantType = plantable.getPlantType(world, pos.offset(direction));
-        if (plantType == EnumPlantType.Plains || plantType == EnumPlantType.Water) return true;
-        if (plantType == EnumPlantType.Beach) for (EnumFacing facing : EnumFacing.Plane.HORIZONTAL.facings())
-            if (world.getBlockState(pos.offset(facing)).getMaterial() == Material.WATER) return true;
-        return false;
-    }
-	
+    
 	@Override
 	@Nullable
     public AxisAlignedBB getCollisionBoundingBox(IBlockState blockState, IBlockAccess worldIn, BlockPos pos) {
-        return AABB;
+        return BlockMud.AABB;
     }
     
     @Override
@@ -98,9 +80,8 @@ public class BlockMud extends BlockBase implements GrowsGrass {
         entity.motionZ *= 0.8d;
     }
     
-    @Override
-    public IBlockState getGrass(IBlockState state, Random random) {
-        return FBiomesBlocks.GRASSY_MUD.getDefaultState().withProperty(VARIANT, state.getValue(VARIANT));
+    private static IBlockState removeGrass(IBlockState state) {
+        return FBiomesBlocks.MUD.getDefaultState().withProperty(BlockMud.VARIANT, state.getValue(BlockMud.VARIANT));
     }
-    
+
 }
