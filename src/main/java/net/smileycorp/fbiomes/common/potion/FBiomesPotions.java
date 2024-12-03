@@ -1,5 +1,6 @@
 package net.smileycorp.fbiomes.common.potion;
 
+import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
 import net.minecraftforge.event.RegistryEvent;
@@ -13,6 +14,7 @@ import java.lang.reflect.Field;
 @Mod.EventBusSubscriber(modid = Constants.MODID)
 public class FBiomesPotions {
     
+    public static final Potion BIOLUMINESCENCE = new PotionBioLuminescence();
     //public static final PotionType GLOWING = register("glowing", new PotionEffect(MobEffects.GLOWING, 3600));
     //public static final PotionType LONGER_GLOWING = register("longer_glowing", new PotionEffect(MobEffects.GLOWING, 9600));
     
@@ -20,6 +22,18 @@ public class FBiomesPotions {
         PotionType type = new PotionType(name, effects);
         type.setRegistryName(Constants.loc(name));
         return type;
+    }
+    
+    @SubscribeEvent
+    public static void registerPotions(RegistryEvent.Register<Potion> event) {
+        IForgeRegistry<Potion> registry = event.getRegistry();
+        for (Field field : FBiomesPotions.class.getDeclaredFields()) {
+            try {
+                Object object = field.get(null);
+                if (!(object instanceof Potion) || object == null) continue;
+                registry.register((Potion) object);
+            } catch (Exception e) {}
+        }
     }
     
     @SubscribeEvent
