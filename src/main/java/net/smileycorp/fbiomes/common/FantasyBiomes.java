@@ -9,14 +9,15 @@ import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
+import net.smileycorp.fbiomes.common.network.PacketHandler;
 import net.smileycorp.fbiomes.common.world.biomes.FBiomes;
 
-@Mod(modid = "fbiomes")
+@Mod(modid = Constants.MODID)
 public class FantasyBiomes {
 	
 	public static CreativeTabs TAB = new CreativeTabs(Constants.MODID){
 		 @Override
-		 public ItemStack getTabIconItem(){
+		 public ItemStack getTabIconItem() {
 			 return new ItemStack(FBiomesBlocks.GREEN_SHROOM);
 		 }
 	 };
@@ -25,7 +26,7 @@ public class FantasyBiomes {
 	 public void preInit(FMLPreInitializationEvent event) {
 		FBiomesConfig.config = new Configuration(event.getSuggestedConfigurationFile());
 		FBiomesConfig.syncConfig();
-		FBiomes.init();
+		PacketHandler.initPackets();
 	 }
 	 
 	 @EventHandler

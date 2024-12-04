@@ -1,10 +1,11 @@
-package net.smileycorp.fbiomes.client;
+package net.smileycorp.fbiomes.client.entity;
 
 import net.minecraft.client.renderer.*;
 import net.minecraft.client.renderer.entity.RenderLiving;
 import net.minecraft.client.renderer.entity.RenderManager;
 import net.minecraft.client.renderer.vertex.DefaultVertexFormats;
 import net.minecraft.util.ResourceLocation;
+import net.smileycorp.fbiomes.client.entity.model.ModelPixie;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
 

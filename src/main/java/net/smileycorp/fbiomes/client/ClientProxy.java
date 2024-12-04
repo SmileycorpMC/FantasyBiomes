@@ -5,9 +5,11 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.block.statemap.DefaultStateMapper;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
+import net.minecraft.client.renderer.texture.TextureMap;
 import net.minecraft.item.Item;
 import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
@@ -16,6 +18,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.atlas.api.block.wood.WoodVariant;
 import net.smileycorp.atlas.api.client.WoodStateMapper;
+import net.smileycorp.fbiomes.client.entity.RenderPixie;
+import net.smileycorp.fbiomes.client.particle.ParticlePixel;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.blocks.BlockFBMushroom;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
@@ -59,6 +63,12 @@ public class ClientProxy {
 	public static void blockColour(ColorHandlerEvent.Block event) {
 		BlockColors colours = event.getBlockColors();
 		colours.registerBlockColorHandler(VanillaLeavesColours.INSTANCE, FBiomesBlocks.VANILLA_LEAVES);
+	}
+	
+	@SubscribeEvent
+	public static void mapTextures(TextureStitchEvent event) {
+		TextureMap map = event.getMap();
+		ParticlePixel.SPRITE = map.registerSprite(Constants.loc("particle/pixel"));
 	}
 	
 }
