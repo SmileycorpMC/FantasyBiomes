@@ -17,11 +17,15 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
+import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.fbiomes.common.Constants;
+import net.smileycorp.fbiomes.common.EnumFBiomesParticle;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomShape;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomVariant;
+import net.smileycorp.fbiomes.common.network.FBiomesParticleMessage;
+import net.smileycorp.fbiomes.common.network.PacketHandler;
 
 import java.util.Random;
 
@@ -110,9 +114,22 @@ public class BlockBigMushroom extends BlockBase {
 	
 	@Override
 	public void onLanded(World world, Entity entity) {
-		IBlockState state = world.getBlockState(entity.getPosition().down());
-		if (entity.isSneaking() |! isBouncy(state)) super.onLanded(world, entity);
-		else if (entity.motionY < 0.02) entity.motionY = Math.min(-entity.motionY * getBounceSpeed(state), getMaxBounce(state));
+		BlockPos pos = entity.getPosition().down();
+		IBlockState state = world.getBlockState(pos);
+		if (!isBouncy(state)) super.onLanded(world, entity);
+		else if (entity.motionY < -0.02) {
+			if (world.isAirBlock(pos.down())) for (int i = 0; i < world.rand.nextInt(3) + 3; i++) {
+				PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new FBiomesParticleMessage(EnumFBiomesParticle.PIXEL,
+								pos.getX() + world.rand.nextFloat(), pos.getY() - 0.1f, pos.getZ() + world.rand.nextFloat(), getSporeColour(state)),
+						new NetworkRegistry.TargetPoint(entity.dimension, pos.getX(), pos.getY(), pos.getZ(), 32));
+			}
+			if (entity.isSneaking()) super.onLanded(world, entity);
+			else entity.motionY = Math.min(-entity.motionY * getBounceSpeed(state), getMaxBounce(state));
+		}
+	}
+	
+	protected double getSporeColour(IBlockState state) {
+		return 0x899989;
 	}
 	
 	protected boolean isBouncy(IBlockState state) {

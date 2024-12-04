@@ -84,4 +84,9 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 		return state.getBlock() == this ? 1.3f : 0;
 	}
 	
+	@Override
+	protected double getSporeColour(IBlockState state) {
+		return state.getValue(VARIANT).getColour();
+	}
+	
 }
