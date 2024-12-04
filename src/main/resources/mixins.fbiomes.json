@@ -3,7 +3,7 @@
   "package": "net.smileycorp.fbiomes.mixin",
   "refmap": "mixins.fbiomes.refmap.json",
   "mixins": [
-
+    "MixinPotionEffect"
   ],
   "client": [
   ],
