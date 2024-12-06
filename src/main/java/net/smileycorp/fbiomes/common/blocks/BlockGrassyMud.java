@@ -35,7 +35,7 @@ public class BlockGrassyMud extends BlockGrassBase {
     
     @Override
     protected BlockStateContainer createBlockState() {
-        return new BlockStateContainer(this, BlockMud.VARIANT);
+        return new BlockStateContainer(this, BlockMud.VARIANT, SNOWY);
     }
     
     @Override
