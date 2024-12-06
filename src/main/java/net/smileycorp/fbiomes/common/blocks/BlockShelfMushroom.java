@@ -41,7 +41,7 @@ public class BlockShelfMushroom extends BlockBush implements BlockProperties {
 		setSoundType(SoundType.PLANT);
 		setUnlocalizedName(Constants.name(name));
 		setRegistryName(Constants.loc(name.toLowerCase()));
-		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.UP));
+		setDefaultState(blockState.getBaseState().withProperty(FACING, EnumFacing.NORTH));
 	}
 	
 	@Override
