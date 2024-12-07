@@ -65,7 +65,7 @@ public class BlockGrassyMud extends BlockGrassBase {
     
     @Override
     public String byMeta(int meta) {
-        return EnumMudType.get(meta).getName();
+        return "grassy_" + EnumMudType.get(meta).getName();
     }
     
 	@Override
