@@ -1,14 +1,15 @@
 package net.smileycorp.fbiomes.client.particle;
 
+import net.minecraft.client.particle.Particle;
 import net.minecraft.client.particle.ParticleSpell;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.World;
 
-public class ParticlePixel extends ParticleSpell {
+public class ParticlePixel extends Particle {
     
     public static TextureAtlasSprite SPRITE;
     
-    public ParticlePixel(World world, double x, double y, double z, int colour) {
+    public ParticlePixel(World world, double x, double y, double z, int colour, int maxAge, double motionX, double motionY, double motionZ) {
         super(world, x, y, z, 0, 0, 0);
         setPosition(x, y, z);
         setRBGColorF((colour >> 16) / 255f, (colour >> 8 & 255) / 255f, (colour & 255) / 255f);
@@ -17,6 +18,23 @@ public class ParticlePixel extends ParticleSpell {
         particleTextureJitterY = 0;
         particleTextureIndexX = 0;
         particleTextureIndexY = 0;
+        this.motionX = motionX;
+        this.motionY = motionY;
+        this.motionZ = motionZ;
+        particleMaxAge = maxAge;
+        particleScale = 0.5f;
+        setSize(0.05f, 0.05f);
+    }
+    
+    @Override
+    public void onUpdate() {
+        prevPosX = posX;
+        prevPosY = posY;
+        prevPosZ = posZ;
+        if (particleAge++ >= particleMaxAge) setExpired();
+        posX += motionX;
+        posY += motionY;
+        posZ += motionZ;
     }
     
     @Override

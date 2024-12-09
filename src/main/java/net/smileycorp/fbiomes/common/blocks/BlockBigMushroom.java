@@ -118,14 +118,20 @@ public class BlockBigMushroom extends BlockBase {
 		IBlockState state = world.getBlockState(pos);
 		if (!isBouncy(state)) super.onLanded(world, entity);
 		else if (entity.motionY < -0.02) {
-			if (world.isAirBlock(pos.down())) for (int i = 0; i < world.rand.nextInt(3) + 3; i++) {
-				PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new FBiomesParticleMessage(EnumFBiomesParticle.PIXEL,
-								pos.getX() + world.rand.nextFloat(), pos.getY() - 0.1f, pos.getZ() + world.rand.nextFloat(), getSporeColour(state)),
-						new NetworkRegistry.TargetPoint(entity.dimension, pos.getX(), pos.getY(), pos.getZ(), 32));
-			}
+			BlockPos down = pos.down();
+			if (world.isAirBlock(down)) spawnSpores(world, pos, state, entity);
+			else if (world.isAirBlock(down.down()) && isBouncy(world.getBlockState(down))) spawnSpores(world, down, state, entity);
 			if (entity.isSneaking()) super.onLanded(world, entity);
 			else entity.motionY = Math.min(-entity.motionY * getBounceSpeed(state), getMaxBounce(state));
 		}
+	}
+	
+	protected void spawnSpores(World world, BlockPos pos, IBlockState state, Entity entity) {
+		for (int i = 0; i < world.rand.nextInt(3) + 3; i++)
+			PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new FBiomesParticleMessage(EnumFBiomesParticle.PIXEL,
+					pos.getX() + world.rand.nextFloat(), pos.getY() - 0.1f, pos.getZ() + world.rand.nextFloat(),
+							getSporeColour(state), 100d, 0d, -0.05, 0d),
+					new NetworkRegistry.TargetPoint(entity.dimension, pos.getX(), pos.getY(), pos.getZ(), 32));
 	}
 	
 	protected double getSporeColour(IBlockState state) {

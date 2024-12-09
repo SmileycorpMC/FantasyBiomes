@@ -7,7 +7,9 @@ import java.util.function.Function;
 
 public enum EnumFBiomesParticle {
     
-    PIXEL((buf, data) -> buf.writeInt((int)(double)data[0]), (buf -> new Double[] {(double) buf.readInt()})),;
+    PIXEL((buf, data) -> {buf.writeInt((int)(double)data[0]); buf.writeInt((int)(double)data[1]); buf.writeDouble(data[2]);
+        buf.writeDouble(data[3]); buf.writeDouble(data[4]);},
+            buf -> new Double[] {(double) buf.readInt(), (double) buf.readInt(), buf.readDouble(), buf.readDouble(), buf.readDouble()}),;
     
     private final BiConsumer<ByteBuf, Double[]> writeFunc;
     private final Function<ByteBuf, Double[]> readFunc;

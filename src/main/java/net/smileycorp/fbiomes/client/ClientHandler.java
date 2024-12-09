@@ -10,7 +10,7 @@ public class ClientHandler {
         Minecraft mc = Minecraft.getMinecraft();
         switch (type) {
             case PIXEL:
-                mc.effectRenderer.addEffect(new ParticlePixel(mc.world, x, y, z, (int)(double)data[0]));
+                mc.effectRenderer.addEffect(new ParticlePixel(mc.world, x, y, z, (int)(double)data[0], (int)(double)data[1], data[2], data[3], data[4]));
                 break;
         }
     }

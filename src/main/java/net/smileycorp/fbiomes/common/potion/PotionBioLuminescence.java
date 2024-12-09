@@ -30,7 +30,8 @@ public class PotionBioLuminescence extends PotionFBiomes {
         if (rand.nextBoolean()) return;
         PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new FBiomesParticleMessage(EnumFBiomesParticle.PIXEL,
                         entity.posX + (rand.nextDouble() - 0.5) * (double)entity.width, entity.posY + rand.nextDouble() * (double)entity.height,
-                        entity.posZ + (rand.nextDouble() - 0.5) * (double)entity.width, (double) EnumGlowshroomVariant.get(amplifier).getColour()),
+                        entity.posZ + (rand.nextDouble() - 0.5) * (double)entity.width,
+                        (double) EnumGlowshroomVariant.get(amplifier).getColour(), 50d, 0d, -0.05, 0d),
                 new NetworkRegistry.TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, 32));
     }
     
