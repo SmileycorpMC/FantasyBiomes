@@ -24,13 +24,12 @@ public class BlockGrassyMud extends BlockGrassBase {
     
 	public BlockGrassyMud() {
 		super("grassy_mud", Constants.MODID, FantasyBiomes.TAB, BlockGrassyMud::removeGrass);
-        setDefaultState(blockState.getBaseState().withProperty(BlockMud.VARIANT, EnumMudType.MUD));
+        setDefaultState(blockState.getBaseState().withProperty(BlockMud.VARIANT, EnumMudType.MUD).withProperty(SNOWY, false));
 	}
     
     @Override
     public IBlockState getStateForPlacement(World world, BlockPos pos, EnumFacing facing, float hitX, float hitY, float hitZ, int meta, EntityLivingBase placer, EnumHand hand) {
-        ItemStack stack = placer.getHeldItem(hand);
-        return getDefaultState().withProperty(BlockMud.VARIANT, EnumMudType.get(stack.getMetadata()));
+        return getDefaultState().withProperty(BlockMud.VARIANT, EnumMudType.get(placer.getHeldItem(hand).getMetadata()));
     }
     
     @Override

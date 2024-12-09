@@ -1,0 +1,9 @@
+{
+    "parent": "atlaslib:block/grassy_cube",
+    "textures": {
+        "particle": "fbiomes:blocks/peat",
+        "base": "fbiomes:blocks/peat",
+        "top": "blocks/snow",
+        "side": "fbiomes:blocks/snowy_grass_side"
+    }
+}

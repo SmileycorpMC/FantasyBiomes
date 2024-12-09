@@ -1,0 +1,47 @@
+{
+    "variants": {
+        "normal": {
+            "model": "fbiomes:grassy_mud"
+        },
+        "snowy=false,variant=mud": [
+            {
+                "model": "fbiomes:grassy_mud"
+            },
+            {
+                "model": "fbiomes:grassy_mud",
+                "y": 90
+            },
+            {
+                "model": "fbiomes:grassy_mud",
+                "y": 180
+            },
+            {
+                "model": "fbiomes:grassy_mud",
+                "y": 270
+            }
+        ],
+        "snowy=true,variant=mud": {
+            "model": "fbiomes:grassy_mud_snowed"
+        },
+        "snowy=false,variant=peat": [
+            {
+                "model": "fbiomes:grassy_peat"
+            },
+            {
+                "model": "fbiomes:grassy_peat",
+                "y": 90
+            },
+            {
+                "model": "fbiomes:grassy_peat",
+                "y": 180
+            },
+            {
+                "model": "fbiomes:grassy_peat",
+                "y": 270
+            }
+        ],
+        "snowy=true,variant=peat": {
+            "model": "fbiomes:grassy_peat_snowed"
+        }
+    }
+}

@@ -18,6 +18,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.atlas.api.block.wood.WoodVariant;
 import net.smileycorp.atlas.api.client.WoodStateMapper;
+import net.smileycorp.atlas.api.client.colour.BlockGrassColour;
+import net.smileycorp.atlas.api.client.colour.ItemFoliageColour;
 import net.smileycorp.fbiomes.client.entity.RenderPixie;
 import net.smileycorp.fbiomes.client.particle.ParticlePixel;
 import net.smileycorp.fbiomes.common.Constants;
@@ -57,12 +59,14 @@ public class ClientProxy {
 	public static void itemColour(ColorHandlerEvent.Item event) {
 		ItemColors colours = event.getItemColors();
 		colours.registerItemColorHandler(VanillaLeavesColours.INSTANCE, FBiomesBlocks.VANILLA_LEAVES);
+		colours.registerItemColorHandler(new ItemFoliageColour(), FBiomesBlocks.GRASSY_MUD);
 	}
 	
 	@SubscribeEvent
 	public static void blockColour(ColorHandlerEvent.Block event) {
 		BlockColors colours = event.getBlockColors();
 		colours.registerBlockColorHandler(VanillaLeavesColours.INSTANCE, FBiomesBlocks.VANILLA_LEAVES);
+		colours.registerBlockColorHandler(new BlockGrassColour(), FBiomesBlocks.GRASSY_MUD);
 	}
 	
 	@SubscribeEvent

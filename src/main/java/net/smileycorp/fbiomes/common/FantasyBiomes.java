@@ -10,7 +10,6 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.network.PacketHandler;
-import net.smileycorp.fbiomes.common.world.biomes.FBiomes;
 
 @Mod(modid = Constants.MODID)
 public class FantasyBiomes {

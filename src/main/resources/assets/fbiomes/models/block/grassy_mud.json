@@ -1,0 +1,9 @@
+{
+    "parent": "atlaslib:block/grassy_cube",
+    "textures": {
+        "particle": "fbiomes:blocks/mud",
+        "base": "fbiomes:blocks/mud",
+        "top": "fbiomes:blocks/grassy_mud_top",
+        "side": "blocks/grass_side_overlay"
+    }
+}
