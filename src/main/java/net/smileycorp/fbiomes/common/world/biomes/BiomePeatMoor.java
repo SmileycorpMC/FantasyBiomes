@@ -25,6 +25,7 @@ import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMudType;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenBoulder;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenBrambles;
+import net.smileycorp.fbiomes.common.world.gen.features.WorldGenGraniteBoulder;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenStoneCircle;
 
 import java.util.Random;
@@ -34,7 +35,7 @@ public class BiomePeatMoor extends Biome {
 	WorldGenStoneCircle circle = new WorldGenStoneCircle();
 
 	public BiomePeatMoor() {
-		super(new BiomeProperties("Moorland").setBaseHeight(1.1F).setHeightVariation(0.5F));
+		super(new BiomeProperties("Moorland").setBaseHeight(1.1F).setHeightVariation(0.3F));
 		topBlock = Blocks.GRASS.getDefaultState();
 		fillerBlock = Blocks.DIRT.getDefaultState();
 		setRegistryName(Constants.loc("Moorland"));
@@ -100,62 +101,44 @@ public class BiomePeatMoor extends Biome {
 		}
 		
 		@Override
-	    public void decorate(World world, Random rand, Biome biome, BlockPos pos)
-	    {
-	        if (this.decorating)
-	        {
-	            throw new RuntimeException("Already decorating");
-	        }
-	        else
-	        {
-	        	WorldGenerator BOULDER_GENERATOR = new WorldGenBoulder();
-	            this.chunkProviderSettings = ChunkGeneratorSettings.Factory.jsonToFactory(world.getWorldInfo().getGeneratorOptions()).build();
-	            this.chunkPos = pos;
-	            this.dirtGen = new WorldGenMinable(Blocks.DIRT.getDefaultState(), this.chunkProviderSettings.dirtSize);
-	            this.gravelOreGen = new WorldGenMinable(Blocks.GRAVEL.getDefaultState(), this.chunkProviderSettings.gravelSize);
-	            this.graniteGen = new WorldGenMinable(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), this.chunkProviderSettings.graniteSize);
-	            this.dioriteGen = new WorldGenMinable(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE), this.chunkProviderSettings.dioriteSize);
-	            this.andesiteGen = new WorldGenMinable(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE), this.chunkProviderSettings.andesiteSize);
-	            this.coalGen = new WorldGenMinable(Blocks.COAL_ORE.getDefaultState(), this.chunkProviderSettings.coalSize);
-	            this.ironGen = new WorldGenMinable(Blocks.IRON_ORE.getDefaultState(), this.chunkProviderSettings.ironSize);
-	            this.goldGen = new WorldGenMinable(Blocks.GOLD_ORE.getDefaultState(), this.chunkProviderSettings.goldSize);
-	            this.redstoneGen = new WorldGenMinable(Blocks.REDSTONE_ORE.getDefaultState(), this.chunkProviderSettings.redstoneSize);
-	            this.diamondGen = new WorldGenMinable(Blocks.DIAMOND_ORE.getDefaultState(), this.chunkProviderSettings.diamondSize);
-	            this.lapisGen = new WorldGenMinable(Blocks.LAPIS_ORE.getDefaultState(), this.chunkProviderSettings.lapisSize);
-	            DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
-	            WorldGenerator BRAMBLE_GENERATOR = new WorldGenBrambles();
-	            if(TerrainGen.decorate(world, rand, new net.minecraft.util.math.ChunkPos(pos), EventType.GRASS)) {
-	                for (int i = 0; i < 16; ++i) {
-	                    int j = rand.nextInt(16) + 8;
-	                    int k = rand.nextInt(16) + 8;
-	                    int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
-	                    
-	                    BRAMBLE_GENERATOR.generate(world, rand, pos.add(j, l, k));
-	                    DOUBLE_PLANT_GENERATOR.generate(world, rand, pos.add(j, l, k));
-	                }
-	            }
-				for (int i = 0; i < 128; ++i)
-				{
-					if (rand.nextInt(5) == 0 && TerrainGen.decorate(world, rand, new ChunkPos(pos), pos, EventType.GRASS)) {
-						int j = rand.nextInt(16) + 8;
-						int k = rand.nextInt(16) + 8;
-						int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
-						if (rand.nextInt(3)==1) {
-							DOUBLE_PLANT_GENERATOR.generate(world, rand, pos.add(j, l, k));
-						} else {
-							getRandomWorldGenForGrass(rand).generate(world, rand, pos.add(j, l, k));
-						}
-					}
-				}
-	            int j = rand.nextInt(16) + 8;
-                int k = rand.nextInt(16) + 8;
-                int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
-                if (rand.nextInt(6)==0) BOULDER_GENERATOR.generate(world, rand, pos.add(j, l, k));
-                else if (rand.nextInt(16)==0) circle.generate(world, rand, pos.add(j, l, k));
-	            generateTrees(world, biome, rand, pos);
-	            this.decorating = false;
-	        }
-	    }
+	    public void decorate(World world, Random rand, Biome biome, BlockPos pos) {
+	        if (decorating) throw new RuntimeException("Already decorating");
+			chunkProviderSettings = ChunkGeneratorSettings.Factory.jsonToFactory(world.getWorldInfo().getGeneratorOptions()).build();
+			chunkPos = pos;
+			dirtGen = new WorldGenMinable(Blocks.DIRT.getDefaultState(), chunkProviderSettings.dirtSize);
+			gravelOreGen = new WorldGenMinable(Blocks.GRAVEL.getDefaultState(), chunkProviderSettings.gravelSize);
+			graniteGen = new WorldGenMinable(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), chunkProviderSettings.graniteSize);
+			dioriteGen = new WorldGenMinable(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE), chunkProviderSettings.dioriteSize);
+			andesiteGen = new WorldGenMinable(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE), chunkProviderSettings.andesiteSize);
+			coalGen = new WorldGenMinable(Blocks.COAL_ORE.getDefaultState(), chunkProviderSettings.coalSize);
+			ironGen = new WorldGenMinable(Blocks.IRON_ORE.getDefaultState(), chunkProviderSettings.ironSize);
+			goldGen = new WorldGenMinable(Blocks.GOLD_ORE.getDefaultState(), chunkProviderSettings.goldSize);
+			redstoneGen = new WorldGenMinable(Blocks.REDSTONE_ORE.getDefaultState(), chunkProviderSettings.redstoneSize);
+			diamondGen = new WorldGenMinable(Blocks.DIAMOND_ORE.getDefaultState(), chunkProviderSettings.diamondSize);
+			lapisGen = new WorldGenMinable(Blocks.LAPIS_ORE.getDefaultState(), chunkProviderSettings.lapisSize);
+			DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
+			WorldGenerator BRAMBLE_GENERATOR = new WorldGenBrambles();
+			if(TerrainGen.decorate(world, rand, new net.minecraft.util.math.ChunkPos(pos), EventType.GRASS)) for (int i = 0; i < 16; ++i) {
+				int j = rand.nextInt(16) + 8;
+				int k = rand.nextInt(16) + 8;
+				int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
+				BRAMBLE_GENERATOR.generate(world, rand, pos.add(j, l, k));
+				DOUBLE_PLANT_GENERATOR.generate(world, rand, pos.add(j, l, k));
+			}
+			for (int i = 0; i < 128; ++i) if (rand.nextInt(5) == 0 && TerrainGen.decorate(world, rand, new ChunkPos(pos), pos, EventType.GRASS)) {
+				int j = rand.nextInt(16) + 8;
+				int k = rand.nextInt(16) + 8;
+				int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
+				(rand.nextInt(3) == 1 ? DOUBLE_PLANT_GENERATOR : getRandomWorldGenForGrass(rand)).generate(world, rand, pos.add(j, l, k));
+			}
+			int j = rand.nextInt(16) + 8;
+			int k = rand.nextInt(16) + 8;
+			int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
+			if (rand.nextInt(6) == 0) (rand.nextInt(3) == 0 ? new WorldGenGraniteBoulder() : new WorldGenBoulder()).generate(world, rand, pos.add(j, l, k));
+			else if (rand.nextInt(16) == 0) circle.generate(world, rand, pos.add(j, l, k));
+			generateTrees(world, biome, rand, pos);
+			decorating = false;
+		}
 	
 		private void generateTrees(World world, Biome biome, Random rand, BlockPos chunkPos)
 	    {
