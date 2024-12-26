@@ -63,21 +63,16 @@ public class BiomePeatMoor extends Biome {
 		 int i = x & 15;
 	     int k = z & 15;
 	     int y = 0;
-	     for (int j = 255; j >= 0; --j) {
-	    	 if (chunk.getBlockState(i, j, k).isFullCube()) {
-	    		 y = j;
-	    		 break;
-	    	 }
+	     for (int j = 255; j >= 0; --j) if (chunk.getBlockState(i, j, k).isFullCube()) {
+			 y = j;
+			 break;
 	     }
 	     //System.out.println(x + ", " + y + ", " + z);
-	     if ((y < 82 && y > 78) || (y < 74 && y > 70) || (y < 66)) {
-	    	 for (int j = y - 2; j <= y; j++) {
-	    		 if (j<= 0 || j>=255) break;
-	    		// if (chunk.getBlockState(i, j, k).getBlock() == Blocks.DIRT || chunk.getBlockState(i, j, k).getBlock() == Blocks.GRASS) {
-	    			 chunk.setBlockState(i, j, k, FBiomesBlocks.MUD.getDefaultState().withProperty(BlockMud.VARIANT, EnumMudType.PEAT));
-	    		 //}
-	    	 }
-	     }
+	     if ((y < 82 && y > 78) || (y < 74 && y > 70) || (y < 66)) for (int j = y - 2; j <= y; j++) {
+			 if (j <= 0 || j >= 255) continue;
+			 chunk.setBlockState(i, j, k,(j == y ? FBiomesBlocks.GRASSY_MUD : FBiomesBlocks.MUD).getDefaultState()
+					 .withProperty(BlockMud.VARIANT, EnumMudType.PEAT));
+		 }
 	}
 	
 	@Override

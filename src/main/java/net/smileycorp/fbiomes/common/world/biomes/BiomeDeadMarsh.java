@@ -60,15 +60,13 @@ public class BiomeDeadMarsh extends Biome {
 		if (variation > 0) {
 			int i = x & 15;
 			int j = z & 15;
-			for (int k = 255; k >= 0; --k)
-				if (chunk.getBlockState(j, k, i).getMaterial() != Material.AIR) {
-					if (k == 62 && chunk.getBlockState(j, k, i).getBlock() != Blocks.WATER)
-						chunk.setBlockState(j, k, i, WATER);
-					break;
-				}
+			for (int k = 255; k >= 0; --k) if (chunk.getBlockState(j, k, i).getMaterial() != Material.AIR) {
+				if (k == 62 && chunk.getBlockState(j, k, i).getBlock() != Blocks.WATER) chunk.setBlockState(j, k, i, WATER);
+				break;
+			}
 		}
 		boolean mud = GRASS_COLOR_NOISE.getValue((double)x * 0.7D, (double)z * 0.7D) > 0;
-		topBlock = (mud ? FBiomesBlocks.MUD : Blocks.GRASS).getDefaultState();
+		topBlock = (mud ? FBiomesBlocks.GRASSY_MUD : Blocks.GRASS).getDefaultState();
 		fillerBlock = (mud ? FBiomesBlocks.MUD : Blocks.DIRT).getDefaultState();
 		super.genTerrainBlocks(world, rand, chunk, x, z, noise);
 	}
