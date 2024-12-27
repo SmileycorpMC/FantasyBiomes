@@ -53,13 +53,13 @@ public class BiomePeatMoor extends Biome {
     }
 	
 	 @Override
-	@SideOnly(Side.CLIENT)
+	 @SideOnly(Side.CLIENT)
 	 public int getFoliageColorAtPos(BlockPos pos) {
 		 return 0x629E48;
 	 }
 	 
 	 @Override
-	public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunk, int x, int z, double noise) {
+	 public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunk, int x, int z, double noise) {
 		 super.genTerrainBlocks(world, rand, chunk, x, z, noise);
 		 int i = x & 15;
 	     int k = z & 15;
