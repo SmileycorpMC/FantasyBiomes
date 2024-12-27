@@ -33,7 +33,7 @@ public class WorldGenHugeFBMushroom extends WorldGenHugeMushroomBase {
 	
 	@Override
 	protected void pickType(Random rand) {
-		EnumMushroomVariant variant = EnumMushroomVariant.values()[rand.nextInt(EnumMushroomVariant.values().length)];
+		EnumMushroomVariant variant = EnumMushroomVariant.values()[rand.nextInt(1) + 1];
 		stem = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.STEM).withProperty(BlockBigMushroom.VARIANT, variant);
 		cap = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.CAP).withProperty(BlockBigMushroom.VARIANT, variant);
 		spot = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.SPOT).withProperty(BlockBigMushroom.VARIANT, variant);

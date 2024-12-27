@@ -24,7 +24,7 @@ public class WorldGenBigFBMushroom extends WorldGenerator {
 	protected final IBlockState spot;
 	
 	public WorldGenBigFBMushroom(Random rand) {
-		this(EnumMushroomVariant.values()[rand.nextInt(EnumMushroomVariant.values().length)]);
+		this(EnumMushroomVariant.values()[rand.nextInt(1) + 1]);
 	}
 	
 	public WorldGenBigFBMushroom(EnumMushroomVariant type) {
