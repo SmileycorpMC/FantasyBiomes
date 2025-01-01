@@ -27,7 +27,7 @@ public class WorldGenShroom extends WorldGenerator {
 	}
 
 	private Block getRandomShroom(Random rand) {
-		return rand.nextFloat() < 0.4 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)] :
+		return rand.nextInt(5) < 2 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)] :
 			rand.nextBoolean() ? FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)] :
 					rand.nextBoolean() ? Blocks.RED_MUSHROOM : Blocks.BROWN_MUSHROOM;
 	}

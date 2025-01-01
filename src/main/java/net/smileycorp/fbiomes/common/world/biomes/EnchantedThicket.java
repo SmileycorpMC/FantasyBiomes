@@ -118,7 +118,7 @@ public class EnchantedThicket extends Biome {
 				//trees and big mushrooms
 				for (int i = 0; i < 8; ++i) for (int j = 0; j < 8; ++j) {
 					BlockPos blockpos =  world.getHeight(pos.add(i * 2 + 1 + 8 + rand.nextInt(2), 0, j * 2 + 1 + 8 + rand.nextInt(2)));
-                    if (rand.nextFloat() < 0.3) genBigMushroom(world, rand, blockpos, canopy_trees);
+                    if (rand.nextInt(10) < 3) genBigMushroom(world, rand, blockpos, canopy_trees);
                     else genTree(world, rand, blockpos, canopy_trees);
                 }
 				for (BlockPos tree : canopy_trees) CANOPY_TREE_GENERATOR.generate(world, rand, tree);
@@ -174,8 +174,8 @@ public class EnchantedThicket extends Biome {
 		}
 		
 		private WorldGenerator getRandomBigMushroom(Random rand, boolean canHuge) {
-			return rand.nextFloat() < 0.3 ? canHuge ? new WorldGenHugeGlowshroom(rand)
-					: new WorldGenBigGlowshroom(rand) : rand.nextFloat() < 0.4 ? canHuge ?
+			return rand.nextInt(10) < 3 ? canHuge ? new WorldGenHugeGlowshroom(rand)
+					: new WorldGenBigGlowshroom(rand) : rand.nextInt(5) < 2 ? canHuge ?
 					new WorldGenHugeFBMushroom(rand) : rand.nextInt(3) == 0 ? new WorldGenSmallToadstool() :
 					new WorldGenBigFBMushroom(rand) : new WorldGenBigMushroom();
 		}

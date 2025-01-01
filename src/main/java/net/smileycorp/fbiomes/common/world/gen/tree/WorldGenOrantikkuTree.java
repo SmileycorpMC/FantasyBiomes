@@ -105,10 +105,10 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 		if (!natural) return;
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) if (rand.nextBoolean() && world.isAirBlock(pos.offset(facing)))
 			setBlockAndNotifyAdequately(world, pos.offset(facing), FBiomesBlocks.LICHEN.getDefaultState().withProperty(BlockLichen.FACING, facing));
-		if (rand.nextFloat() < 0.1775) {
+		if (rand.nextInt(5) > 1) {
 			EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
 			BlockPos facePos = pos.offset(facing);
-			IBlockState shroom = (rand.nextFloat() < 0.4 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
+			IBlockState shroom = (rand.nextInt(2) < 2 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
 				FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)]).getDefaultState();
 			if (world.isAirBlock(facePos)) setBlockAndNotifyAdequately(world, facePos, shroom.withProperty(BlockFBMushroom.FACING, facing));
 		}
@@ -122,7 +122,7 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 			mutable.setPos(bpos.x, bpos.y, bpos.z);
 			if (world.isAirBlock(mutable) || world.getBlockState(mutable) == LEAVES) setBlockAndNotifyAdequately(world, mutable, BARK);
 			generateLeaves(world, mutable, i < 2 ? 6 : 5);
-			dir = dir.addVector(0.5 * (rand.nextFloat() - 0.5), 0.5 * (rand.nextFloat() - 0.5), 0.5 * (rand.nextFloat() - 0.5));
+			dir = dir.addVector(0.5 * (0.1f * rand.nextInt(10) - 0.5), 0.5 * (0.1f * rand.nextInt(10) - 0.5), 0.5 * (0.1f * rand.nextInt(10) - 0.5));
 		}
 	}
 	

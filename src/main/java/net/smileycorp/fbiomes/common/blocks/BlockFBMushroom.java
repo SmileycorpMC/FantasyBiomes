@@ -133,7 +133,7 @@ public class BlockFBMushroom extends BlockBush implements IGrowable, BlockProper
 	
 	@Override
 	public boolean canUseBonemeal(World world, Random rand, BlockPos blockPos, IBlockState state) {
-		return rand.nextFloat() < 0.4;
+		return rand.nextInt(5) < 2;
 	}
 	
 	@Override

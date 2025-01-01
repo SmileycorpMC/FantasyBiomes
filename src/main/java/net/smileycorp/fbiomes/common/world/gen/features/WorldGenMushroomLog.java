@@ -42,8 +42,8 @@ public class WorldGenMushroomLog extends WorldGenerator {
         pos = pos.offset(facing);
         if (rand.nextBoolean() && world.isAirBlock(pos))
             setBlockAndNotifyAdequately(world, pos, FBiomesBlocks.LICHEN.getDefaultState().withProperty(BlockLichen.FACING, facing));
-        else if (rand.nextFloat() < 0.1) if (world.isAirBlock(pos)) setBlockAndNotifyAdequately(world, pos,
-                (rand.nextFloat() < 0.4 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
+        else if (rand.nextInt(10) < 1) if (world.isAirBlock(pos)) setBlockAndNotifyAdequately(world, pos,
+                (rand.nextInt(5) < 2 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
                     FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)]).getDefaultState().withProperty(BlockFBMushroom.FACING, facing));
     }
     
