@@ -38,7 +38,7 @@ public class WorldGenGoldenBirchTree extends WorldGenBirchTree {
         if (rand.nextInt(5) > 1) return;
         EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
         BlockPos facePos = pos.offset(facing);
-        IBlockState shroom = (rand.nextFloat(5) < 2 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
+        IBlockState shroom = (rand.nextInt(5) < 2 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
                 FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)]).getDefaultState();
         if (world.isAirBlock(facePos)) setBlockAndNotifyAdequately(world, facePos, shroom.withProperty(BlockFBMushroom.FACING, facing));
     }
