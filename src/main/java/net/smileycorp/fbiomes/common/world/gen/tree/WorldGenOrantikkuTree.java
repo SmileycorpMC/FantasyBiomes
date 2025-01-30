@@ -69,7 +69,7 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 		for (int i = 0; i < 4; i++) generateRoot(world, rand, pos, DirectionUtils.getXZDirection(i));
 		//branches
 		setBlockAndNotifyAdequately(world, pos.up(h), BARK);
-		generateLeaves(world, pos.up(h - 1), 7);
+		//generateLeaves(world, pos.up(h - 1), 7);
 		int branches = rand.nextInt(4) + 5;
 		for (int i = 0; i < branches; i++) generateBranch(world, rand, new BlockPos.MutableBlockPos(pos.up(h)), rand.nextInt(5) + 7,
 					getBranchDir(2f * Math.PI * (float) i / (float) branches, rand));
@@ -121,14 +121,14 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 			bpos = bpos.add(dir.normalize());
 			mutable.setPos(bpos.x, bpos.y, bpos.z);
 			if (world.isAirBlock(mutable) || world.getBlockState(mutable) == LEAVES) setBlockAndNotifyAdequately(world, mutable, BARK);
-			generateLeaves(world, mutable, i < 2 ? 6 : 5);
-			dir = dir.addVector(0.5 * (0.1f * rand.nextInt(10) - 0.5), 0.5 * (0.1f * rand.nextInt(10) - 0.5), 0.5 * (0.1f * rand.nextInt(10) - 0.5));
+			if (i > 3) generateLeaves(world, mutable, 4 + rand.nextInt(3));
+			dir = dir.addVector(0.5 * (0.1f * rand.nextInt(10) - 0.5), 0.2 * (0.1f * rand.nextInt(3) - 0.2), 0.5 * (0.1f * rand.nextInt(10) - 0.5));
 		}
 	}
 	
 	private void generateLeaves(World world, BlockPos pos, int r) {
 		for (int i = -r; i <= r; i++) for (int j = -r; j <= r; j++) for (int k = -r; k <= r; k++) {
-			if (i * i + j * j + k * k >= r * r) continue;
+			if (j >= r -1 || j < -1 || i * i + j * j + k * k >= r * r) continue;
 			BlockPos newpos = pos.north(i).up(j).east(k);
 			IBlockState state = world.getBlockState(newpos);
 			if (state == LEAVES) continue;
@@ -138,7 +138,7 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 	}
 	
 	private Vec3d getBranchDir(double angle, Random rand) {
-		return new Vec3d(MathHelper.cos((float) angle) + (rand.nextFloat() - 0.5f) * 0.2f, 0.1,
+		return new Vec3d(MathHelper.cos((float) angle) + (rand.nextFloat() - 0.5f) * 0.2f, 0.05f * rand.nextInt(5) + 0.2,
 				MathHelper.sin((float) angle) + (rand.nextFloat() - 0.5f) * 0.2f);
 	}
 	
