@@ -2,6 +2,7 @@ package net.smileycorp.fbiomes.common.blocks;
 
 import net.minecraft.block.BlockVine;
 import net.minecraft.block.IGrowable;
+import net.minecraft.block.SoundType;
 import net.minecraft.block.properties.PropertyBool;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
@@ -22,6 +23,8 @@ public class BlockGnarledVines extends BlockVine implements IGrowable, BlockProp
 		setCreativeTab(FantasyBiomes.TAB);
 		setUnlocalizedName(Constants.name("gnarled_vine"));
 		setRegistryName(Constants.loc("gnarled_vine"));
+        setHardness(0.2F);
+        setSoundType(SoundType.PLANT);
         setDefaultState(blockState.getBaseState().withProperty(UP, false).withProperty(NORTH, false).withProperty(EAST, false)
                 .withProperty(SOUTH, false).withProperty(WEST, Boolean.valueOf(false)).withProperty(BOTTOM, false));
 	}
