@@ -127,8 +127,8 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 	}
 	
 	private void generateLeaves(World world, BlockPos pos, int r) {
-		for (int i = -r; i <= r; i++) for (int j = -r; j <= r; j++) for (int k = -r; k <= r; k++) {
-			if (j >= r -1 || j < -1 || i * i + j * j + k * k >= r * r) continue;
+		for (int i = -r; i <= r; i++) for (int j = -2; j <= r -1; j++) for (int k = -r; k <= r; k++) {
+			if (i * i + j * j + k * k >= r * r) continue;
 			BlockPos newpos = pos.north(i).up(j).east(k);
 			IBlockState state = world.getBlockState(newpos);
 			if (state == LEAVES) continue;
