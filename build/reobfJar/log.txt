@@ -1,9 +1,9 @@
 Args: "--in-jar", "O:\forge dev\1.12\FantasyBiomes\build\libs\Fantasy-Biomes-1.12.2-1.0.0.jar", "--out-jar", "O:\forge dev\1.12\FantasyBiomes\build\reobfJar\output.jar", "--srg-in", "O:\forge dev\1.12\FantasyBiomes\build\createMcpToSrg\output.tsrg", "--srg-in", "O:\forge dev\1.12\FantasyBiomes\build\tmp\compileJava\compileJava-mappings.tsrg", "--live"
 Classpath: C:\Users\Owner\.gradle\caches\forge_gradle\maven_downloader\net\md-5\SpecialSource\1.8.3\SpecialSource-1.8.3-shaded.jar
-Classpath: C:\Users\Owner\.gradle\caches\modules-2\files-2.1\curse.maven\atlas-463826\3816069\7e079dd8e533b402e718f6680d68a9ec409737c9\atlas-463826-3816069.jar
+Classpath: O:\forge dev\1.12\FantasyBiomes\libs\Atlas-Lib-1.12.2-1.1.7.jar
 Classpath: C:\Users\Owner\.gradle\caches\modules-2\files-2.1\org.spongepowered\mixin\0.8\dbe9e5db694a7c3cd644d5bb98f8a21295c75048\mixin-0.8.jar
 Classpath: C:\Users\Owner\.gradle\caches\modules-2\files-2.1\io.github.llamalad7\mixinextras-common\0.4.1\a7f425cc49de7f10d008a9a676f5f023ebac13bb\mixinextras-common-0.4.1.jar
-Classpath: C:\Users\Owner\.gradle\caches\forge_gradle\minecraft_user_repo\net\minecraftforge\forge\1.12.2-14.23.5.2860_mapped_snapshot_20171003-1.12\forge-1.12.2-14.23.5.2860_mapped_snapshot_20171003-1.12-recomp.jar
+Classpath: O:\forge dev\1.12\FantasyBiomes\build\fg_cache\net\minecraftforge\forge\1.12.2-14.23.5.2860_mapped_snapshot_20171003-1.12\forge-1.12.2-14.23.5.2860_mapped_snapshot_20171003-1.12.jar
 Classpath: C:\Users\Owner\.gradle\caches\forge_gradle\minecraft_repo\versions\1.12.2\client-extra.jar
 Classpath: C:\Users\Owner\.gradle\caches\modules-2\files-2.1\com.mojang\authlib\1.5.25\9834cdf236c22e84b946bba989e2f94ef5897c3c\authlib-1.5.25.jar
 Classpath: C:\Users\Owner\.gradle\caches\modules-2\files-2.1\com.google.code.findbugs\jsr305\3.0.1\f7be08ec23c21485b9b5a1cf1654c2ec8c58168d\jsr305-3.0.1.jar
@@ -79,5 +79,5 @@ WorkDir: O:\forge dev\1.12\FantasyBiomes\build\reobfJar
 Main: net.md_5.specialsource.SpecialSource
 ====================================
 Loading mappings
-0 packages, 3344 classes, 11915 fields, 20817 methods
+0 packages, 3344 classes, 11916 fields, 20817 methods
 Remapping final jar

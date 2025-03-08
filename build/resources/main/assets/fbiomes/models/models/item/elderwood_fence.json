@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/fence_inventory",
-  "textures": {
-    "texture": "fbiomes:blocks/elderwood_planks"
-  }
-}

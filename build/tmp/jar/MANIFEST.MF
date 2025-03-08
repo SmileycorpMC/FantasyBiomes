@@ -1,13 +1,14 @@
 Manifest-Version: 1.0
 Implementation-Title: FantasyBiomes
-MixinConfigs: mixins.crossbows.json
 Implementation-Version: 1.12.2-1.0.0
-FMLCorePluginContainsFMLMod: true
 Specification-Vendor: smileycorp
 Specification-Title: fbiomes
-Implementation-Timestamp: 2024-10-21T20:08:50+0100
+FMLAT: fbiomes_at.cfg
+Implementation-Timestamp: 2025-03-08T20:19:55+0000
 TweakClass: org.spongepowered.asm.launch.MixinTweaker
+Implementation-Vendor: smileycorp
+MixinConfigs: mixins.fbiomes.json
+FMLCorePluginContainsFMLMod: true
 ForceLoadAsMod: true
 Specification-Version: 1
-Implementation-Vendor: smileycorp
 

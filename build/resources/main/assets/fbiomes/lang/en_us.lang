@@ -1,45 +1,125 @@
-itemGroup.TabFantasyBiomes=Fantasy Biomes
+itemGroup.fbiomes=Fantasy Biomes
 
-item.fbiomes.Berries.name=Berries
-item.fbiomes.MithrilNugget.name=Mithril Nugget
-item.fbiomes.MithrilIngot.name=Mithril Ingot
-item.fbiomes.MithrilDust.name=Mithril Dust
-item.fbiomes.StarSilverNugget.name=Star-Silver Nugget
-item.fbiomes.StarSilverIngot.name=Star-Silver Ingot
-item.fbiomes.StarSilverDust.name=Star-Silver Dust
+item.fbiomes.berries.name=Berries
+item.fbiomes.mithril_nugget.name=Mithril Nugget
+item.fbiomes.mithril_ingot.name=Mithril Ingot
+item.fbiomes.mithril_dust.name=Mithril Dust
+item.fbiomes.starsilver_nugget.name=Starsilver Nugget
+item.fbiomes.starsilver_ingot.name=Starsilver Ingot
+item.fbiomes.starsilver_dust.name=Starsilver Dust
+item.fbiomes.orantikku_boat.name=Orantikku Boat
+item.fbiomes.orantikku_door.name=Orantikku Door
+item.fbiomes.gnarlwillow_boat.name=Gnarlwillow Boat
+item.fbiomes.gnarlwillow_door.name=Gnarlwillow Door
 
-tile.fbiomes.Mud.name=Mud
-tile.fbiomes.Peat.name=Peat
-tile.fbiomes.LooseRock.name=Loose Rock
-tile.fbiomes.Roots.name=Roots
-tile.fbiomes.Brambles.name=Bramble Bush
-tile.fbiomes.Toadstool.name=Toadstool
-tile.fbiomes.PurpleMushroom.name=Purple Mushroom
-tile.fbiomes.GreenMushroom.name=Green Mushroom
-tile.fbiomes.BlueGlowshroom.name=Blue Glowshroom
-tile.fbiomes.GreenGlowshroom.name=Green Glowshroom
-tile.fbiomes.OrangeGlowshroom.name=Orange Glowshroom
-tile.fbiomes.PinkGlowshroom.name=Pink Glowshroom
-tile.fbiomes.PurpleGlowshroom.name=Purple Glowshroom
-tile.fbiomes.BigGlowshroomCapBlue.name=Blue Glowshroom Cap
-tile.fbiomes.BigGlowshroomCapGreen.name=Green Glowshroom Cap
-tile.fbiomes.BigGlowshroomCapOrange.name=Orange Glowshroom Cap
-tile.fbiomes.BigGlowshroomCapPink.name=Pink Glowshroom Cap
-tile.fbiomes.BigGlowshroomCapPurple.name=Purple Glowshroom Cap
-tile.fbiomes.BigGlowshroomStemBlue.name=Blue Glowshroom Stem
-tile.fbiomes.BigGlowshroomStemGreen.name=Green Glowshroom Stem
-tile.fbiomes.BigGlowshroomStemOrange.name=Orange Glowshroom Stem
-tile.fbiomes.BigGlowshroomStemPink.name=Pink Glowshroom Stem
-tile.fbiomes.BigGlowshroomStemPurple.name=Purple Glowshroom Stem
-tile.fbiomes.BigMushroomCapGreen.name=Green Mushroom Cap
-tile.fbiomes.BigMushroomCapPurple.name=Purple Mushroom Cap
-tile.fbiomes.BigMushroomStemGreen.name=Green Mushroom Stem
-tile.fbiomes.BigMushroomStemPurple.name=Purple Mushroom Stem
-tile.fbiomes.BigMushroomSpotGreen.name=Green Mushroom Spot
-tile.fbiomes.BigMushroomSpotPurple.name=Purple Mushroom Spot
+item.fbiomes.pixie_bottle.name=Bottled Pixie
+item.fbiomes.pixie_bottle.tooltip.variant=Variant: %1$s
+
+tile.fbiomes.mud.name=Mud
+tile.fbiomes.peat.name=Peat
+tile.fbiomes.grassy_mud.name=Grassy Mud
+tile.fbiomes.grassy_peat.name=Grassy Peat
+tile.fbiomes.loose_rock.name=Loose Rock
+tile.fbiomes.roots.name=Roots
+tile.fbiomes.lichen.name=Lichen
+tile.fbiomes.brambles.name=Bramble Bush
+
+tile.fbiomes.toadstool.name=Toadstool
+tile.fbiomes.purple_mushroom.name=Purple Mushroom
+tile.fbiomes.green_mushroom.name=Green Mushroom
+tile.fbiomes.blue_glowshroom.name=Blue Glowshroom
+tile.fbiomes.green_glowshroom.name=Green Glowshroom
+tile.fbiomes.yellow_glowshroom.name=Yellow Glowshroom
+tile.fbiomes.pink_glowshroom.name=Pink Glowshroom
+tile.fbiomes.purple_glowshroom.name=Purple Glowshroom
+tile.fbiomes.shelf_mushroom.name=Shelf Mushroom
+
+tile.fbiomes.big_blue_glowshroom_cap.name=Blue Glowshroom Cap
+tile.fbiomes.big_green_glowshroom_cap.name=Green Glowshroom Cap
+tile.fbiomes.big_yellow_glowshroom_cap.name=Yellow Glowshroom Cap
+tile.fbiomes.big_pink_glowshroom_cap.name=Pink Glowshroom Cap
+tile.fbiomes.big_purple_glowshroom_cap.name=Purple Glowshroom Cap
+
+tile.fbiomes.big_blue_glowshroom_stem.name=Blue Glowshroom Stem
+tile.fbiomes.big_green_glowshroom_stem.name=Green Glowshroom Stem
+tile.fbiomes.big_yellow_glowshroom_stem.name=Yellow Glowshroom Stem
+tile.fbiomes.big_pink_glowshroom_stem.name=Pink Glowshroom Stem
+tile.fbiomes.big_purple_glowshroom_stem.name=Purple Glowshroom Stem
+
+tile.fbiomes.big_toadstool_mushroom_cap.name=Toadstool Cap
+tile.fbiomes.big_green_mushroom_cap.name=Green Mushroom Cap
+tile.fbiomes.big_purple_mushroom_cap.name=Purple Mushroom Cap
+tile.fbiomes.big_toadstool_mushroom_stem.name=Toadstool Stem
+tile.fbiomes.big_green_mushroom_stem.name=Green Mushroom Stem
+tile.fbiomes.big_purple_mushroom_stem.name=Purple Mushroom Stem
+tile.fbiomes.big_toadstool_mushroom_spot.name=Toadstool Spot
+tile.fbiomes.big_green_mushroom_spot.name=Green Mushroom Spot
+tile.fbiomes.big_purple_mushroom_spot.name=Purple Mushroom Spot
+
+tile.fbiomes.orantikku_planks.name=Orantikku Planks
+tile.fbiomes.orantikku_log.name=Orantikku Wood
+tile.fbiomes.orantikku_wood.name=Orantikku Bark
+tile.fbiomes.orantikku_leaves.name=Orantikku Leaves
+tile.fbiomes.orantikku_sapling.name=Orantikku Sapling
+tile.fbiomes.orantikku_stairs.name=Orantikku Stairs
+tile.fbiomes.orantikku_slab.name=Orantikku Slab
+tile.fbiomes.orantikku_fence.name=Orantikku Fence
+tile.fbiomes.orantikku_fence_gate.name=Orantikku Fence Gate
+tile.fbiomes.orantikku_door.name=Orantikku Door
+tile.fbiomes.orantikku_trapdoor.name=Orantikku Trapdoor
+
+tile.fbiomes.gnarlwillow_planks.name=Gnarlwillow Planks
+tile.fbiomes.gnarlwillow_log.name=Gnarlwillow Wood
+tile.fbiomes.gnarlwillow_wood.name=Gnarlwillow Bark
+tile.fbiomes.gnarlwillow_leaves.name=Gnarlwillow Leaves
+tile.fbiomes.gnarlwillow_sapling.name=Gnarlwillow Sapling
+tile.fbiomes.gnarlwillow_stairs.name=Gnarlwillow Stairs
+tile.fbiomes.gnarlwillow_slab.name=Gnarlwillow Slab
+tile.fbiomes.gnarlwillow_fence.name=Gnarlwillow Fence
+tile.fbiomes.gnarlwillow_fence_gate.name=Gnarlwillow Fence Gate
+tile.fbiomes.gnarlwillow_door.name=Gnarlwillow Door
+tile.fbiomes.gnarlwillow_trapdoor.name=Gnarlwillow Trapdoor
+tile.fbiomes.twisted_gnarlwillow.name=Twisted Gnarlwillow
+
+tile.fbiomes.pine_planks.name=Pine Planks
+tile.fbiomes.pine_log.name=Pine Wood
+tile.fbiomes.pine_wood.name=Pine Bark
+tile.fbiomes.pine_leaves.name=Pine Leaves
+tile.fbiomes.pine_sapling.name=Pine Sapling
+tile.fbiomes.pine_stairs.name=Pine Stairs
+tile.fbiomes.pine_slab.name=Pine Slab
+tile.fbiomes.pine_fence.name=Pine Fence
+tile.fbiomes.pine_fence_gate.name=Pine Fence Gate
+tile.fbiomes.pine_door.name=Pine Door
+tile.fbiomes.pine_trapdoor.name=Pine Trapdoor
+
+tile.fbiomes.red_oak_leaves.name=Red Oak Leaves
+tile.fbiomes.gold_birch_leaves.name=Golden Birch Leaves
+tile.fbiomes.red_oak_sapling.name=Red Oak Sapling
+tile.fbiomes.gold_birch_sapling.name=Golden Birch Sapling
+
+tile.fbiomes.gnarled_vine.name=Gnarled Vines
+
+tile.fbiomes.web_cover.name=Web Cover
 
 material.fbiomes.mithril.name=Mithril
 material.fbiomes.star_silver.name=Star-Silver
 
 fluid.tconstruct.mithril.name=Molten Mithril
 fluid.tconstruct.star_silver.name=Molten Star-Silver
+
+potion.effect.glowing=Potion of Glowing
+potion.effect.longer_glowing=Potion of Glowing
+splash_potion.effect.glowing=Splash Potion of Glowing
+splash_potion.effect.longer_glowing=Splash Potion of Glowing
+lingering_potion.effect.glowing=Lingering Potion of Glowing
+lingering_potion.effect.longer_glowing=Lingering Potion of Glowing
+
+entity.fbiomes.pixie.name=Pixie
+entity.fbiomes.pixie.variant.swallowtail=Swallowtail
+entity.fbiomes.pixie.variant.monarch=Monarch
+entity.fbiomes.pixie.variant.red_spotted=Red Spotted
+entity.fbiomes.pixie.variant.marbled=§eMarbled
+entity.fbiomes.pixie.variant.hairstreak=§eHairstreak
+entity.fbiomes.pixie.variant.sunset=§bSunset
+entity.fbiomes.pixie.variant.malachite=§bMalachite
