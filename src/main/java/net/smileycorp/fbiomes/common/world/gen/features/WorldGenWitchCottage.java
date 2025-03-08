@@ -31,20 +31,18 @@ public class WorldGenWitchCottage extends WorldGenTemplate {
                 break;
             case "witch":
                 EntityWitch witch = new EntityWitch(world);
-                witch.posX = pos.getX() + 0.5;
-                witch.posY = pos.getY();
-                witch.posZ = pos.getZ() + 0.5;
                 witch.enablePersistence();
+                witch.moveToBlockPosAndAngles(pos, 0, 0);
                 world.spawnEntity(witch);
+                world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
                 break;
             case "pixie":
                 EntityPixie pixie = new EntityPixie(world);
-                pixie.setVariant(EntityPixie.Variant.MALACHITE);
-                pixie.posX = pos.getX() + 0.5;
-                pixie.posY = pos.getY();
-                pixie.posZ = pos.getZ() + 0.5;
                 pixie.enablePersistence();
+                pixie.setVariant(EntityPixie.Variant.MALACHITE);
+                pixie.moveToBlockPosAndAngles(pos, 0, 0);
                 world.spawnEntity(pixie);
+                world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
                 break;
         }
     }
