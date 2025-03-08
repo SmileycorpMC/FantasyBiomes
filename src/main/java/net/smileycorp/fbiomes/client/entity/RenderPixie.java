@@ -58,7 +58,7 @@ public class RenderPixie extends RenderLiving<EntityPixie> {
     @Nullable
     @Override
     protected ResourceLocation getEntityTexture(EntityPixie entity) {
-        return Constants.loc("textures/entity/pixie/variant_" + entity.getVariant() + ".png");
+        return Constants.loc("textures/entity/pixie/" + entity.getVariant().getName() + ".png");
     }
     
 }

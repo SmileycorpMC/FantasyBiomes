@@ -39,7 +39,7 @@ public class WorldGenWitchCottage extends WorldGenTemplate {
                 break;
             case "pixie":
                 EntityPixie pixie = new EntityPixie(world);
-                pixie.setVariant((byte) (rand.nextInt(3) + 1));
+                pixie.setVariant(EntityPixie.Variant.MALACHITE);
                 pixie.posX = pos.getX() + 0.5;
                 pixie.posY = pos.getY();
                 pixie.posZ = pos.getZ() + 0.5;

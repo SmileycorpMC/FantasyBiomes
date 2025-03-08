@@ -13,6 +13,7 @@ item.fbiomes.gnarlwillow_boat.name=Gnarlwillow Boat
 item.fbiomes.gnarlwillow_door.name=Gnarlwillow Door
 
 item.fbiomes.pixie_bottle.name=Bottled Pixie
+item.fbiomes.pixie_bottle.tooltip.variant=Variant: %1$s
 
 tile.fbiomes.mud.name=Mud
 tile.fbiomes.peat.name=Peat
@@ -115,3 +116,10 @@ lingering_potion.effect.glowing=Lingering Potion of Glowing
 lingering_potion.effect.longer_glowing=Lingering Potion of Glowing
 
 entity.fbiomes.pixie.name=Pixie
+entity.fbiomes.pixie.variant.swallowtail=Swallowtail
+entity.fbiomes.pixie.variant.monarch=Monarch
+entity.fbiomes.pixie.variant.red_spotted=Red Spotted
+entity.fbiomes.pixie.variant.marbled=§eMarbled
+entity.fbiomes.pixie.variant.hairstreak=§eHairstreak
+entity.fbiomes.pixie.variant.sunset=§bSunset
+entity.fbiomes.pixie.variant.malachite=§bMalachite

@@ -1,5 +1,6 @@
 package net.smileycorp.fbiomes.common.items;
 
+import net.minecraft.client.util.ITooltipFlag;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
@@ -13,11 +14,13 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.smileycorp.atlas.api.item.IMetaItem;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class ItemPixieBottle extends ItemFBiomes implements IMetaItem {
@@ -30,12 +33,12 @@ public class ItemPixieBottle extends ItemFBiomes implements IMetaItem {
     
     @Override
     public String byMeta(int meta) {
-        return "pixie_bottle_" + meta;
+        return "pixie_bottle_" + EntityPixie.Variant.get((byte) meta);
     }
     
     @Override
     public int getMaxMeta() {
-        return EntityPixie.VARIANTS;
+        return EntityPixie.Variant.values().length;
     }
     
     @Override
@@ -69,6 +72,14 @@ public class ItemPixieBottle extends ItemFBiomes implements IMetaItem {
         return EnumActionResult.SUCCESS;
     }
     
+    @Override
+    public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltips, ITooltipFlag flag) {
+        tooltips.add(new TextComponentTranslation("item.fbiomes.pixie_bottle.tooltip.variant",
+                new TextComponentTranslation("entity.fbiomes.pixie.variant."
+                        + EntityPixie.Variant.get((byte) stack.getMetadata()).getName())).getFormattedText());
+        super.addInformation(stack, world, tooltips, flag);
+    }
+    
     public static boolean spawnPixie(World world, ItemStack stack, double x, double y, double z) {
         EntityPixie pixie = new EntityPixie(world);
         if (ForgeEventFactory.doSpecialSpawn(pixie, world, (float) x, (float) y, (float) z, null)) return false;
@@ -77,7 +88,7 @@ public class ItemPixieBottle extends ItemFBiomes implements IMetaItem {
             NBTTagCompound nbt = stack.getTagCompound();
             if (nbt.hasKey("entity")) pixie.readFromNBT(nbt.getCompoundTag("entity"));
         }
-        pixie.setVariant((byte)stack.getMetadata());
+        pixie.setVariant(EntityPixie.Variant.get((byte) stack.getMetadata()));
         if (stack.hasDisplayName()) pixie.setCustomNameTag(stack.getDisplayName());
         pixie.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(world.rand.nextFloat() * 360f), 0);
         pixie.rotationYawHead = pixie.rotationYaw;
@@ -88,7 +99,7 @@ public class ItemPixieBottle extends ItemFBiomes implements IMetaItem {
     }
     
     public static ItemStack bottlePixie(EntityPixie pixie) {
-        ItemStack stack = new ItemStack(FBiomesItems.PIXIE_BOTTLE, 1, pixie.getVariant());
+        ItemStack stack = new ItemStack(FBiomesItems.PIXIE_BOTTLE, 1, pixie.getVariant().ordinal());
         if (pixie.hasCustomName()) stack.setStackDisplayName(pixie.getCustomNameTag());
         if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
         NBTTagCompound nbt = pixie.writeToNBT(new NBTTagCompound());

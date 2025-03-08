@@ -1,8 +1,10 @@
 package net.smileycorp.fbiomes.common.entities;
 
+import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EntityLiving;
+import net.minecraft.entity.IEntityLivingData;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
@@ -17,21 +19,32 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
+import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.smileycorp.atlas.api.entity.ai.EntityAIMoveRandomFlying;
 import net.smileycorp.atlas.api.entity.ai.FlyingMoveControl;
+import net.smileycorp.atlas.api.recipe.WeightedOutputs;
 import net.smileycorp.fbiomes.common.items.ItemPixieBottle;
+
+import javax.annotation.Nullable;
+import java.util.EnumMap;
+import java.util.Random;
 
 public class EntityPixie extends EntityLiving {
     
-    public static final byte VARIANTS = (byte)6;
     private static final DataParameter<Byte> VARIANT = EntityDataManager.createKey(EntityPixie.class, DataSerializers.BYTE);
     
     public EntityPixie(World world) {
         super(world);
         moveHelper = new FlyingMoveControl(this);
         setSize(0.5f, 0.5f);
-        setVariant((byte)rand.nextInt(VARIANTS));
+    }
+    
+    @Nullable
+    @Override
+    public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData data) {
+        setVariant(Variant.random(rand));
+        return super.onInitialSpawn(difficulty, data);
     }
     
     @Override
@@ -49,8 +62,7 @@ public class EntityPixie extends EntityLiving {
             ItemStack newStack = ItemPixieBottle.bottlePixie(this);
             player.addStat(StatList.getObjectUseStats(Items.GLASS_BOTTLE));
             playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.2f, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7f + 1) * 2f);
-            if (!player.inventory.addItemStackToInventory(newStack))
-                player.dropItem(newStack, false);
+            if (!player.inventory.addItemStackToInventory(newStack)) player.dropItem(newStack, false);
             return true;
         }
         return super.processInteract(player, hand);
@@ -90,25 +102,63 @@ public class EntityPixie extends EntityLiving {
         return 0.25f;
     }
     
-    public void setVariant(byte variant) {
-        if (variant >= VARIANTS) variant = 0;
-        dataManager.set(VARIANT, variant);
+    public void setVariant(Variant variant) {
+        dataManager.set(VARIANT, (byte)variant.ordinal());
     }
     
-    public byte getVariant() {
-        return dataManager.get(VARIANT);
+    public Variant getVariant() {
+        return Variant.get(dataManager.get(VARIANT));
     }
     
     @Override
     public void readEntityFromNBT(NBTTagCompound nbt) {
         super.readEntityFromNBT(nbt);
-        if (nbt.hasKey("variant")) setVariant(nbt.getByte("variant"));
+        if (nbt.hasKey("variant")) dataManager.set(VARIANT, nbt.getByte("variant"));
     }
     
     @Override
     public void writeEntityToNBT(NBTTagCompound nbt) {
         super.writeEntityToNBT(nbt);
-        nbt.setByte("variant", getVariant());
+        nbt.setByte("variant", dataManager.get(VARIANT));
+    }
+    
+    public enum Variant {
+        SWALLOWTAIL("swallowtail", 35),
+        MONARCH("monarch", 25),
+        RED_SPOTTED("red_spotted", 20),
+        MARBLED("marbled", 14),
+        HAIRSTREAK("hairstreak", 5),
+        SUNSET("sunset", 1),
+        MALACHITE("malachite", 0);
+        
+        private static WeightedOutputs<Variant> table;
+        
+        private final String name;
+        private final int weight;
+        
+        Variant(String name, int weight) {
+            this.name = name;
+            this.weight = weight;
+        }
+        
+        public String getName() {
+            return name;
+        }
+        
+        public static Variant get(byte val) {
+            if (val >= values().length) val = 0;
+            return values()[val];
+        }
+        
+        public static Variant random(Random rand) {
+            if (table == null) {
+                EnumMap<Variant, Integer> map = Maps.newEnumMap(Variant.class);
+                for (Variant variant : values()) map.put(variant, variant.weight);
+                table = new WeightedOutputs<>(map);
+            }
+            return table.getResult(rand);
+        }
+        
     }
     
 }
