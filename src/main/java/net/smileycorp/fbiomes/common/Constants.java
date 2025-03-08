@@ -17,5 +17,9 @@ public class Constants {
 	public static ResourceLocation loc(String name) {
 		return new ResourceLocation(MODID, name.toLowerCase(Locale.US));
 	}
+    
+    public static String locStr(String name) {
+		return loc(name).toString();
+    }
 	
 }

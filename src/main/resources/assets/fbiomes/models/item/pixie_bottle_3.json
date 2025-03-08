@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "fbiomes:items/pixie_bottle_3",
+		"layer1": "items/potion_bottle_drinkable"
+    }
+}

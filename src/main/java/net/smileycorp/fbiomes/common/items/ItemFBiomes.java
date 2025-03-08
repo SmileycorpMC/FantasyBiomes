@@ -4,9 +4,9 @@ import net.minecraft.item.Item;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
 
-public class ItemFBiomesBase extends Item {
+public class ItemFBiomes extends Item {
 	
-	public ItemFBiomesBase(String name) {
+	public ItemFBiomes(String name) {
 		setUnlocalizedName(Constants.name(name));
 		setCreativeTab(FantasyBiomes.TAB);
 		setRegistryName(Constants.loc(name));

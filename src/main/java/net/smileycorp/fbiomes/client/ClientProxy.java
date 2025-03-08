@@ -20,6 +20,7 @@ import net.smileycorp.atlas.api.block.wood.WoodVariant;
 import net.smileycorp.atlas.api.client.WoodStateMapper;
 import net.smileycorp.atlas.api.client.colour.BlockGrassColour;
 import net.smileycorp.atlas.api.client.colour.ItemFoliageColour;
+import net.smileycorp.atlas.api.item.IMetaItem;
 import net.smileycorp.fbiomes.client.entity.RenderPixie;
 import net.smileycorp.fbiomes.client.particle.ParticlePixel;
 import net.smileycorp.fbiomes.common.Constants;
@@ -36,8 +37,14 @@ public class ClientProxy {
 		DefaultStateMapper mapper = new DefaultStateMapper();
 		ModelLoader.setCustomStateMapper(FBiomesBlocks.VANILLA_LEAVES, new WoodStateMapper(FBiomesBlocks.VANILLA_LEAVES));
 		ModelLoader.setCustomStateMapper(FBiomesBlocks.VANILLA_SAPLING, new WoodStateMapper(FBiomesBlocks.VANILLA_SAPLING));
-		for (Item item : FBiomesItems.ITEMS)
+		for (Item item : FBiomesItems.ITEMS) {
+			if (item instanceof IMetaItem) {
+				for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++)
+					ModelLoader.setCustomModelResourceLocation(item, i, new ModelResourceLocation(Constants.locStr(((IMetaItem) item).byMeta(i))));
+				continue;
+			}
 			ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName().toString()));
+		}
 		for (Block block : FBiomesBlocks.BLOCKS) for (int meta = 0; meta < ((BlockProperties) block).getMaxMeta(); meta++) {
 			String state = mapper.getPropertyString(block.getStateFromMeta(meta).getProperties());
 			if (block instanceof BlockFBMushroom) {

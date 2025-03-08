@@ -24,6 +24,7 @@ public class FBiomesItems {
 	//public static Item MITHRIL_INGOT = new ItemMithril("ingot");
 	//public static Item MITHRIL_NUGGET = new ItemMithril("nugget");
 	//public static Item MITHRIL_DUST = new ItemMithril("dust");
+	public static Item PIXIE_BOTTLE = new ItemPixieBottle();
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {

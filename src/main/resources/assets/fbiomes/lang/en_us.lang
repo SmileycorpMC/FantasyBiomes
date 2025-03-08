@@ -12,6 +12,8 @@ item.fbiomes.orantikku_door.name=Orantikku Door
 item.fbiomes.gnarlwillow_boat.name=Gnarlwillow Boat
 item.fbiomes.gnarlwillow_door.name=Gnarlwillow Door
 
+item.fbiomes.pixie_bottle.name=Bottled Pixie
+
 tile.fbiomes.mud.name=Mud
 tile.fbiomes.peat.name=Peat
 tile.fbiomes.grassy_mud.name=Grassy Mud
