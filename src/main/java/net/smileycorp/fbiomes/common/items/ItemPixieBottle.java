@@ -77,6 +77,13 @@ public class ItemPixieBottle extends ItemFBiomes implements IMetaItem {
         tooltips.add(new TextComponentTranslation("item.fbiomes.pixie_bottle.tooltip.variant",
                 new TextComponentTranslation("entity.fbiomes.pixie.variant."
                         + EntityPixie.Variant.get((byte) stack.getMetadata()).getName())).getFormattedText());
+        if (stack.hasTagCompound()) {
+            NBTTagCompound nbt = stack.getTagCompound();
+            if (nbt.hasKey("EntityData")) {
+                tooltips.add(new TextComponentTranslation("item.fbiomes.pixie_bottle.tooltip.health",
+                        nbt.getInteger("Health")).getFormattedText());
+            }
+        }
         super.addInformation(stack, world, tooltips, flag);
     }
     
@@ -86,7 +93,7 @@ public class ItemPixieBottle extends ItemFBiomes implements IMetaItem {
         pixie.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(pixie)), null);
         if (stack.hasTagCompound()) {
             NBTTagCompound nbt = stack.getTagCompound();
-            if (nbt.hasKey("entity")) pixie.readFromNBT(nbt.getCompoundTag("entity"));
+            if (nbt.hasKey("EntityData")) pixie.readFromNBT(nbt.getCompoundTag("EntityData"));
         }
         pixie.setVariant(EntityPixie.Variant.get((byte) stack.getMetadata()));
         if (stack.hasDisplayName()) pixie.setCustomNameTag(stack.getDisplayName());
@@ -102,18 +109,7 @@ public class ItemPixieBottle extends ItemFBiomes implements IMetaItem {
         ItemStack stack = new ItemStack(FBiomesItems.PIXIE_BOTTLE, 1, pixie.getVariant().ordinal());
         if (pixie.hasCustomName()) stack.setStackDisplayName(pixie.getCustomNameTag());
         if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
-        NBTTagCompound nbt = pixie.writeToNBT(new NBTTagCompound());
-        nbt.removeTag("Pos");
-        nbt.removeTag("Motion");
-        nbt.removeTag("Rotation");
-        nbt.removeTag("FallDistance");
-        nbt.removeTag("Air");
-        nbt.removeTag("OnGround");
-        nbt.removeTag("Dimension");
-        nbt.removeTag("Invulnerable");
-        nbt.removeTag("PortalCooldown");
-        nbt.removeTag("UUID");
-        stack.getTagCompound().setTag("entity", nbt);
+        stack.getTagCompound().setTag("EntityData", pixie.storeInItem());
         pixie.setDead();
         return stack;
     }

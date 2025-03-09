@@ -138,6 +138,20 @@ public class EntityPixie extends EntityLiving {
         nbt.setByte("variant", dataManager.get(VARIANT));
     }
     
+    public NBTTagCompound storeInItem() {
+        NBTTagCompound nbt = super.writeToNBT(new NBTTagCompound());
+        nbt.removeTag("Pos");
+        nbt.removeTag("Motion");
+        nbt.removeTag("Rotation");
+        nbt.removeTag("FallDistance");
+        nbt.removeTag("Air");
+        nbt.removeTag("UUIDMost");
+        nbt.removeTag("UUIDLeast");
+        nbt.removeTag("Leashed");
+        nbt.removeTag("Leash");
+        return nbt;
+    }
+    
     public enum Variant {
         SWALLOWTAIL("swallowtail", 35, 0xFF68F2),
         MONARCH("monarch", 25, 0x68C1FF),
