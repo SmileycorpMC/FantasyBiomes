@@ -5,7 +5,7 @@ import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.smileycorp.fbiomes.common.Constants;
-import net.smileycorp.fbiomes.common.EnumFBiomesParticle;
+import net.smileycorp.fbiomes.common.EnumParticle;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumGlowshroomVariant;
 import net.smileycorp.fbiomes.common.network.FBiomesParticleMessage;
 import net.smileycorp.fbiomes.common.network.PacketHandler;
@@ -28,11 +28,9 @@ public class PotionBioLuminescence extends PotionFBiomes {
         Random rand = entity.getRNG();
         if (entity.isInvisible()) return;
         if (rand.nextBoolean()) return;
-        PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new FBiomesParticleMessage(EnumFBiomesParticle.PIXEL,
-                        entity.posX + (rand.nextDouble() - 0.5) * (double)entity.width, entity.posY + rand.nextDouble() * (double)entity.height,
-                        entity.posZ + (rand.nextDouble() - 0.5) * (double)entity.width,
-                        (double) EnumGlowshroomVariant.get(amplifier).getColour(), 50d, 0d, -0.05, 0d),
-                new NetworkRegistry.TargetPoint(entity.dimension, entity.posX, entity.posY, entity.posZ, 32));
+        EnumParticle.PIXEL.send(entity.dimension, entity.posX + (rand.nextDouble() - 0.5) * (double)entity.width,
+                entity.posY + rand.nextDouble() * (double)entity.height, entity.posZ + (rand.nextDouble() - 0.5) * (double)entity.width,
+                (double) EnumGlowshroomVariant.get(amplifier).getColour(), 50d, 0d, -0.05, 0d);
     }
     
     @Override

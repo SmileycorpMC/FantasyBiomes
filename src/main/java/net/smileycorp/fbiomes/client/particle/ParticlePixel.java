@@ -1,7 +1,6 @@
 package net.smileycorp.fbiomes.client.particle;
 
 import net.minecraft.client.particle.Particle;
-import net.minecraft.client.particle.ParticleSpell;
 import net.minecraft.client.renderer.texture.TextureAtlasSprite;
 import net.minecraft.world.World;
 

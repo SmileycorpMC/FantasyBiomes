@@ -6,17 +6,17 @@ import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
 import net.smileycorp.fbiomes.client.ClientHandler;
-import net.smileycorp.fbiomes.common.EnumFBiomesParticle;
+import net.smileycorp.fbiomes.common.EnumParticle;
 
 public class FBiomesParticleMessage implements IMessage {
 	
-	private EnumFBiomesParticle type = EnumFBiomesParticle.PIXEL;
+	private EnumParticle type = EnumParticle.PIXEL;
 	private double x, y, z = 0;
 	private Double[] data = {};
 	
 	public FBiomesParticleMessage() {}
 	
-	public FBiomesParticleMessage(EnumFBiomesParticle type, double x, double y, double z, Double... data) {
+	public FBiomesParticleMessage(EnumParticle type, double x, double y, double z, Double... data) {
 		this.type = type;
 		this.x = x;
 		this.y = y;
@@ -26,7 +26,7 @@ public class FBiomesParticleMessage implements IMessage {
 
 	@Override
 	public void fromBytes(ByteBuf buf) {
-		type = EnumFBiomesParticle.values()[buf.readByte()];
+		type = EnumParticle.values()[buf.readByte()];
 		x = buf.readDouble();
 		y = buf.readDouble();
 		z = buf.readDouble();

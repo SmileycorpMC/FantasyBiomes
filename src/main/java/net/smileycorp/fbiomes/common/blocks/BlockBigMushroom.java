@@ -20,7 +20,7 @@ import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.fbiomes.common.Constants;
-import net.smileycorp.fbiomes.common.EnumFBiomesParticle;
+import net.smileycorp.fbiomes.common.EnumParticle;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomShape;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomVariant;
@@ -128,10 +128,8 @@ public class BlockBigMushroom extends BlockBase {
 	
 	protected void spawnSpores(World world, BlockPos pos, IBlockState state, Entity entity) {
 		for (int i = 0; i < world.rand.nextInt(3) + 3; i++)
-			PacketHandler.NETWORK_INSTANCE.sendToAllTracking(new FBiomesParticleMessage(EnumFBiomesParticle.PIXEL,
-					pos.getX() + world.rand.nextFloat(), pos.getY() - 0.1f, pos.getZ() + world.rand.nextFloat(),
-							getSporeColour(state), 100d, 0d, -0.05, 0d),
-					new NetworkRegistry.TargetPoint(entity.dimension, pos.getX(), pos.getY(), pos.getZ(), 32));
+			EnumParticle.PIXEL.send(entity.dimension, pos.getX() + world.rand.nextFloat(), pos.getY() - 0.1f,
+					pos.getZ() + world.rand.nextFloat(), getSporeColour(state), 100d, 0d, -0.05, 0d);
 	}
 	
 	protected double getSporeColour(IBlockState state) {
