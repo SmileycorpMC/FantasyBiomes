@@ -2,6 +2,7 @@ package net.smileycorp.fbiomes.common;
 
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -10,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.network.PacketHandler;
+import net.smileycorp.fbiomes.common.world.WorldEventHandler;
 
 @Mod(modid = Constants.MODID)
 public class FantasyBiomes {
@@ -26,6 +28,7 @@ public class FantasyBiomes {
 		FBiomesConfig.config = new Configuration(event.getSuggestedConfigurationFile());
 		FBiomesConfig.syncConfig();
 		PacketHandler.initPackets();
+		MinecraftForge.TERRAIN_GEN_BUS.register(new WorldEventHandler());
 	 }
 	 
 	 @EventHandler
