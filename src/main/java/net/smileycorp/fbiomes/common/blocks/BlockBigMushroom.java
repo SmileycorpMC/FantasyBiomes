@@ -17,15 +17,12 @@ import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.EnumParticle;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomShape;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomVariant;
-import net.smileycorp.fbiomes.common.network.FBiomesParticleMessage;
-import net.smileycorp.fbiomes.common.network.PacketHandler;
 
 import java.util.Random;
 
