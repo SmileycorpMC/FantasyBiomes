@@ -19,19 +19,17 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.smileycorp.atlas.api.entity.ai.EntityAIMoveRandomFlying;
 import net.smileycorp.atlas.api.entity.ai.FlyingMoveControl;
 import net.smileycorp.atlas.api.recipe.WeightedOutputs;
+import net.smileycorp.fbiomes.client.ClientHandler;
 import net.smileycorp.fbiomes.common.EnumParticle;
 import net.smileycorp.fbiomes.common.items.ItemPixieBottle;
-import net.smileycorp.fbiomes.common.network.FBiomesParticleMessage;
 
 import javax.annotation.Nullable;
 import java.awt.*;
-import java.awt.color.ColorSpace;
 import java.util.EnumMap;
 import java.util.Random;
 
@@ -91,12 +89,11 @@ public class EntityPixie extends EntityLiving {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (world.isRemote) return;
-        if (motionX == 0 && motionZ == 0) return;
+        if (!world.isRemote) return;
         if (ticksExisted % 5 > 0) return;
         if (rand.nextBoolean()) return;
-        EnumParticle.TWINKLE.send(dimension, posX, posY, posZ, (double) getVariant().getRandomTrailColour(rand),
-                -motionX * 0.3 -0.1, -motionZ * 0.3);
+        ClientHandler.spawnParticle(EnumParticle.TWINKLE, posX + 0.1f * (rand.nextFloat() * 2f - 1), posY + height * 0.5 + 0.1f * (rand.nextFloat() * 2f - 1),
+                posZ + 0.1f * (rand.nextFloat() * 2f - 1), (double) getVariant().getRandomTrailColour(rand), -motionX * 0.3, -0.01, -motionZ * 0.3);
     }
     
     @Override
@@ -159,8 +156,8 @@ public class EntityPixie extends EntityLiving {
         RED_SPOTTED("red_spotted", 20, 0x7AFF68),
         MARBLED("marbled", 14, 0xFFFF7D),
         HAIRSTREAK("hairstreak", 5, 0x68FFE6),
-        SUNSET("sunset", 1, 0xE3E5E5),
-        MALACHITE("malachite", 0, 0x654AA8);
+        SUNSET("sunset", 1, 0xF9FCFC),
+        MALACHITE("malachite", 0, 0x9A72FF);
         
         private static WeightedOutputs<Variant> table;
         
@@ -178,11 +175,8 @@ public class EntityPixie extends EntityLiving {
         }
         
         public int getRandomTrailColour(Random rand) {
-            float multiplier = 1 + rand.nextFloat() * 0.3f;
-            int r = Math.min((int)(multiplier * (float)(colour >> 16 & 0xFF)), 255);
-            int g = Math.min((int)(multiplier * (float)(colour >> 8 & 0xFF)), 255);
-            int b = Math.min((int)(multiplier * (float)(colour & 0xFF)), 255);
-            return r << 16 + g << 16 + b;
+            float[] hsv = Color.RGBtoHSB((colour >> 16) & 0xFF, (colour >> 8) & 0xFF, colour & 0xFF, new float[3]);
+            return Color.HSBtoRGB(hsv[0], rand.nextFloat() * 0.3f, hsv[2]) & 0xFFFFFF;
         }
         
         public static Variant get(byte val) {
