@@ -103,6 +103,9 @@ tile.fbiomes.gnarled_vine.name=Gnarled Vines
 
 tile.fbiomes.web_cover.name=Web Cover
 
+tile.fbiomes.pixie_table.name=Mystic Stump
+tile.fbiomes.pixie_table_child.name=Mystic Stump
+
 material.fbiomes.mithril.name=Mithril
 material.fbiomes.star_silver.name=Star-Silver
 

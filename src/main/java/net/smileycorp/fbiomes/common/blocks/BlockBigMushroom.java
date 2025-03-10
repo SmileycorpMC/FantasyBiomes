@@ -124,8 +124,9 @@ public class BlockBigMushroom extends BlockBase {
 	}
 	
 	protected void spawnSpores(World world, BlockPos pos, IBlockState state, Entity entity) {
+		while (isBouncy(world.getBlockState(pos.down()))) pos = pos.down();
 		for (int i = 0; i < world.rand.nextInt(3) + 3; i++)
-			EnumParticle.PIXEL.send(entity.dimension, pos.getX() + world.rand.nextFloat(), pos.getY() - 0.1f,
+			EnumParticle.PIXEL.send(entity.dimension, pos.getX() + world.rand.nextFloat(), pos.getY() - world.rand.nextFloat() * 0.1f,
 					pos.getZ() + world.rand.nextFloat(), getSporeColour(state), 100d, 0d, -0.05, 0d);
 	}
 	

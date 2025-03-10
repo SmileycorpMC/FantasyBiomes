@@ -1,0 +1,8 @@
+{
+  "variants": {
+    "facing=north": { "model": "fbiomes:pixie_table" },
+    "facing=south": { "model": "fbiomes:pixie_table", "y": 180 },
+    "facing=west":  { "model": "fbiomes:pixie_table", "y": 270 },
+    "facing=east":  { "model": "fbiomes:pixie_table", "y": 90 }
+  }
+}

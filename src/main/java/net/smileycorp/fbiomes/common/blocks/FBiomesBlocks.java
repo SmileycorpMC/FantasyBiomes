@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod.EventBusSubscriber;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.atlas.api.block.ShapedBlock;
 import net.smileycorp.atlas.api.block.wood.BlockBaseLeaves;
@@ -16,6 +17,8 @@ import net.smileycorp.fbiomes.common.blocks.enums.EnumGlowshroomVariant;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomVariant;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumVanillaWoodType;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
+import net.smileycorp.fbiomes.common.blocks.tile.TilePixieTable;
+import net.smileycorp.fbiomes.common.blocks.tile.TilePixieTableChild;
 import net.smileycorp.fbiomes.common.world.gen.fungusforest.*;
 
 import java.lang.reflect.Field;
@@ -68,6 +71,10 @@ public class FBiomesBlocks {
 	//Ores
 	//public static Block MYTHRIL_ORE;
 	
+	//functional
+	public static BlockPixieTable PIXIE_TABLE = new BlockPixieTable();
+	public static BlockPixieTableChild PIXIE_TABLE_CHILD = new BlockPixieTableChild();
+	
 	public final static BlockFBMushroom[] shrooms = {TOADSTOOL, PURPLE_SHROOM, GREEN_SHROOM};
 	public final static BlockFBMushroom[] glowshrooms = {BLUE_GLOWSHROOM, GREEN_GLOWSHROOM, YELLOW_GLOWSHROOM, PINK_GLOWSHROOM, PURPLE_GLOWSHROOM};
 	
@@ -93,6 +100,8 @@ public class FBiomesBlocks {
 				register(registry, (Block) object);
 			} catch (Exception e) {}
 		}
+		GameRegistry.registerTileEntity(TilePixieTable.class, Constants.loc("pixietable"));
+		GameRegistry.registerTileEntity(TilePixieTableChild.class, Constants.loc("pixietablechild"));
 	}
 	
 	private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {

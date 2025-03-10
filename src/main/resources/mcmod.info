@@ -7,8 +7,8 @@
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["Smileycorp"],
-  "credits": "",
+  "authorList": ["Smileycorp", "slava_110"],
+  "credits": "Foreck1",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
