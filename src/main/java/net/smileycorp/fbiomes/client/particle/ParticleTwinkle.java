@@ -3,7 +3,7 @@ package net.smileycorp.fbiomes.client.particle;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
-public class ParticleTwinkle extends ParticlePixel{
+public class ParticleTwinkle extends ParticleFullbrightPixel {
     
     public ParticleTwinkle(World world, double x, double y, double z, int colour, double motionX, double motionY, double motionZ) {
         super(world, x, y, z, colour, 30, motionX, motionY, motionZ);

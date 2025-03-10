@@ -28,8 +28,6 @@ public class RenderPixie extends RenderLiving<EntityPixie> {
             final float v0 = 0F;
             final float u1 = 0.375f;
             final float v1 = 0.375f;
-            int brightness = entity.getBrightnessForRender();
-            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, brightness % 65536, brightness / 65536);
             GlStateManager.color(1.0F, 1.0F, 1.0F, 1.0F);
             GlStateManager.translate(0.0F, 0.1F, 0.0F);
             GlStateManager.rotate(180.0F - renderManager.playerViewY, 0.0F, 1.0F, 0.0F);
@@ -39,6 +37,7 @@ public class RenderPixie extends RenderLiving<EntityPixie> {
             GlStateManager.enableNormalize();
             GlStateManager.enableBlend();
             GlStateManager.blendFunc(GlStateManager.SourceFactor.SRC_ALPHA, GlStateManager.DestFactor.ONE_MINUS_SRC_ALPHA);
+            OpenGlHelper.setLightmapTextureCoords(OpenGlHelper.lightmapTexUnit, 240, 240);
             Tessellator tesselator = Tessellator.getInstance();
             BufferBuilder buffer = tesselator.getBuffer();
             buffer.begin(7, DefaultVertexFormats.POSITION_TEX_NORMAL);

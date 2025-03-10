@@ -25,7 +25,7 @@ public class PotionBioLuminescence extends PotionFBiomes {
         Random rand = entity.getRNG();
         if (entity.isInvisible()) return;
         if (rand.nextBoolean()) return;
-        EnumParticle.PIXEL.send(entity.dimension, entity.posX + (rand.nextDouble() - 0.5) * (double)entity.width,
+        EnumParticle.PIXEL_FULLBRIGHT.send(entity.dimension, entity.posX + (rand.nextDouble() - 0.5) * (double)entity.width,
                 entity.posY + rand.nextDouble() * (double)entity.height, entity.posZ + (rand.nextDouble() - 0.5) * (double)entity.width,
                 (double) EnumGlowshroomVariant.get(amplifier).getColour(), 50d, 0d, -0.05, 0d);
     }

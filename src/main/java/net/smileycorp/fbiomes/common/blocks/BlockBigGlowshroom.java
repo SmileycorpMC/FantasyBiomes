@@ -3,10 +3,12 @@ package net.smileycorp.fbiomes.common.blocks;
 import net.minecraft.block.properties.PropertyEnum;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.smileycorp.fbiomes.common.EnumParticle;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumGlowshroomVariant;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomShape;
 
@@ -82,6 +84,12 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	@Override
 	protected float getBounceSpeed(IBlockState state) {
 		return state.getBlock() == this ? 1.3f : 0;
+	}
+	
+	protected void spawnSpores(World world, BlockPos pos, IBlockState state, Entity entity) {
+		for (int i = 0; i < world.rand.nextInt(3) + 3; i++)
+			EnumParticle.PIXEL_FULLBRIGHT.send(entity.dimension, pos.getX() + world.rand.nextFloat(), pos.getY() - 0.1f,
+					pos.getZ() + world.rand.nextFloat(), getSporeColour(state), 100d, 0d, -0.05, 0d);
 	}
 	
 	@Override
