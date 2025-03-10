@@ -2,10 +2,10 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [48, 48],
 	"textures": {
-		"0": "pixietable:blocks/pixietable",
-		"1": "pixietable:blocks/pixietable_top",
-		"2": "pixietable:blocks/pixietable_bot",
-		"particle": "pixietable:blocks/pixietable"
+		"0": "fbiomes:blocks/pixie_table",
+		"1": "fbiomes:blocks/pixie_table_top",
+		"2": "fbiomes:blocks/pixie_table_bot",
+		"particle": "fbiomes:blocks/pixie_table"
 	},
 	"elements": [
 		{
