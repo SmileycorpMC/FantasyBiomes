@@ -149,6 +149,7 @@ public class EntityPixie extends EntityLiving {
         nbt.removeTag("UUIDLeast");
         nbt.removeTag("Leashed");
         nbt.removeTag("Leash");
+        nbt.setFloat("MaxHealth", getMaxHealth());
         return nbt;
     }
     

@@ -80,8 +80,9 @@ public class ItemPixieBottle extends ItemFBiomes implements IMetaItem {
         if (stack.hasTagCompound()) {
             NBTTagCompound nbt = stack.getTagCompound();
             if (nbt.hasKey("EntityData")) {
+                NBTTagCompound data = nbt.getCompoundTag("EntityData");
                 tooltips.add(new TextComponentTranslation("item.fbiomes.pixie_bottle.tooltip.health",
-                        nbt.getInteger("Health")).getFormattedText());
+                        data.getFloat("Health"),  data.getFloat("MaxHealth")).getFormattedText());
             }
         }
         super.addInformation(stack, world, tooltips, flag);
