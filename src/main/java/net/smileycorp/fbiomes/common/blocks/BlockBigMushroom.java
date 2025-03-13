@@ -65,7 +65,7 @@ public class BlockBigMushroom extends BlockBase {
 	
 	@Override
 	public int getMaxMeta(){
-		return 6;
+		return 9;
 	}
 	
 	@Override
