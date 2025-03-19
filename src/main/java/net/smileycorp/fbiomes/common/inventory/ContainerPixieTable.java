@@ -8,14 +8,14 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
-import net.smileycorp.fbiomes.common.blocks.tile.TilePixieTable;
+import net.smileycorp.fbiomes.common.blocks.tile.TileMysticStump;
 
 public class ContainerPixieTable extends Container {
     
-    private final TilePixieTable tile;
+    private final TileMysticStump tile;
     public final InventoryPlayer playerInv;
 
-    public ContainerPixieTable(TilePixieTable tile, InventoryPlayer playerInv) {
+    public ContainerPixieTable(TileMysticStump tile, InventoryPlayer playerInv) {
         this.tile = tile;
         this.playerInv = playerInv;
 
@@ -80,7 +80,7 @@ public class ContainerPixieTable extends Container {
 
     @Override
     public boolean canInteractWith(EntityPlayer playerIn) {
-        if (tile.getWorld().getBlockState(tile.getPos()).getBlock() != FBiomesBlocks.PIXIE_TABLE) {
+        if (tile.getWorld().getBlockState(tile.getPos()).getBlock() != FBiomesBlocks.MYSTIC_STUMP) {
             return false;
         } else {
             return playerIn.getDistanceSq(

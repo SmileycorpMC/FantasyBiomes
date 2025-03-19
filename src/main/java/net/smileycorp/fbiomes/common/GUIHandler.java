@@ -6,8 +6,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.smileycorp.fbiomes.client.gui.GuiPixieTable;
+import net.smileycorp.fbiomes.common.blocks.tile.TileMysticStump;
 import net.smileycorp.fbiomes.common.inventory.ContainerPixieTable;
-import net.smileycorp.fbiomes.common.blocks.tile.TilePixieTable;
 
 import javax.annotation.Nullable;
 
@@ -21,8 +21,8 @@ public class GUIHandler implements IGuiHandler {
         switch (ID) {
             case 1:
                 TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
-                if(tile instanceof TilePixieTable) {
-                    return new GuiPixieTable(new ContainerPixieTable((TilePixieTable) tile, player.inventory));
+                if(tile instanceof TileMysticStump) {
+                    return new GuiPixieTable(new ContainerPixieTable((TileMysticStump) tile, player.inventory));
                 }
         }
         return null;
@@ -34,8 +34,8 @@ public class GUIHandler implements IGuiHandler {
         switch (ID) {
             case 1:
                 TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
-                if(tile instanceof TilePixieTable) {
-                    return new ContainerPixieTable((TilePixieTable) tile, player.inventory);
+                if(tile instanceof TileMysticStump) {
+                    return new ContainerPixieTable((TileMysticStump) tile, player.inventory);
                 }
         }
         return null;

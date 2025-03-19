@@ -16,11 +16,12 @@ import net.minecraft.util.SoundCategory;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IPlantable;
+import net.smileycorp.atlas.api.item.IMetaItem;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 
-public class ItemBerries extends ItemFood {
+public class ItemBerries extends ItemFood implements IMetaItem {
 
 	public ItemBerries() {
 		super(1, 0.5f, false);

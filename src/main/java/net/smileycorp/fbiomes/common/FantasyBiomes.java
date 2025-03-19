@@ -12,6 +12,7 @@ import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.network.PacketHandler;
+import net.smileycorp.fbiomes.common.recipe.PixieRecipeManager;
 import net.smileycorp.fbiomes.common.world.WorldEventHandler;
 
 @Mod(modid = Constants.MODID)
@@ -47,6 +48,8 @@ public class FantasyBiomes {
 	 }
 	 
 	@EventHandler
-	public void postInit(FMLPostInitializationEvent event) {}
+	public void postInit(FMLPostInitializationEvent event) {
+		PixieRecipeManager.addVanillaRecipes();
+	}
 	
 }

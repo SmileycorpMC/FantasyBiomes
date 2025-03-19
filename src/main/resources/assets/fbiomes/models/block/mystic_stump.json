@@ -1,0 +1,42 @@
+{
+	"credit": "Made with Blockbench",
+	"textures": {
+		"0": "fbiomes:blocks/mystic_stump",
+		"1": "fbiomes:blocks/mystic_stump_top",
+		"2": "fbiomes:blocks/mystic_stump_bottom",
+		"particle": "fbiomes:blocks/mystic_stump"
+	},
+	"elements": [
+		{
+			"from": [-13, 0, -13],
+			"to": [29, 16, 29],
+			"faces": {
+				"north": {"uv": [0, 10.66667, 14, 16], "texture": "#0"},
+				"east": {"uv": [0, 10.66667, 14, 16], "texture": "#0"},
+				"south": {"uv": [0, 10.66667, 14, 16], "texture": "#0"},
+				"west": {"uv": [0, 10.66667, 14, 16], "texture": "#0"},
+				"up": {"uv": [0, 0, 14, 14], "texture": "#1"},
+				"down": {"uv": [0, 0, 14, 14], "texture": "#2"}
+			}
+		},
+		{
+			"from": [5, 0, -14],
+			"to": [11, 6, -13],
+			"faces": {
+				"north": {"uv": [0, 4.66667, 2, 6.66667], "texture": "#0"},
+				"east": {"uv": [1.66667, 4.66667, 2, 6.66667], "texture": "#0"},
+				"west": {"uv": [0, 4.66667, 0.33333, 6.66667], "texture": "#0"},
+				"up": {"uv": [0, 4.33333, 2, 4.66667], "texture": "#0"},
+				"down": {"uv": [0, 6.33333, 2, 6.66667], "texture": "#0"}
+			}
+		}
+	],
+	"groups": [
+		{
+			"name": "mystic_stump_houses",
+			"origin": [8, 8, 8],
+			"color": 0,
+			"children": [0, 1]
+		}
+	]
+}

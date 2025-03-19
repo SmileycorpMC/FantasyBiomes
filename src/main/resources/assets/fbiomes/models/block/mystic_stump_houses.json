@@ -2,10 +2,10 @@
 	"credit": "Made with Blockbench",
 	"texture_size": [48, 48],
 	"textures": {
-		"0": "fbiomes:blocks/pixie_table",
-		"1": "fbiomes:blocks/pixie_table_top",
-		"2": "fbiomes:blocks/pixie_table_bot",
-		"particle": "fbiomes:blocks/pixie_table"
+		"0": "fbiomes:blocks/mystic_stump",
+		"1": "fbiomes:blocks/mystic_stump_top",
+		"2": "fbiomes:blocks/mystic_stump_bottom",
+		"particle": "fbiomes:blocks/mystic_stump"
 	},
 	"elements": [
 		{

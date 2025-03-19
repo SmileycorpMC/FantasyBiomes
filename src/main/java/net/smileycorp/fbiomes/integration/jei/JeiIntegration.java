@@ -12,7 +12,7 @@ public class JeiIntegration implements IModPlugin {
     
     @Override
     public void register(IModRegistry registry) {
-        registry.addRecipeCatalyst(new ItemStack(FBiomesBlocks.PIXIE_TABLE), VanillaRecipeCategoryUid.CRAFTING);
+        registry.addRecipeCatalyst(new ItemStack(FBiomesBlocks.MYSTIC_STUMP), VanillaRecipeCategoryUid.CRAFTING);
     }
     
 }

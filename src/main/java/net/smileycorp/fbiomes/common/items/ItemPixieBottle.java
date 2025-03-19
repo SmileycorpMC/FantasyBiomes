@@ -17,13 +17,12 @@ import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
-import net.smileycorp.atlas.api.item.IMetaItem;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
 
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class ItemPixieBottle extends ItemFBiomes implements IMetaItem {
+public class ItemPixieBottle extends ItemFBiomes {
     
     public ItemPixieBottle() {
         super("Pixie_Bottle");

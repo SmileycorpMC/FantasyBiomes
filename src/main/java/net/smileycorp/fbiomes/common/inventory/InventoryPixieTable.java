@@ -7,7 +7,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
-import net.smileycorp.fbiomes.common.blocks.tile.TilePixieTable;
+import net.smileycorp.fbiomes.common.blocks.tile.TileMysticStump;
 
 import javax.annotation.Nonnull;
 
@@ -20,11 +20,11 @@ import javax.annotation.Nonnull;
  */
 public class InventoryPixieTable extends ItemStackHandler {
     
-    private final TilePixieTable tile;
+    private final TileMysticStump tile;
     private final InventoryWrapper wrapper = new InventoryWrapper(this);
     private boolean dirty = false;
 
-    public InventoryPixieTable(TilePixieTable tile) {
+    public InventoryPixieTable(TileMysticStump tile) {
         this.tile = tile;
         setSize(21);
     }

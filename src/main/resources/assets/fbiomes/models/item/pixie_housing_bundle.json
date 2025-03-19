@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "fbiomes:items/pixie_housing_bundle"
+    }
+}
