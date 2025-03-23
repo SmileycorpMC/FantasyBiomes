@@ -16,16 +16,9 @@ public class PixieRecipeManager {
 
     @Nullable
     public static IRecipe findRecipe(InventoryPixieTable inventory, World world) {
-        for (Map.Entry<ResourceLocation, IRecipe> en : recipes.entrySet()) {
-            if(en.getValue().matches(inventory.getCraftingWrapper(), world)) {
-                return en.getValue();
-            }
-        }
+        for (IRecipe recipe : recipes.values()) if(recipe.matches(inventory.getCraftingWrapper(), world)) return recipe;
+        for (IRecipe recipe : CraftingManager.REGISTRY) if(recipe.matches(inventory.getCraftingWrapper(), world)) return recipe;
         return null;
-    }
-    
-    public static void addVanillaRecipes() {
-        CraftingManager.REGISTRY.getKeys().forEach(rl -> recipes.put(rl, CraftingManager.REGISTRY.getObject(rl)));
     }
     
 }

@@ -11,7 +11,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Blocks;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -63,11 +62,12 @@ public class BlockMysticStump extends BlockBase {
     
     @Override
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
+        if (world.isRemote) return;
         breakStump(world, pos);
     }
     
     public static void breakStump(World world, BlockPos pos) {
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos.getX() - 1, pos.getY(), pos.getZ() - 1);
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
         for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) {
             mutable.setPos(pos.getX() + i, pos.getY(), pos.getZ() + j);
             if (world.getBlockState(mutable).getBlock() == (pos.equals(mutable)

@@ -12,6 +12,7 @@ import net.minecraft.util.ITickable;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
+import net.smileycorp.atlas.api.util.RecipeUtils;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
 import net.smileycorp.fbiomes.common.inventory.InventoryPixieTable;
 import net.smileycorp.fbiomes.common.items.ItemPixieBottle;
@@ -41,13 +42,27 @@ public class TileMysticStump extends TileEntity implements ITickable {
     
     public void tryFindingRecipe() {
         currentRecipe = PixieRecipeManager.findRecipe(inventory, world);
+        System.out.println(currentRecipe);
         if(currentRecipe != null) tryCraft();
     }
     
     public void tryCraft() {
         if(recipeProgress++ >= (currentRecipe instanceof IPixieRecipe ? ((IPixieRecipe)currentRecipe).getCraftingDuration() : 500)) {
-            currentRecipe.getCraftingResult(inventory.getCraftingWrapper());
-            recipeProgress = 0;
+            ItemStack result = currentRecipe.getCraftingResult(inventory.getCraftingWrapper());
+            if (result.isEmpty()) return;
+            for (int i = 9; i < 13; i++) if (RecipeUtils.compareItemStacksCanFit(result, inventory.getStackInSlot(i))) {
+                result.setCount(result.getCount() + inventory.getStackInSlot(i).getCount());
+                inventory.setStackInSlot(i, result);
+                for (int j = 0; j < 9; j++) {
+                    ItemStack stack = inventory.getStackInSlot(j);
+                    if (stack.isEmpty()) continue;
+                    ItemStack container = stack.getItem().getContainerItem(stack);
+                    if (container.isEmpty()) stack.shrink(1);
+                    else  inventory.setStackInSlot(j, container);
+                }
+                recipeProgress = 0;
+                break;
+            }
         }
     }
     
