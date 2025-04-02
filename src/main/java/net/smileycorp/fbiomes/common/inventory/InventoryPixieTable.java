@@ -82,24 +82,17 @@ public class InventoryPixieTable extends ItemStackHandler {
                     return true;
                 }
             }, 3, 3);
-
             this.inventory = inventory;
         }
 
         @Override
         public ItemStack getStackInSlot(int index) {
-            if(index >= getSizeInventory())
-                return ItemStack.EMPTY;
-
-            return inventory.getStackInSlot(index);
+            return (index >= getSizeInventory()) ? ItemStack.EMPTY : inventory.getStackInSlot(index);
         }
 
         @Override
         public ItemStack getStackInRowAndColumn(int row, int column) {
-            if(row < 0 || row > 3 || column < 0 || column > 3)
-                return ItemStack.EMPTY;
-
-            return getStackInSlot(row * 3 + column);
+            return (row < 0 || row > 3 || column < 0 || column > 3) ? ItemStack.EMPTY : getStackInSlot(row * 3 + column);
         }
 
         @Override
@@ -111,5 +104,6 @@ public class InventoryPixieTable extends ItemStackHandler {
         public void markDirty() {
             inventory.markDirty();
         }
+    
     }
 }

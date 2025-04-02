@@ -40,10 +40,6 @@ public class EnchantedThicket extends Biome {
 		spawnableCreatureList.add(new Biome.SpawnListEntry(EntityPixie.class, 5, 2, 6));
 		//spawnableCreatureList.add(new Biome.SpawnListEntry(EntitySheep.class, 3, 1, 4));
 		//spawnableCreatureList.add(new Biome.SpawnListEntry(EntityMooshroom.class, 1, 1, 2));
-		spawnableMonsterList.clear();
-		//spawnableMonsterList.add(new Biome.SpawnListEntry(EntityPixie.class, 5, 2, 6));
-		//spawnableMonsterList.add(new Biome.SpawnListEntry(EntitySkeleton.class, 3, 1, 4));
-		//spawnableMonsterList.add(new Biome.SpawnListEntry(EntityWitch.class, 1, 1, 2));
 	}
 	
 	@Override

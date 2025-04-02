@@ -38,6 +38,7 @@ public class FantasyBiomes {
 		PacketHandler.initPackets();
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GUIHandler());
 		MinecraftForge.TERRAIN_GEN_BUS.register(new WorldEventHandler());
+		MinecraftForge.EVENT_BUS.register(new EventListener());
 	 }
 	 
 	 @EventHandler
