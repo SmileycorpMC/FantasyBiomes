@@ -22,7 +22,7 @@ public class GUIHandler implements IGuiHandler {
             case 1:
                 TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
                 if(tile instanceof TileMysticStump) {
-                    return new GuiPixieTable(new ContainerPixieTable((TileMysticStump) tile, player.inventory));
+                    return new GuiPixieTable((TileMysticStump) tile, new ContainerPixieTable((TileMysticStump) tile, player.inventory));
                 }
         }
         return null;

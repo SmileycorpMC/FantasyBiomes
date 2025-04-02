@@ -42,10 +42,9 @@ public class BlockMysticStump extends BlockBase {
     
     @Override
     public boolean canPlaceBlockAt(World world, BlockPos pos) {
-        for(BlockPos pos1 : BlockPos.getAllInBoxMutable(
-                pos.add(-1, 0, -1),
-                pos.add(1, 0, 1)
-        )) if(!world.getBlockState(pos1).getBlock().isReplaceable(world, pos1)) return false;
+        for(BlockPos mutable : BlockPos.getAllInBoxMutable(
+                pos.add(-1, 0, -1), pos.add(1, 0, 1)))
+            if(!world.getBlockState(mutable).getBlock().isReplaceable(world, mutable)) return false;
         return true;
     }
     
@@ -67,12 +66,10 @@ public class BlockMysticStump extends BlockBase {
     }
     
     public static void breakStump(World world, BlockPos pos) {
-        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
-        for (int i = -1; i <= 1; i++) for (int j = -1; j <= 1; j++) {
-            mutable.setPos(pos.getX() + i, pos.getY(), pos.getZ() + j);
+        for(BlockPos mutable : BlockPos.getAllInBoxMutable(
+                pos.add(-1, 0, -1), pos.add(1, 0, 1)))
             if (world.getBlockState(mutable).getBlock() == (pos.equals(mutable)
                     ? FBiomesBlocks.MYSTIC_STUMP : FBiomesBlocks.MYSTIC_STUMP_PART)) world.setBlockToAir(mutable);
-        }
     }
     
     @Override

@@ -2,8 +2,10 @@ package net.smileycorp.fbiomes.client.gui;
 
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.util.ResourceLocation;
 import net.smileycorp.fbiomes.common.Constants;
+import net.smileycorp.fbiomes.common.blocks.tile.TileMysticStump;
 import net.smileycorp.fbiomes.common.inventory.ContainerPixieTable;
 
 import java.io.IOException;
@@ -11,9 +13,12 @@ import java.io.IOException;
 public class GuiPixieTable extends GuiContainer {
     
     private static final ResourceLocation GUI_TEXTURE = Constants.loc("textures/gui/container/pixie_table.png");
-
-    public GuiPixieTable(ContainerPixieTable inventorySlotsIn) {
+    
+    private final TileMysticStump tile;
+    
+    public GuiPixieTable(TileMysticStump tile, ContainerPixieTable inventorySlotsIn) {
         super(inventorySlotsIn);
+        this.tile = tile;
         xSize = 176;
         ySize = 176;
     }
@@ -90,6 +95,12 @@ public class GuiPixieTable extends GuiContainer {
     public void drawScreen(int mouseX, int mouseY, float partialTicks) {
         drawDefaultBackground();
         super.drawScreen(mouseX, mouseY, partialTicks);
+        if (tile.getCraftingProgress() <= 0) return;
+        mc.getTextureManager().bindTexture(GUI_TEXTURE);
+        GlStateManager.disableDepth();
+        drawTexturedModalRect((width - xSize) / 2 + 78, (height - ySize) / 2 + 47,
+                177, 47, (int)(tile.getCraftingProgress() * 57) + 1, 7);
+        GlStateManager.enableDepth();
         renderHoveredToolTip(mouseX, mouseY);
     }
 

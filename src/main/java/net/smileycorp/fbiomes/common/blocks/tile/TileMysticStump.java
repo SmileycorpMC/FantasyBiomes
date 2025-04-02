@@ -6,6 +6,7 @@ import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
+import net.minecraft.network.play.server.SPacketUpdateTileEntity;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
@@ -19,6 +20,7 @@ import net.smileycorp.fbiomes.common.items.ItemPixieBottle;
 import net.smileycorp.fbiomes.common.recipe.IPixieRecipe;
 import net.smileycorp.fbiomes.common.recipe.PixieRecipeManager;
 
+import javax.annotation.Nullable;
 import java.util.List;
 
 public class TileMysticStump extends TileEntity implements ITickable {
@@ -28,16 +30,15 @@ public class TileMysticStump extends TileEntity implements ITickable {
     public final InventoryPixieTable inventory = new InventoryPixieTable(this);
     private IRecipe currentRecipe = null;
     private int recipeProgress = 0;
+    private float progressPercent = 0;
     private List<EntityPixie> pixies = Lists.newArrayList();
     
     @Override
     public void update() {
         if(currentRecipe == null) return;
-            if(currentRecipe.matches(inventory.getCraftingWrapper(), world)) {
-                tryCraft();
-                return;
-            }
-            // TODO maybe call tryFindingRecipe or might be a bug here
+        if(currentRecipe.matches(inventory.getCraftingWrapper(), world)) {
+            tryCraft();
+        }
     }
     
     public void tryFindingRecipe() {
@@ -47,7 +48,9 @@ public class TileMysticStump extends TileEntity implements ITickable {
     }
     
     public void tryCraft() {
-        if(recipeProgress++ >= (currentRecipe instanceof IPixieRecipe ? ((IPixieRecipe)currentRecipe).getCraftingDuration() : 500)) {
+        int recipeDuration = (currentRecipe instanceof IPixieRecipe ? ((IPixieRecipe)currentRecipe).getCraftingDuration() : 500);
+        progressPercent = (float) recipeProgress / (float) recipeDuration;
+        if(recipeProgress++ >= recipeDuration) {
             ItemStack result = currentRecipe.getCraftingResult(inventory.getCraftingWrapper());
             if (result.isEmpty()) return;
             for (int i = 9; i < 13; i++) if (RecipeUtils.compareItemStacksCanFit(result, inventory.getStackInSlot(i))) {
@@ -61,9 +64,14 @@ public class TileMysticStump extends TileEntity implements ITickable {
                     else  inventory.setStackInSlot(j, container);
                 }
                 recipeProgress = 0;
+                progressPercent = 0;
                 break;
             }
         }
+    }
+    
+    public float getCraftingProgress() {
+        return progressPercent;
     }
     
     public int getPixieCount() {
@@ -113,6 +121,39 @@ public class TileMysticStump extends TileEntity implements ITickable {
             pixies.appendTag(nbt);
         }
         return super.writeToNBT(compound);
+    }
+    
+    @Override
+    public void handleUpdateTag(NBTTagCompound compound) {
+        super.deserializeNBT(compound);
+        inventory.deserializeNBT(compound.getCompoundTag("inventory"));
+        pixies.clear();
+        for (NBTBase nbt : compound.getTagList("pixies", 10)) {
+            EntityPixie pixie = new EntityPixie(FMLCommonHandler.instance().getMinecraftServerInstance().getWorld(0));
+            pixie.readFromNBT((NBTTagCompound) nbt);
+            pixies.add(pixie);
+        }
+        progressPercent = compound.getFloat("recipe_progress");
+    }
+    
+    @Override
+    public NBTTagCompound getUpdateTag() {
+        NBTTagCompound compound = super.getUpdateTag();
+        compound.setTag("inventory", inventory.serializeNBT());
+        NBTTagList pixies = new NBTTagList();
+        for (EntityPixie pixie : this.pixies) {
+            NBTTagCompound nbt = new NBTTagCompound();
+            pixie.writeEntityToNBT(nbt);
+            pixies.appendTag(nbt);
+        }
+        compound.setFloat("recipe_progress", progressPercent);
+        return compound;
+    }
+    
+    @Nullable
+    @Override
+    public SPacketUpdateTileEntity getUpdatePacket() {
+        return new SPacketUpdateTileEntity(pos, 0, getUpdateTag());
     }
     
     @Override
