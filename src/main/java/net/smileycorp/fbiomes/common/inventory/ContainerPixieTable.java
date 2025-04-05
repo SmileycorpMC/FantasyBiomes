@@ -33,7 +33,7 @@ public class ContainerPixieTable extends Container {
 
         // Food
         for(int i = 0; i < 7; ++i) {
-            addSlotToContainer(new SlotItemHandler(tile.inventory, 14 + i, 8 + i * 24, 74));
+            addSlotToContainer(new SlotPixieFood(tile.inventory, 14 + i, 8 + i * 24, 74));
         }
 
         // Player inventory
