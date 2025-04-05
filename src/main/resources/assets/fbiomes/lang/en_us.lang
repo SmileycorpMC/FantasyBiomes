@@ -128,3 +128,7 @@ entity.fbiomes.pixie.variant.marbled=§eMarbled
 entity.fbiomes.pixie.variant.hairstreak=§eHairstreak
 entity.fbiomes.pixie.variant.sunset=§bSunset
 entity.fbiomes.pixie.variant.malachite=§bMalachite
+
+jei.category.fbiomes.pixie_table_food=Pixie Workshop Food
+
+jei.tooltip.fbiomes.pixie_table_food=+%s Efficiency
