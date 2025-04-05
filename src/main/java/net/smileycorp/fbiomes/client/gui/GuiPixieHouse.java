@@ -1,42 +1,53 @@
 package net.smileycorp.fbiomes.client.gui;
 
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.GuiButton;
-import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
+import com.google.common.collect.Lists;
+import net.minecraft.client.gui.Gui;
+import net.minecraft.util.text.TextComponentTranslation;
+import net.smileycorp.fbiomes.common.blocks.tile.TileMysticStump;
+import net.smileycorp.fbiomes.common.entities.EntityPixie;
 
-public class GuiPixieHouse extends GuiButton {
-    private final int textureX;
-    private final int textureY;
-    private final ResourceLocation texture;
-    public boolean toggled = false;
+import java.util.List;
 
-    public GuiPixieHouse(int buttonId, int x, int y, int textureX, int textureY, int width, int height, ResourceLocation texture) {
-        super(buttonId, x, y, width, height, "");
+public class GuiPixieHouse extends Gui {
+    
+    private final int x, y, textureX, textureY, width, height, index;
+    private final TileMysticStump tile;
+    
+    public GuiPixieHouse(int x, int y, int textureX, int textureY, int width, int height, int index, TileMysticStump tile) {
+        this.x = x;
+        this.y = y;
         this.textureX = textureX;
         this.textureY = textureY;
-        this.texture = texture;
+        this.width = width;
+        this.height = height;
+        this.index = index;
+        this.tile = tile;
+    }
+    
+    private boolean isActive() {
+        return tile.getPixieCount() > index;
+    }
+    
+    public void draw() {
+        if (!isActive()) return;
+        drawTexturedModalRect(x, y, textureX, textureY, width, height);
     }
 
-    public void toggle() {
-        toggled = !toggled;
+    public boolean isHovered(int mouseX, int mouseY) {
+        if (!isActive()) return false;
+        return mouseX >= x && mouseY >= y && mouseX <= x + width && mouseY <= y + height;
     }
-
-    @Override
-    public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
-        //this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-
-        mc.getTextureManager().bindTexture(texture);
-        GlStateManager.disableDepth();
-
-        if(toggled) {
-            drawTexturedModalRect(x, y, textureX, textureY, this.width, this.height);
-        }
-
-        /*if(hovered) {
-            drawTexturedModalRect(x, y, 206, 68, this.width, this.height);
-        }*/
-
-        GlStateManager.enableDepth();
+    
+    public List<String> getTooltipText() {
+        List<String> tooltips = Lists.newArrayList();
+        EntityPixie pixie = tile.getPixie(index);
+        tooltips.add(pixie.getName());
+        tooltips.add(new TextComponentTranslation("item.fbiomes.pixie_bottle.tooltip.variant",
+                new TextComponentTranslation("entity.fbiomes.pixie.variant."
+                        + pixie.getVariant().getName())).getFormattedText());
+                tooltips.add(new TextComponentTranslation("item.fbiomes.pixie_bottle.tooltip.health",
+                        pixie.getHealth(),  pixie.getMaxHealth()).getFormattedText());
+        return tooltips;
     }
+    
 }

@@ -36,9 +36,7 @@ public class TileMysticStump extends TileEntity implements ITickable {
     @Override
     public void update() {
         if(currentRecipe == null) return;
-        if(currentRecipe.matches(inventory.getCraftingWrapper(), world)) {
-            tryCraft();
-        }
+        if(currentRecipe.matches(inventory.getCraftingWrapper(), world)) tryCraft();
     }
     
     public void tryFindingRecipe() {
@@ -50,7 +48,7 @@ public class TileMysticStump extends TileEntity implements ITickable {
     public void tryCraft() {
         int recipeDuration = (currentRecipe instanceof IPixieRecipe ? ((IPixieRecipe)currentRecipe).getCraftingDuration() : 500);
         progressPercent = (float) recipeProgress / (float) recipeDuration;
-        if(recipeProgress++ >= recipeDuration) {
+        if((recipeProgress++) >= recipeDuration) {
             ItemStack result = currentRecipe.getCraftingResult(inventory.getCraftingWrapper());
             if (result.isEmpty()) return;
             for (int i = 9; i < 13; i++) if (RecipeUtils.compareItemStacksCanFit(result, inventory.getStackInSlot(i))) {
@@ -91,7 +89,11 @@ public class TileMysticStump extends TileEntity implements ITickable {
         return true;
     }
     
-    public ItemStack getPixie() {
+    public EntityPixie getPixie(int index) {
+        return pixies.get(index);
+    }
+    
+    public ItemStack bottlePixie() {
         int count = getPixieCount();
         if (count == 0) return ItemStack.EMPTY;
         EntityPixie pixie = pixies.get(count - 1);
