@@ -22,8 +22,8 @@ public class WorldGenGoldenBirchTree extends WorldGenBirchTree {
             .withProperty(BlockLeaves.DECAYABLE, true).withProperty(BlockLeaves.CHECK_DECAY, false);
     private final boolean isNatural;
     
-    public WorldGenGoldenBirchTree(boolean notify, boolean isTall, boolean isNatural) {
-        super(notify, isTall);
+    public WorldGenGoldenBirchTree(boolean notify, boolean isNatural) {
+        super(notify, true);
         this.isNatural = isNatural;
     }
     
@@ -34,7 +34,7 @@ public class WorldGenGoldenBirchTree extends WorldGenBirchTree {
         if (!isNatural || state.getBlock() != Blocks.LOG) return;
         Random rand = world.rand;
         for (EnumFacing facing : EnumFacing.HORIZONTALS) if (rand.nextBoolean() && world.isAirBlock(pos.offset(facing)))
-            setBlockAndNotifyAdequately(world, pos.offset(facing), FBiomesBlocks.LICHEN.getDefaultState().withProperty(BlockLichen.FACING, facing));
+            setBlockAndNotifyAdequately(world, pos.offset(facing), BlockLichen.getBlockState(facing.getOpposite()));
         if (rand.nextInt(5) > 1) return;
         EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
         BlockPos facePos = pos.offset(facing);

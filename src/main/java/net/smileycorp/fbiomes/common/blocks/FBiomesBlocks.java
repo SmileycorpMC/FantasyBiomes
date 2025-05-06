@@ -54,10 +54,10 @@ public class FBiomesBlocks {
 	public static Block BIG_SHROOM = new BlockBigMushroom();
 	public static Block BIG_GLOWSHROOM = new BlockBigGlowshroom();
 	public static Block SHELF_MUSHROOM = new BlockShelfMushroom();
-	public static Block LICHEN = new BlockLichen();
+	public static List<BlockLichen> LICHEN = IMultifaceBlock.create(BlockLichen::new);
 	public static Block BRAMBLES = new BlockBrambleBush();
 	public static Block ROOTS = new BlockRoots();
-	public static Block WEB_COVER = new BlockWebCover();
+	public static List<BlockWebCover> WEB_COVER = IMultifaceBlock.create(BlockWebCover::new);
 	//public static Block FAE_WATER;
 	//public static Block FAE_WATER_FLOWING;
 	
@@ -85,6 +85,10 @@ public class FBiomesBlocks {
 				Object object = field.get(null);
 				if (object instanceof Map) {
 					for (Object o : ((Map)object).values()) if (o instanceof Block) register(registry, (Block) o);
+					continue;
+				}
+				if (object instanceof List) {
+					for (Object o : ((List)object)) if (o instanceof Block) register(registry, (Block) o);
 					continue;
 				}
 				if (object instanceof ShapedBlock) {

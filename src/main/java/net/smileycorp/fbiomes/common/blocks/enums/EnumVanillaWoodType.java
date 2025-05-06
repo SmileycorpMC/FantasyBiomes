@@ -18,7 +18,7 @@ import java.util.function.Function;
 public enum EnumVanillaWoodType implements WoodEnum {
     RED_OAK("red_oak", rand -> rand.nextInt(5) == 0 ? new WorldGenBigRedOakTree(true, false) : new WorldGenRedOakTree(true, false),
             null, MapColor.RED_STAINED_HARDENED_CLAY, 0xFF9E1A06),
-    GOLD_BIRCH("gold_birch", rand -> new WorldGenGoldenBirchTree(true, false, false), null, MapColor.GOLD, 0xFFF7AD00);
+    GOLD_BIRCH("gold_birch", rand -> new WorldGenGoldenBirchTree(true, false), null, MapColor.GOLD, 0xFFF7AD00);
     
     private final String name;
     private final Function<Random,WorldGenerator> tree, largeTree;

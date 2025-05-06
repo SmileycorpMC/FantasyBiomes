@@ -12,6 +12,9 @@ item.fbiomes.orantikku_door.name=Orantikku Door
 item.fbiomes.gnarlwillow_boat.name=Gnarlwillow Boat
 item.fbiomes.gnarlwillow_door.name=Gnarlwillow Door
 
+item.fbiomes.lichen.name=Lichen
+item.fbiomes.web_cover.name=Web Cover
+
 item.fbiomes.pixie_bottle.name=Bottled Pixie
 item.fbiomes.pixie_bottle.tooltip.variant=Variant: %1$s
 item.fbiomes.pixie_bottle.tooltip.health=Health: %1$s/%2$s

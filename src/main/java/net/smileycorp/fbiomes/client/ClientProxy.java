@@ -1,5 +1,6 @@
 package net.smileycorp.fbiomes.client;
 
+import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.client.renderer.color.BlockColors;
 import net.minecraft.client.renderer.color.ItemColors;
@@ -33,6 +34,8 @@ public class ClientProxy {
 	public static void registerModels(ModelRegistryEvent event) {
 		ModelLoader.setCustomStateMapper(FBiomesBlocks.VANILLA_LEAVES, new WoodStateMapper(FBiomesBlocks.VANILLA_LEAVES));
 		ModelLoader.setCustomStateMapper(FBiomesBlocks.VANILLA_SAPLING, new WoodStateMapper(FBiomesBlocks.VANILLA_SAPLING));
+		for (Block block : FBiomesBlocks.LICHEN) ModelLoader.setCustomStateMapper(block, new MultifaceStateMapper());
+		for (Block block : FBiomesBlocks.WEB_COVER) ModelLoader.setCustomStateMapper(block, new MultifaceStateMapper());
 		for (Item item : FBiomesItems.ITEMS) if (item instanceof IMetaItem &! (item instanceof ItemBlock &&
 				((BlockProperties)((ItemBlock) item).getBlock()).usesCustomItemHandler())) {
 			if (((IMetaItem) item).getMaxMeta() > 1) for (int i = 0; i < ((IMetaItem) item).getMaxMeta(); i++)

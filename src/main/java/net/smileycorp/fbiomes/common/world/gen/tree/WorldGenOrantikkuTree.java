@@ -1,5 +1,6 @@
 package net.smileycorp.fbiomes.common.world.gen.tree;
 
+import com.google.common.collect.Sets;
 import net.minecraft.block.BlockLeaves;
 import net.minecraft.block.BlockLog;
 import net.minecraft.block.BlockSapling;
@@ -13,20 +14,24 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.smileycorp.atlas.api.util.DirectionUtils;
 import net.smileycorp.fbiomes.common.blocks.BlockFBMushroom;
-import net.smileycorp.fbiomes.common.blocks.BlockLichen;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
+import net.smileycorp.fbiomes.common.world.gen.IMultiFacePlacer;
 
 import java.util.Random;
+import java.util.Set;
 
-public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
+public class WorldGenOrantikkuTree extends WorldGenAbstractTree implements IMultiFacePlacer {
 	
+	protected static final float TWO_PI = 6.283185307f;
 	protected static final IBlockState LOG = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ORANTIKKU, BlockLog.EnumAxis.Y);
 	protected static final IBlockState BARK = FBiomesBlocks.WOOD.getLogState(EnumWoodType.ORANTIKKU, BlockLog.EnumAxis.NONE);
 	protected static final IBlockState LEAVES = FBiomesBlocks.WOOD.getLeavesState(EnumWoodType.ORANTIKKU)
 			.withProperty(BlockLeaves.DECAYABLE, false).withProperty(BlockLeaves.CHECK_DECAY, false);
 	
 	protected final boolean natural;
+	
+	private final Set<BlockPos> lichen = Sets.newHashSet();
 	
 	public WorldGenOrantikkuTree(boolean notify, boolean natural) {
 		super(notify);
@@ -72,7 +77,10 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 		//generateLeaves(world, pos.up(h - 1), 7);
 		int branches = rand.nextInt(4) + 5;
 		for (int i = 0; i < branches; i++) generateBranch(world, rand, new BlockPos.MutableBlockPos(pos.up(h)), rand.nextInt(5) + 7,
-					getBranchDir(2f * Math.PI * (float) i / (float) branches, rand));
+					getBranchDir(TWO_PI * (float) i / (float) branches, rand));
+		for (BlockPos pos1 : lichen) if (world.isAirBlock(pos1)) setBlockAndNotifyAdequately(world, pos1,
+				getMultiface(rand.nextInt(50) == 0 ? web() : lichen(), world, pos1));
+		lichen.clear();
 		return true;
 	}
 
@@ -103,12 +111,11 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 	private void setBlock(World world, Random rand, BlockPos pos, IBlockState state) {
 		setBlockAndNotifyAdequately(world, pos, state);
 		if (!natural) return;
-		for (EnumFacing facing : EnumFacing.HORIZONTALS) if (rand.nextBoolean() && world.isAirBlock(pos.offset(facing)))
-			setBlockAndNotifyAdequately(world, pos.offset(facing), FBiomesBlocks.LICHEN.getDefaultState().withProperty(BlockLichen.FACING, facing));
+		for (EnumFacing facing : EnumFacing.HORIZONTALS) if (rand.nextBoolean() && world.isAirBlock(pos.offset(facing))) lichen.add(pos.offset(facing));
 		if (rand.nextInt(5) > 1) {
 			EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
 			BlockPos facePos = pos.offset(facing);
-			IBlockState shroom = (rand.nextInt(2) < 2 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
+			IBlockState shroom = (rand.nextInt(3) < 2 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
 				FBiomesBlocks.shrooms[rand.nextInt(FBiomesBlocks.shrooms.length)]).getDefaultState();
 			if (world.isAirBlock(facePos)) setBlockAndNotifyAdequately(world, facePos, shroom.withProperty(BlockFBMushroom.FACING, facing));
 		}
@@ -142,4 +149,9 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree {
 				MathHelper.sin((float) angle) + (rand.nextFloat() - 0.5f) * 0.2f);
 	}
 	
-}	
+	@Override
+	public boolean supportsMultiFace(IBlockState state) {
+		return state.getBlock() == FBiomesBlocks.WOOD.getLogState(EnumWoodType.ORANTIKKU, BlockLog.EnumAxis.NONE).getBlock();
+	}
+	
+}

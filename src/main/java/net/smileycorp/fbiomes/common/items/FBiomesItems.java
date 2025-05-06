@@ -9,7 +9,11 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.fbiomes.common.Constants;
+import net.smileycorp.fbiomes.common.blocks.BlockLichen;
+import net.smileycorp.fbiomes.common.blocks.BlockWebCover;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
+import net.smileycorp.fbiomes.common.blocks.IMultifaceBlock;
+import net.smileycorp.fbiomes.common.items.block.ItemMultifaceBlock;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -26,10 +30,14 @@ public class FBiomesItems {
 	public static Item PIXIE_BOTTLE = new ItemPixieBottle();
 	public static Item PIXIE_HOUSING = new ItemPixieHousing();
 	
+	public static ItemMultifaceBlock<BlockLichen> LICHEN = new ItemMultifaceBlock<>(FBiomesBlocks.LICHEN.get(0));
+	public static ItemMultifaceBlock<BlockWebCover> WEB_COVER = new ItemMultifaceBlock<>(FBiomesBlocks.WEB_COVER.get(0));
+	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		IForgeRegistry<Item> registry = event.getRegistry();
 		for (final Block block : FBiomesBlocks.BLOCKS) {
+			if (block instanceof IMultifaceBlock) continue;
 			if (((BlockProperties)block).usesCustomItemHandler()) continue;
 			register(registry, new ItemBlockFBiomes(block));
 		}
