@@ -1,4 +1,4 @@
-package net.smileycorp.fbiomes.common.world.gen.fungusforest;
+package net.smileycorp.fbiomes.common.world.gen.mushroom;
 
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;

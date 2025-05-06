@@ -18,7 +18,7 @@ import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomVariant;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumVanillaWoodType;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
 import net.smileycorp.fbiomes.common.blocks.tile.TileMysticStump;
-import net.smileycorp.fbiomes.common.world.gen.fungusforest.*;
+import net.smileycorp.fbiomes.common.world.gen.mushroom.*;
 
 import java.lang.reflect.Field;
 import java.util.List;

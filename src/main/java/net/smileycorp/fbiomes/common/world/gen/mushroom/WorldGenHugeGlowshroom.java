@@ -1,4 +1,4 @@
-package net.smileycorp.fbiomes.common.world.gen.fungusforest;
+package net.smileycorp.fbiomes.common.world.gen.mushroom;
 
 import net.smileycorp.fbiomes.common.blocks.BlockBigGlowshroom;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
