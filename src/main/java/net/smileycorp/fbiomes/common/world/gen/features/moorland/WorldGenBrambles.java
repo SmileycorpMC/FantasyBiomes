@@ -1,4 +1,4 @@
-package net.smileycorp.fbiomes.common.world.gen.features;
+package net.smileycorp.fbiomes.common.world.gen.features.moorland;
 
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.BlockPos;

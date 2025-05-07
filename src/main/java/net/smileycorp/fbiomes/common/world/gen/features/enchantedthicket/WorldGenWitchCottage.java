@@ -1,4 +1,4 @@
-package net.smileycorp.fbiomes.common.world.gen.features;
+package net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket;
 
 import net.minecraft.block.BlockChest;
 import net.minecraft.entity.monster.EntityWitch;
@@ -10,6 +10,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
+import net.smileycorp.fbiomes.common.world.gen.features.WorldGenTemplate;
 
 import java.util.Random;
 

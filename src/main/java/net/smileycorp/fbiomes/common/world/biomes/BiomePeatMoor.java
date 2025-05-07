@@ -23,10 +23,10 @@ import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.blocks.BlockMud;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMudType;
-import net.smileycorp.fbiomes.common.world.gen.features.WorldGenBoulder;
-import net.smileycorp.fbiomes.common.world.gen.features.WorldGenBrambles;
-import net.smileycorp.fbiomes.common.world.gen.features.WorldGenGraniteBoulder;
-import net.smileycorp.fbiomes.common.world.gen.features.WorldGenStoneCircle;
+import net.smileycorp.fbiomes.common.world.gen.features.moorland.WorldGenBoulder;
+import net.smileycorp.fbiomes.common.world.gen.features.moorland.WorldGenBrambles;
+import net.smileycorp.fbiomes.common.world.gen.features.moorland.WorldGenGraniteBoulder;
+import net.smileycorp.fbiomes.common.world.gen.features.moorland.WorldGenStoneCircle;
 
 import java.util.Random;
 

@@ -17,9 +17,10 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
-import net.smileycorp.fbiomes.common.world.gen.features.WorldGenMushroomLog;
-import net.smileycorp.fbiomes.common.world.gen.features.WorldGenWitchCottage;
-import net.smileycorp.fbiomes.common.world.gen.fungusforest.*;
+import net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket.WorldGenHollowLog;
+import net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket.WorldGenLog;
+import net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket.WorldGenWitchCottage;
+import net.smileycorp.fbiomes.common.world.gen.mushroom.*;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenBigRedOakTree;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenGoldenBirchTree;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenOrantikkuTree;
@@ -106,7 +107,7 @@ public class EnchantedThicket extends Biome {
 							&& CANOPY_TREE_GENERATOR.canGenerate(world, blockpos)) canopy_trees.add(blockpos);
 				}
 				//features
-				if (rand.nextInt(5) == 0) {
+				if (rand.nextInt(3) == 0) {
 					BlockPos pos1 = world.getHeight(pos.add(rand.nextInt(16) - rand.nextInt(16), 0, rand.nextInt(16) - rand.nextInt(16)));
 					WorldGenerator feature = getRandomFeature(world, pos1, rand, canopy_trees);
 					if (feature != null) feature.generate(world, rand, pos1);
@@ -166,7 +167,10 @@ public class EnchantedThicket extends Biome {
 		}
 		
 		private WorldGenerator getRandomFeature(World world, BlockPos pos, Random rand, Set<BlockPos> canopyTrees) {
-			return rand.nextInt(3) == 1 ? new WorldGenWitchCottage() : new WorldGenMushroomLog();
+			int r = rand.nextInt(10);
+			if (r < 3) return new WorldGenWitchCottage();
+			if (r < 6) return new WorldGenHollowLog();
+			return new WorldGenLog();
 		}
 		
 		private WorldGenerator getRandomBigMushroom(Random rand, boolean canHuge) {
@@ -177,8 +181,8 @@ public class EnchantedThicket extends Biome {
 		}
 		
 		public WorldGenAbstractTree getRandomTreeFeature(Random rand, boolean canHuge) {
-			return canHuge ? rand.nextFloat() < 0.2 ? new WorldGenCanopyTree(false) : new WorldGenBigRedOakTree(false, true) :
-					rand.nextFloat() < 0.3 ? new WorldGenRedOakTree(false, true) : new WorldGenGoldenBirchTree(false, false, true);
+			return canHuge ? rand.nextInt(5) == 0 ? new WorldGenCanopyTree(false) : new WorldGenBigRedOakTree(false, true) :
+					rand.nextInt(10) < 3 ? new WorldGenRedOakTree(false, true) : new WorldGenGoldenBirchTree(false, true);
 		}
 		
 	}

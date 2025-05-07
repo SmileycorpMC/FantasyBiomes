@@ -1,6 +1,9 @@
 package net.smileycorp.fbiomes.common.world.gen.tree;
 
 import net.minecraft.block.BlockLeaves;
+import net.minecraft.block.BlockLog;
+import net.minecraft.block.BlockOldLog;
+import net.minecraft.block.BlockPlanks;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumFacing;
@@ -21,6 +24,7 @@ public class WorldGenGoldenBirchTree extends WorldGenBirchTree {
             .withProperty(FBiomesBlocks.VANILLA_LEAVES.getVariantProperty(), EnumVanillaWoodType.GOLD_BIRCH)
             .withProperty(BlockLeaves.DECAYABLE, true).withProperty(BlockLeaves.CHECK_DECAY, false);
     private final boolean isNatural;
+    private BlockPos floor;
     
     public WorldGenGoldenBirchTree(boolean notify, boolean isNatural) {
         super(notify, true);
@@ -28,11 +32,26 @@ public class WorldGenGoldenBirchTree extends WorldGenBirchTree {
     }
     
     @Override
+    public boolean generate(World world, Random rand, BlockPos position) {
+        floor = position;
+        return super.generate(world, rand, position);
+    }
+    
+    @Override
     protected void setBlockAndNotifyAdequately(World world, BlockPos pos, IBlockState state) {
         if (state.getBlock() == Blocks.LEAVES) state = LEAVES;
         super.setBlockAndNotifyAdequately(world, pos, state);
-        if (!isNatural || state.getBlock() != Blocks.LOG) return;
         Random rand = world.rand;
+        if (pos.getY() - floor.getY() >= 5 && state.getBlock() == Blocks.LOG
+                && state.getValue(BlockLog.LOG_AXIS) == BlockLog.EnumAxis.Y && rand.nextInt(25) == 0) {
+            EnumFacing facing = EnumFacing.HORIZONTALS[rand.nextInt(4)];
+            if (world.isAirBlock(pos.offset(facing))) {
+                setBlockAndNotifyAdequately(world, pos, Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH)
+                        .withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis())));
+                return;
+            }
+        }
+        if (!isNatural || state.getBlock() != Blocks.LOG) return;
         for (EnumFacing facing : EnumFacing.HORIZONTALS) if (rand.nextBoolean() && world.isAirBlock(pos.offset(facing)))
             setBlockAndNotifyAdequately(world, pos.offset(facing), BlockLichen.getBlockState(facing.getOpposite()));
         if (rand.nextInt(5) > 1) return;

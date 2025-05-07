@@ -1,4 +1,4 @@
-package net.smileycorp.fbiomes.common.world.gen.features;
+package net.smileycorp.fbiomes.common.world.gen.features.moorland;
 
 import com.google.common.collect.Sets;
 import net.minecraft.block.material.Material;
