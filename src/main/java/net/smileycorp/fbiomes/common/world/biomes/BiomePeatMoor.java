@@ -60,20 +60,10 @@ public class BiomePeatMoor extends Biome {
 	 
 	 @Override
 	 public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunk, int x, int z, double noise) {
-		 super.genTerrainBlocks(world, rand, chunk, x, z, noise);
-		 int i = x & 15;
-	     int k = z & 15;
-	     int y = 0;
-	     for (int j = 255; j >= 0; --j) if (chunk.getBlockState(i, j, k).isFullCube()) {
-			 y = j;
-			 break;
-	     }
-	     //System.out.println(x + ", " + y + ", " + z);
-	     if ((y < 82 && y > 78) || (y < 74 && y > 70) || (y < 66)) for (int j = y - 2; j <= y; j++) {
-			 if (j <= 0 || j >= 255) continue;
-			 chunk.setBlockState(i, j, k,(j == y ? FBiomesBlocks.GRASSY_MUD : FBiomesBlocks.MUD).getDefaultState()
-					 .withProperty(BlockMud.VARIANT, EnumMudType.PEAT));
-		 }
+		boolean peat = Math.sin(noise) < 0;
+		topBlock = peat ? FBiomesBlocks.GRASSY_MUD.getDefaultState().withProperty(BlockMud.VARIANT, EnumMudType.PEAT) : Blocks.GRASS.getDefaultState();
+		fillerBlock = peat ? FBiomesBlocks.MUD.getDefaultState().withProperty(BlockMud.VARIANT, EnumMudType.PEAT) : Blocks.DIRT.getDefaultState();
+		super.genTerrainBlocks(world, rand, chunk, x, z, noise);
 	}
 	
 	@Override
