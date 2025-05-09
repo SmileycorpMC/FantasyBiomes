@@ -21,12 +21,8 @@ build
 eclipse
 run
 
+src/test
+
 # Files from Forge MDK
 forge*changelog.txt
 /libs
-/.gradle
-/.gradle/4.9
-/.gradle/4.9/fileContent
-/.gradle
-*.lock
-*.bin
