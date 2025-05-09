@@ -1,6 +1,7 @@
 package net.smileycorp.fbiomes.common.world.biomes;
 
 import com.google.common.collect.Sets;
+import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockStone;
 import net.minecraft.init.Blocks;
@@ -17,6 +18,7 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
+import net.smileycorp.fbiomes.common.world.gen.WorldGenDisc;
 import net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket.WorldGenHollowLog;
 import net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket.WorldGenLog;
 import net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket.WorldGenWitchCottage;
@@ -30,9 +32,9 @@ import java.util.Collection;
 import java.util.Random;
 import java.util.Set;
 
-public class EnchantedThicket extends Biome {
-
-	public EnchantedThicket() {
+public class BiomeEnchantedThicket extends Biome {
+	
+	public BiomeEnchantedThicket() {
 		super(new BiomeProperties("Enchanted Thicket").setBaseHeight(0.3F).setHeightVariation(0.0F));
 		topBlock = Blocks.GRASS.getDefaultState();
 		fillerBlock = Blocks.DIRT.getDefaultState();
@@ -43,10 +45,19 @@ public class EnchantedThicket extends Biome {
 		//spawnableCreatureList.add(new Biome.SpawnListEntry(EntityMooshroom.class, 1, 1, 2));
 	}
 	
+	/*@Override
+	public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noise) {
+		double grassNoise = PODZOL_NOISE.getValue((double) x / 100d, (double) z / 100d);
+		topBlock = grassNoise > 0 ? Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL)
+				: Blocks.GRASS.getDefaultState();
+		generateBiomeTerrain(world, rand, chunkPrimerIn, x, z, noise);
+	}*/
+	
+	
 	@Override
 	@SideOnly(Side.CLIENT)
     public int getGrassColorAtPos(BlockPos pos) {
-        return 0x5A9158;
+        return 0x4D602F;
     }
 	
 	@Override
@@ -61,6 +72,9 @@ public class EnchantedThicket extends Biome {
     }
 	
 	public class Decorator extends BiomeDecorator {
+		
+		private final WorldGenDisc podzol = new WorldGenDisc(8,
+				Blocks.DIRT.getDefaultState().withProperty(BlockDirt.VARIANT, BlockDirt.DirtType.PODZOL), Blocks.GRASS.getDefaultState());
 		
 		private Decorator(){
 			waterlilyPerChunk = 0;
@@ -85,18 +99,22 @@ public class EnchantedThicket extends Biome {
 			else {
 				chunkProviderSettings = ChunkGeneratorSettings.Factory.jsonToFactory(world.getWorldInfo().getGeneratorOptions()).build();
 				chunkPos = pos;
-				dirtGen = new WorldGenMinable(Blocks.DIRT.getDefaultState(), this.chunkProviderSettings.dirtSize);
-				gravelOreGen = new WorldGenMinable(Blocks.GRAVEL.getDefaultState(), this.chunkProviderSettings.gravelSize);
+				dirtGen = new WorldGenMinable(Blocks.DIRT.getDefaultState(), chunkProviderSettings.dirtSize);
+				gravelOreGen = new WorldGenMinable(Blocks.GRAVEL.getDefaultState(), chunkProviderSettings.gravelSize);
 				graniteGen = new WorldGenMinable(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.GRANITE), chunkProviderSettings.graniteSize);
 				dioriteGen = new WorldGenMinable(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.DIORITE), chunkProviderSettings.dioriteSize);
 				andesiteGen = new WorldGenMinable(Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE), chunkProviderSettings.andesiteSize);
-				coalGen = new WorldGenMinable(Blocks.COAL_ORE.getDefaultState(), this.chunkProviderSettings.coalSize);
-				ironGen = new WorldGenMinable(Blocks.IRON_ORE.getDefaultState(), this.chunkProviderSettings.ironSize);
-				goldGen = new WorldGenMinable(Blocks.GOLD_ORE.getDefaultState(), this.chunkProviderSettings.goldSize);
-				redstoneGen = new WorldGenMinable(Blocks.REDSTONE_ORE.getDefaultState(), this.chunkProviderSettings.redstoneSize);
-				diamondGen = new WorldGenMinable(Blocks.DIAMOND_ORE.getDefaultState(), this.chunkProviderSettings.diamondSize);
-				lapisGen = new WorldGenMinable(Blocks.LAPIS_ORE.getDefaultState(), this.chunkProviderSettings.lapisSize);
+				coalGen = new WorldGenMinable(Blocks.COAL_ORE.getDefaultState(), chunkProviderSettings.coalSize);
+				ironGen = new WorldGenMinable(Blocks.IRON_ORE.getDefaultState(), chunkProviderSettings.ironSize);
+				goldGen = new WorldGenMinable(Blocks.GOLD_ORE.getDefaultState(), chunkProviderSettings.goldSize);
+				redstoneGen = new WorldGenMinable(Blocks.REDSTONE_ORE.getDefaultState(), chunkProviderSettings.redstoneSize);
+				diamondGen = new WorldGenMinable(Blocks.DIAMOND_ORE.getDefaultState(), chunkProviderSettings.diamondSize);
+				lapisGen = new WorldGenMinable(Blocks.LAPIS_ORE.getDefaultState(), chunkProviderSettings.lapisSize);
 				DOUBLE_PLANT_GENERATOR.setPlantType(BlockDoublePlant.EnumPlantType.GRASS);
+				generateOres(world, rand);
+				//podzol
+				for (int i = 0; i < 6; ++i) podzol.generate(world, rand,
+						world.getTopSolidOrLiquidBlock(pos.add(rand.nextInt(16) + 8, 0, rand.nextInt(16) + 8)));
 				WorldGenerator SHROOM_GENERATOR = new WorldGenShroom();
 				WorldGenOrantikkuTree CANOPY_TREE_GENERATOR = new WorldGenOrantikkuTree(false, true);
 				Set<BlockPos> canopy_trees = Sets.newHashSet();
@@ -107,7 +125,7 @@ public class EnchantedThicket extends Biome {
 							&& CANOPY_TREE_GENERATOR.canGenerate(world, blockpos)) canopy_trees.add(blockpos);
 				}
 				//features
-				if (rand.nextInt(3) == 0) {
+				if (rand.nextBoolean()) {
 					BlockPos pos1 = world.getHeight(pos.add(rand.nextInt(16) - rand.nextInt(16), 0, rand.nextInt(16) - rand.nextInt(16)));
 					WorldGenerator feature = getRandomFeature(world, pos1, rand, canopy_trees);
 					if (feature != null) feature.generate(world, rand, pos1);
@@ -118,7 +136,6 @@ public class EnchantedThicket extends Biome {
                     if (rand.nextInt(10) < 3) genBigMushroom(world, rand, blockpos, canopy_trees);
                     else genTree(world, rand, blockpos, canopy_trees);
                 }
-				for (BlockPos tree : canopy_trees) CANOPY_TREE_GENERATOR.generate(world, rand, tree);
 				//mushrooms
 				for (int i = 0; i < 128; ++i) {
 					if (TerrainGen.decorate(world, rand, new ChunkPos(pos), pos, EventType.SHROOM)) {
@@ -138,6 +155,7 @@ public class EnchantedThicket extends Biome {
 						else getRandomWorldGenForGrass(rand).generate(world, rand, pos.add(j, l, k));
 					}
 				}
+				for (BlockPos tree : canopy_trees) CANOPY_TREE_GENERATOR.generate(world, rand, tree);
 				this.decorating = false;
 			}
 		}

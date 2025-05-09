@@ -17,7 +17,7 @@ public class FBiomes {
 	public final static Biome PEAT_MOOR = new BiomePeatMoor();
 	public final static Biome FLOATING_MOUNTAIN = new BiomeFloatingMountain();
 	public final static Biome IRON_HILLS = new BiomeIronHills();
-	public final static Biome ENCHANTED_THICKET = new EnchantedThicket();
+	public final static Biome ENCHANTED_THICKET = new BiomeEnchantedThicket();
     
     @SubscribeEvent
     public static void registerBiomes(final RegistryEvent.Register<Biome> event) {
