@@ -46,7 +46,7 @@ public class WorldGenGoldenBirchTree extends WorldGenBirchTree {
                 && state.getValue(BlockLog.LOG_AXIS) == BlockLog.EnumAxis.Y && rand.nextInt(25) == 0) {
             EnumFacing facing = EnumFacing.HORIZONTALS[rand.nextInt(4)];
             if (world.isAirBlock(pos.offset(facing))) {
-                setBlockAndNotifyAdequately(world, pos, Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH)
+                setBlockAndNotifyAdequately(world, pos.offset(facing), Blocks.LOG.getDefaultState().withProperty(BlockOldLog.VARIANT, BlockPlanks.EnumType.BIRCH)
                         .withProperty(BlockLog.LOG_AXIS, BlockLog.EnumAxis.fromFacingAxis(facing.getAxis())));
                 return;
             }
