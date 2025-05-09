@@ -61,7 +61,7 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree implements IMult
 		//trunk
 		for (int i = 0; i < h; i++) if (blocksPlacement(world, pos.up(i))) {
 			if (h > 16) {
-				h = 13;
+				h = 14;
 				break;
 			}
 			return false;
@@ -112,7 +112,7 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree implements IMult
 		setBlockAndNotifyAdequately(world, pos, state);
 		if (!natural) return;
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) if (rand.nextBoolean() && world.isAirBlock(pos.offset(facing))) lichen.add(pos.offset(facing));
-		if (rand.nextInt(5) > 1) {
+		if (rand.nextInt(5) == 1) {
 			EnumFacing facing = DirectionUtils.getRandomDirectionXZ(rand);
 			BlockPos facePos = pos.offset(facing);
 			IBlockState shroom = (rand.nextInt(3) < 2 ? FBiomesBlocks.glowshrooms[rand.nextInt(FBiomesBlocks.glowshrooms.length)]:
