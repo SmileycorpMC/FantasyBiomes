@@ -114,13 +114,13 @@ shadowJar {
     }
 }
 
-build.dependsOn(shadowJar)
+/*build.dependsOn(shadowJar)
 
 reobf {
     shadowJar {}
 }
 
-build.dependsOn(reobf)
+build.dependsOn(reobf)*/
 
 processResources {
     inputs.property "version", project.version

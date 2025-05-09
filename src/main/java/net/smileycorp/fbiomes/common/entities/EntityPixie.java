@@ -157,7 +157,8 @@ public class EntityPixie extends EntityLiving {
         MARBLED("marbled", 14, 0xFFFF7D),
         HAIRSTREAK("hairstreak", 5, 0x68FFE6),
         SUNSET("sunset", 1, 0xF9FCFC),
-        MALACHITE("malachite", 0, 0x9A72FF);
+        MALACHITE("malachite", 0, 0x9A72FF),
+        GLASSWING("glasswing", 0, 0xDDBDEC);
         
         private static WeightedOutputs<Variant> table;
         

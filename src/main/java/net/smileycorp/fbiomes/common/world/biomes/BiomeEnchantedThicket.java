@@ -21,6 +21,7 @@ import net.smileycorp.fbiomes.common.entities.EntityPixie;
 import net.smileycorp.fbiomes.common.world.gen.WorldGenDisc;
 import net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket.WorldGenHollowLog;
 import net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket.WorldGenLog;
+import net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket.WorldGenMysticStump;
 import net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket.WorldGenWitchCottage;
 import net.smileycorp.fbiomes.common.world.gen.mushroom.*;
 import net.smileycorp.fbiomes.common.world.gen.tree.WorldGenBigRedOakTree;
@@ -185,9 +186,10 @@ public class BiomeEnchantedThicket extends Biome {
 		}
 		
 		private WorldGenerator getRandomFeature(World world, BlockPos pos, Random rand, Set<BlockPos> canopyTrees) {
-			int r = rand.nextInt(10);
+			int r = rand.nextInt(15);
 			if (r < 3) return new WorldGenWitchCottage();
-			if (r < 6) return new WorldGenHollowLog();
+			if (r < 5) return new WorldGenMysticStump();
+			if (r < 9) return new WorldGenHollowLog();
 			return new WorldGenLog();
 		}
 		
