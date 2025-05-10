@@ -114,7 +114,7 @@ public class BlockBigMushroom extends BlockBase {
 		BlockPos pos = entity.getPosition().down();
 		IBlockState state = world.getBlockState(pos);
 		if (!isBouncy(state)) super.onLanded(world, entity);
-		else if (entity.motionY < -0.02) {
+		else if (entity.motionY < -0.05) {
 			BlockPos down = pos.down();
 			if (world.isAirBlock(down)) spawnSpores(world, pos, state, entity);
 			else if (world.isAirBlock(down.down()) && isBouncy(world.getBlockState(down))) spawnSpores(world, down, state, entity);
