@@ -4,7 +4,8 @@
   "refmap": "mixins.fbiomes.refmap.json",
   "mixins": [
     "MixinEntityLivingBase",
-    "MixinPotionEffect"
+    "MixinPotionEffect",
+    "MixinWorldEntitySpawner"
   ],
   "client": [
   ],
