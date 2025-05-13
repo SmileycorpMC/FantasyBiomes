@@ -19,10 +19,7 @@ public class WorldGenDisc extends WorldGenerator {
     }
     
     public boolean generate(World world, Random rand, BlockPos pos) {
-        if (world.getBlockState(pos.down()) != replace) {
-            System.out.println(world.getBlockState(pos) + ", " + pos);
-            return false;
-        }
+        if (world.getBlockState(pos.down()) != replace) return false;
         int i = rand.nextInt(this.size - 2) + 2;
         for (int k = pos.getX() - i; k <= pos.getX() + i; ++k) {
             for (int l = pos.getZ() - i; l <= pos.getZ() + i; ++l) {
