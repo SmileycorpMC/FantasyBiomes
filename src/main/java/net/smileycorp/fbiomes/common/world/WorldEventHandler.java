@@ -11,7 +11,8 @@ public class WorldEventHandler {
     
     @SubscribeEvent
     public void genFeature(DecorateBiomeEvent.Decorate event) {
-        if (event.getType() != DecorateBiomeEvent.Decorate.EventType.LAKE_LAVA) return;
+        if (event.getType() != DecorateBiomeEvent.Decorate.EventType.LAKE_LAVA &&
+                event.getType() != DecorateBiomeEvent.Decorate.EventType.LAKE_WATER) return;
         ChunkPos pos = event.getChunkPos();
         for (Biome biome : event.getWorld().getBiomeProvider().getBiomes(null, pos.getXStart(), pos.getZStart(), 16, 16)) {
             if (biome == FBiomes.ENCHANTED_THICKET) {
