@@ -65,7 +65,7 @@ public class BiomeDeadMarsh extends Biome {
 				break;
 			}
 		}
-		boolean mud = GRASS_COLOR_NOISE.getValue((double)x * 0.7D, (double)z * 0.7D) > 0;
+		boolean mud = Math.abs(noise) < 0.2;
 		topBlock = (mud ? FBiomesBlocks.GRASSY_MUD : Blocks.GRASS).getDefaultState();
 		fillerBlock = (mud ? FBiomesBlocks.MUD : Blocks.DIRT).getDefaultState();
 		super.genTerrainBlocks(world, rand, chunk, x, z, noise);
