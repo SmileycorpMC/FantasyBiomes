@@ -4,9 +4,9 @@
     "facing=south,houses=false": { "model": "fbiomes:mystic_stump", "y": 180 },
     "facing=west,houses=false":  { "model": "fbiomes:mystic_stump", "y": 270 },
     "facing=east,houses=false":  { "model": "fbiomes:mystic_stump", "y": 90 },
-	"facing=north,houses=true": { "model": "fbiomes:mystic_stump_houses" },
-    "facing=south,houses=true": { "model": "fbiomes:mystic_stump_houses", "y": 180 },
-    "facing=west,houses=true":  { "model": "fbiomes:mystic_stump_houses", "y": 270 },
-    "facing=east,houses=true":  { "model": "fbiomes:mystic_stump_houses", "y": 90 }
+	"facing=north,houses=true": { "model": "fbiomes:pixie_workshop" },
+    "facing=south,houses=true": { "model": "fbiomes:pixie_workshop", "y": 180 },
+    "facing=west,houses=true":  { "model": "fbiomes:pixie_workshop", "y": 270 },
+    "facing=east,houses=true":  { "model": "fbiomes:pixie_workshop", "y": 90 }
   }
 }

@@ -1,13 +1,13 @@
 package net.smileycorp.fbiomes.common.inventory;
 
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.init.Items;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.InventoryCrafting;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
-import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
+import net.smileycorp.atlas.api.util.RecipeUtils;
+import net.smileycorp.fbiomes.common.blocks.tiles.TilePixieWorkshop;
+import net.smileycorp.fbiomes.common.recipe.PixieRecipeManager;
 
 import javax.annotation.Nonnull;
 
@@ -15,55 +15,58 @@ import javax.annotation.Nonnull;
  * Pixie table inventory
  * Slots 0-8 - Grid
  * Slot 9-11 - Result
- * Slot 12-13 - Pixie jar slot
- * Slots 14-20 - Food
+ * Slot 12-18 - Food
  */
 public class InventoryPixieTable extends ItemStackHandler {
-    
-    private final TileMysticStump tile;
-    private final InventoryWrapper wrapper = new InventoryWrapper(this);
-    private boolean dirty = false;
 
-    public InventoryPixieTable(TileMysticStump tile) {
+    private final TilePixieWorkshop tile;
+    private final InventoryWrapper wrapper = new InventoryWrapper(this);
+    private final WrappedItemStackHandler capabilityHandler = new WrappedItemStackHandler(this) {
+
+        @Nonnull
+        @Override
+        public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
+            if (slot > 8 && slot < 12) return stack;
+            if (slot > 11 && slot < 19) return PixieRecipeManager.isPixieFood(stack) ? super.insertItem(slot, stack, simulate) : stack;
+            if (tile.isCrafting()) return inventory.getStackInSlot(slot).isEmpty() ? stack : super.insertItem(slot, stack, simulate);
+            return RecipeUtils.compareItemStacks(tile.getLastRecipe().get(slot), stack, true) ?
+                    super.insertItem(slot, stack, simulate) : stack;
+        }
+
+        @Nonnull
+        @Override
+        public ItemStack extractItem(int slot, int amount, boolean simulate) {
+            if (slot < 9 || slot > 11) return ItemStack.EMPTY;
+            return super.extractItem(slot, amount, simulate);
+        }
+
+    };
+
+    public InventoryPixieTable(TilePixieWorkshop tile) {
         this.tile = tile;
-        setSize(21);
+        setSize(19);
+    }
+
+    public WrappedItemStackHandler getCapabilityWrapper() {
+        return capabilityHandler;
     }
 
     public InventoryCrafting getCraftingWrapper() {
         return wrapper;
     }
 
-    public boolean isDirty() {
-        return dirty;
-    }
-
     public void markDirty() {
-        dirty = true;
+        tile.markDirty();
     }
 
     @Override
     public boolean isItemValid(int slot, @Nonnull ItemStack stack) {
         if(slot >= 0 && slot <= 8)
             return true; //TODO
-        else if(slot == 12)
-            return stack.getItem() == Items.MUSHROOM_STEW;
-        else if(slot >= 14 && slot < 19)
-            return stack.getItem() instanceof ItemFood;
+        else if(slot >= 12 && slot < 19)
+            return PixieRecipeManager.isPixieFood(stack);
         else
             return false;
-    }
-
-    @Nonnull
-    @Override
-    public ItemStack insertItem(int slot, @Nonnull ItemStack stack, boolean simulate) {
-        return super.insertItem(slot, stack, simulate);
-    }
-
-    @Nonnull
-    @Override
-    public ItemStack extractItem(int slot, int amount, boolean simulate) {
-        if (slot < 9 || slot > 11) return ItemStack.EMPTY;
-        return super.extractItem(slot, amount, simulate);
     }
 
     @Override
@@ -103,6 +106,6 @@ public class InventoryPixieTable extends ItemStackHandler {
         public void markDirty() {
             inventory.markDirty();
         }
-    
+
     }
 }

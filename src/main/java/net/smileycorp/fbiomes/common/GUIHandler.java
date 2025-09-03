@@ -5,8 +5,8 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
-import net.smileycorp.fbiomes.client.gui.GuiPixieTable;
-import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
+import net.smileycorp.fbiomes.client.gui.GuiPixieWorkshop;
+import net.smileycorp.fbiomes.common.blocks.tiles.TilePixieWorkshop;
 import net.smileycorp.fbiomes.common.inventory.ContainerPixieTable;
 
 import javax.annotation.Nullable;
@@ -21,8 +21,8 @@ public class GUIHandler implements IGuiHandler {
         switch (ID) {
             case 1:
                 TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
-                if(tile instanceof TileMysticStump) {
-                    return new GuiPixieTable((TileMysticStump) tile, new ContainerPixieTable((TileMysticStump) tile, player.inventory));
+                if(tile instanceof TilePixieWorkshop) {
+                    return new GuiPixieWorkshop((TilePixieWorkshop) tile, new ContainerPixieTable((TilePixieWorkshop) tile, player.inventory));
                 }
         }
         return null;
@@ -34,8 +34,8 @@ public class GUIHandler implements IGuiHandler {
         switch (ID) {
             case 1:
                 TileEntity tile = world.getTileEntity(new BlockPos(x, y, z));
-                if(tile instanceof TileMysticStump) {
-                    return new ContainerPixieTable((TileMysticStump) tile, player.inventory);
+                if(tile instanceof TilePixieWorkshop) {
+                    return new ContainerPixieTable((TilePixieWorkshop) tile, player.inventory);
                 }
         }
         return null;

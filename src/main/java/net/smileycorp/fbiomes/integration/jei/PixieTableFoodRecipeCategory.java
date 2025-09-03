@@ -19,7 +19,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.ForgeRegistries;
-import net.smileycorp.fbiomes.client.gui.GuiPixieTable;
+import net.smileycorp.fbiomes.client.gui.GuiPixieWorkshop;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.recipe.PixieRecipeManager;
 
@@ -28,7 +28,7 @@ import java.util.List;
 public class PixieTableFoodRecipeCategory implements IRecipeCategory<PixieTableFoodRecipeCategory.Wrapper> {
     
     public static final String ID = Constants.locStr("pixie_table_food");
-    public static final ResourceLocation TEXTURE = GuiPixieTable.TEXTURE;
+    public static final ResourceLocation TEXTURE = GuiPixieWorkshop.TEXTURE;
     private final IDrawable background, bowl;
     
     public PixieTableFoodRecipeCategory(IGuiHelper helper) {

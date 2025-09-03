@@ -8,45 +8,31 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
-import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
+import net.smileycorp.fbiomes.common.blocks.tiles.TilePixieWorkshop;
 
 public class ContainerPixieTable extends Container {
     
-    private final TileMysticStump tile;
+    private final TilePixieWorkshop tile;
     public final InventoryPlayer playerInv;
 
-    public ContainerPixieTable(TileMysticStump tile, InventoryPlayer playerInv) {
+    public ContainerPixieTable(TilePixieWorkshop tile, InventoryPlayer playerInv) {
         this.tile = tile;
         this.playerInv = playerInv;
-
         // Grid
-        for (int i = 0; i < 3; ++i) {
-            for (int j = 0; j < 3; ++j) {
-                addSlotToContainer(new SlotItemHandler(tile.inventory, j + i * 3, 13 + j * 18, 8 + i * 19));
-            }
-        }
+        for (int i = 0; i < 3; ++i) for (int j = 0; j < 3; ++j) addSlotToContainer(new SlotItemHandler(tile.inventory, j + i * 3, 13 + j * 18, 8 + i * 19));
 
         // Output
-        for(int i = 0; i < 3; ++i) {
-            addSlotToContainer(new SlotItemHandler(tile.inventory, 9 + i, 147, 8 + i * 19));
-        }
+        for(int i = 0; i < 3; ++i) addSlotToContainer(new SlotItemHandler(tile.inventory, 9 + i, 147, 8 + i * 19));
 
         // Food
-        for(int i = 0; i < 7; ++i) {
-            addSlotToContainer(new SlotPixieFood(tile.inventory, 14 + i, 8 + i * 24, 74));
-        }
+        for(int i = 0; i < 7; ++i) addSlotToContainer(new SlotPixieFood(tile.inventory, 12 + i, 8 + i * 24, 74));
 
         // Player inventory
-        for (int sloty = 0; sloty < 3; sloty++) {
-            for (int slotx = 0; slotx < 9; slotx++) {
-                addSlotToContainer(new Slot(playerInv, slotx + sloty * 9 + 9, 8 + slotx * 18, 95 + sloty * 18));
-            }
-        }
+        for (int sloty = 0; sloty < 3; sloty++) for (int slotx = 0; slotx < 9; slotx++)
+            addSlotToContainer(new Slot(playerInv, slotx + sloty * 9 + 9, 8 + slotx * 18, 95 + sloty * 18));
 
         // Player hotbar
-        for (int slot = 0; slot < 9; slot++) {
-            addSlotToContainer(new Slot(playerInv, slot, 8 + slot * 18, 153));
-        }
+        for (int slot = 0; slot < 9; slot++) addSlotToContainer(new Slot(playerInv, slot, 8 + slot * 18, 153));
     }
 
     @Override

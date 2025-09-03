@@ -1,11 +1,11 @@
 package net.smileycorp.fbiomes.common.inventory;
 
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.items.IItemHandler;
 import net.minecraftforge.items.SlotItemHandler;
 import net.smileycorp.fbiomes.common.Constants;
+import net.smileycorp.fbiomes.common.recipe.PixieRecipeManager;
 
 import javax.annotation.Nonnull;
 
@@ -19,7 +19,7 @@ public class SlotPixieFood extends SlotItemHandler {
     
     @Override
     public boolean isItemValid(@Nonnull ItemStack stack) {
-        return stack.getItem() instanceof ItemFood && super.isItemValid(stack);
+        return PixieRecipeManager.isPixieFood(stack) && super.isItemValid(stack);
     }
     
 }

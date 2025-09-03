@@ -21,7 +21,7 @@ import net.minecraft.world.World;
 import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
+import net.smileycorp.fbiomes.common.blocks.tiles.TilePixieWorkshop;
 import net.smileycorp.fbiomes.common.items.FBiomesItems;
 
 public class BlockMysticStump extends BlockBase {
@@ -64,6 +64,8 @@ public class BlockMysticStump extends BlockBase {
     public void breakBlock(World world, BlockPos pos, IBlockState state) {
         if (world.isRemote) return;
         breakStump(world, pos);
+        TileEntity tile = world.getTileEntity(pos);
+        if (tile instanceof TilePixieWorkshop) ((TilePixieWorkshop)tile).destroy();
     }
     
     public static void breakStump(World world, BlockPos pos) {
@@ -96,7 +98,7 @@ public class BlockMysticStump extends BlockBase {
     }
     
     @Override
-    public EnumPushReaction getMobilityFlag(IBlockState p_149656_1_) {
+    public EnumPushReaction getMobilityFlag(IBlockState state) {
         return EnumPushReaction.BLOCK;
     }
     
@@ -122,15 +124,15 @@ public class BlockMysticStump extends BlockBase {
             return false;
         }
         TileEntity tile = world.getTileEntity(pos);
-        if (stack.getItem() == FBiomesItems.PIXIE_BOTTLE && tile instanceof TileMysticStump
-                && ((TileMysticStump) tile).getPixieCount() < 3) {
+        if (stack.getItem() == FBiomesItems.PIXIE_BOTTLE && tile instanceof TilePixieWorkshop
+                && ((TilePixieWorkshop) tile).getPixieCount() < 3) {
             if (!player.isCreative()) stack.shrink(1);
-            ((TileMysticStump) tile).addPixie(stack);
+            ((TilePixieWorkshop) tile).addPixie(stack);
             return true;
         }
-        if (stack.getItem() == Items.GLASS_BOTTLE && tile instanceof TileMysticStump
-                && ((TileMysticStump) tile).getPixieCount() > 0) {
-            ItemStack pixie = ((TileMysticStump) tile).bottlePixie();
+        if (stack.getItem() == Items.GLASS_BOTTLE && tile instanceof TilePixieWorkshop
+                && ((TilePixieWorkshop) tile).getPixieCount() > 0) {
+            ItemStack pixie = ((TilePixieWorkshop) tile).bottlePixie();
             if (!player.isCreative()) stack.shrink(1);
             if (!player.addItemStackToInventory(pixie)) player.dropItem(stack, false);
             return true;
@@ -162,12 +164,12 @@ public class BlockMysticStump extends BlockBase {
     
     @Override
     public boolean hasTileEntity(IBlockState state) {
-        return true;
+        return state.getValue(HOUSES);
     }
     
     @Override
     public TileEntity createTileEntity(World world, IBlockState state) {
-        return new TileMysticStump();
+        return state.getValue(HOUSES) ? new TilePixieWorkshop() : null;
     }
     
     @Override
@@ -182,7 +184,7 @@ public class BlockMysticStump extends BlockBase {
     
     @Override
     public String byMeta(int meta) {
-        return meta == 1 ? "mystic_stump_houses" : "mystic_stump";
+        return meta == 1 ? "pixie_workshop" : "mystic_stump";
     }
     
 }

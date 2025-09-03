@@ -17,7 +17,7 @@ import net.smileycorp.fbiomes.common.blocks.enums.EnumGlowshroomVariant;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomVariant;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumVanillaWoodType;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
-import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
+import net.smileycorp.fbiomes.common.blocks.tiles.TilePixieWorkshop;
 import net.smileycorp.fbiomes.common.world.gen.mushroom.*;
 
 import java.lang.reflect.Field;
@@ -103,7 +103,7 @@ public class FBiomesBlocks {
 				register(registry, (Block) object);
 			} catch (Exception e) {}
 		}
-		GameRegistry.registerTileEntity(TileMysticStump.class, Constants.loc("mystic_stump"));
+		GameRegistry.registerTileEntity(TilePixieWorkshop.class, Constants.loc("mystic_stump"));
 	}
 	
 	private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {

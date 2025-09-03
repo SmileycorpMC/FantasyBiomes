@@ -3,7 +3,6 @@ package net.smileycorp.fbiomes.common.entities;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.translation.I18n;
 
 import java.util.List;
 import java.util.Random;
@@ -158,7 +157,7 @@ public class Pixie {
     }
 
     public static Pixie newPixie(EntityPixie.PixieVariant variant, Random rand) {
-        return newPixie(variant, rand);
+        return new Pixie(variant, rand);
     }
 
 }

@@ -7,7 +7,7 @@ import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.network.simpleimpl.IMessage;
 import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.fml.relauncher.Side;
-import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
+import net.smileycorp.fbiomes.common.blocks.tiles.TilePixieWorkshop;
 
 public class PixieTableEnableMessage implements IMessage {
 
@@ -38,7 +38,7 @@ public class PixieTableEnableMessage implements IMessage {
 	public IMessage process(MessageContext ctx) {
 		if (ctx.side == Side.SERVER) FMLCommonHandler.instance().getMinecraftServerInstance().addScheduledTask(() -> {
 			TileEntity tile = ctx.getServerHandler().player.world.getTileEntity(pos);
-			if (tile instanceof TileMysticStump) ((TileMysticStump)tile).setActive(consume);
+			if (tile instanceof TilePixieWorkshop) ((TilePixieWorkshop)tile).setActive(consume);
 		});
 		return null;
 	}

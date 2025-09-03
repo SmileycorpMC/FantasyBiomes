@@ -1,5 +1,6 @@
 package net.smileycorp.fbiomes.common.recipe;
 
+import com.google.common.collect.Maps;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
@@ -10,12 +11,11 @@ import net.minecraft.world.World;
 import net.smileycorp.fbiomes.common.inventory.InventoryPixieTable;
 
 import javax.annotation.Nullable;
-import java.util.HashMap;
 import java.util.Map;
 
 public class PixieRecipeManager {
     
-    private static final Map<ResourceLocation, IRecipe> recipes = new HashMap<>();
+    private static final Map<ResourceLocation, IRecipe> recipes = Maps.newHashMap();
 
     @Nullable
     public static IRecipe findRecipe(InventoryPixieTable inventory, World world) {
@@ -23,11 +23,17 @@ public class PixieRecipeManager {
         for (IRecipe recipe : CraftingManager.REGISTRY) if(recipe.matches(inventory.getCraftingWrapper(), world)) return recipe;
         return null;
     }
+
+    public static boolean isPixieFood(ItemStack stack) {
+        return stack.getItem() instanceof ItemFood;
+    }
     
     public static float getFoodEfficiency(ItemStack stack) {
         Item item = stack.getItem();
-        return item instanceof ItemFood ?  1 + 0.01f * (float) ((ItemFood) item).getHealAmount(stack)
-                * (1 + 0.5f * ((ItemFood) item).getSaturationModifier(stack)) : 1;
+        if (!(item instanceof ItemFood)) return 1;
+        float multiplier = 0.03f * (float) ((ItemFood) item).getHealAmount(stack)
+                * (1 + ((ItemFood) item).getSaturationModifier(stack));
+        return 1 + multiplier;
     }
     
 }

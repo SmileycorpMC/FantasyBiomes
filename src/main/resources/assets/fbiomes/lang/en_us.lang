@@ -16,8 +16,6 @@ item.fbiomes.lichen.name=Lichen
 item.fbiomes.web_cover.name=Web Cover
 
 item.fbiomes.pixie_bottle.name=Bottled Pixie
-item.fbiomes.pixie_bottle.tooltip.variant=Variant: %1$s
-item.fbiomes.pixie_bottle.tooltip.health=Health: %1$s/%2$s
 
 tile.fbiomes.mud.name=Mud
 tile.fbiomes.peat.name=Peat
@@ -107,7 +105,7 @@ tile.fbiomes.gnarled_vine.name=Gnarled Vines
 tile.fbiomes.web_cover.name=Web Cover
 
 tile.fbiomes.mystic_stump.name=Mystic Stump
-tile.fbiomes.mystic_stump_houses.name=Pixie Workshop
+tile.fbiomes.pixie_workshop.name=Pixie Workshop
 tile.fbiomes.mystic_stump_part.name=Mystic Stump
 
 material.fbiomes.mithril.name=Mithril
@@ -116,7 +114,7 @@ material.fbiomes.star_silver.name=Star-Silver
 fluid.tconstruct.mithril.name=Molten Mithril
 fluid.tconstruct.star_silver.name=Molten Star-Silver
 
-potion.effect.glowing=Potion of Glowing
+effect.fbiomes.bioluminescence=Bioluminescence
 potion.effect.longer_glowing=Potion of Glowing
 splash_potion.effect.glowing=Splash Potion of Glowing
 splash_potion.effect.longer_glowing=Splash Potion of Glowing
@@ -133,6 +131,21 @@ entity.fbiomes.pixie.variant.sunset=§bSunset
 entity.fbiomes.pixie.variant.malachite=§bMalachite
 entity.fbiomes.pixie.variant.glasswing=§bGlasswing
 
-jei.category.fbiomes.pixie_table_food=Pixie Workshop Food
+entity.fbiomes.pixie.mood.0=§0Furious
+entity.fbiomes.pixie.mood.1=§4Mad
+entity.fbiomes.pixie.mood.2=§cIrritated
+entity.fbiomes.pixie.mood.3=Neutral
+entity.fbiomes.pixie.mood.4=§2Positive
+entity.fbiomes.pixie.mood.5=§aHappy
+entity.fbiomes.pixie.mood.6=§eVery Happy
 
-jei.tooltip.fbiomes.pixie_table_food=+%s Efficiency
+tooltip.fbiomes.pixie_variant=Variant: %1$s
+tooltip.fbiomes.size=Size: %1$s
+tooltip.fbiomes.health=Health: %1$s/%2$s
+tooltip.fbiomes.mood=Mood: %1$s
+tooltip.fbiomes.efficiency=§e%1$s Efficiency
+tooltip.fbiomes.efficiency.food=§eFood Multiplier (%1$s) : x%2$s
+tooltip.fbiomes.efficiency.pixie=§ePixie Multiplier (%1$s) : x%2$s
+
+jei.category.fbiomes.pixie_table_food=Pixie Workshop Food
+jei.tooltip.fbiomes.efficiency=+%s Efficiency

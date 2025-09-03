@@ -9,7 +9,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.smileycorp.fbiomes.common.Constants;
-import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
+import net.smileycorp.fbiomes.common.blocks.tiles.TilePixieWorkshop;
 import net.smileycorp.fbiomes.common.entities.Pixie;
 import net.smileycorp.fbiomes.common.inventory.ContainerPixieTable;
 import net.smileycorp.fbiomes.common.network.PacketHandler;
@@ -18,13 +18,13 @@ import net.smileycorp.fbiomes.common.network.PixieTableEnableMessage;
 import java.io.IOException;
 import java.util.List;
 
-public class GuiPixieTable extends GuiContainer {
+public class GuiPixieWorkshop extends GuiContainer {
     
     public static final ResourceLocation TEXTURE = Constants.loc("textures/gui/container/pixie_table.png");
     private final List<GuiPixieHouse> houses = Lists.newArrayList();
-    private final TileMysticStump tile;
+    private final TilePixieWorkshop tile;
     
-    public GuiPixieTable(TileMysticStump tile, ContainerPixieTable inventorySlotsIn) {
+    public GuiPixieWorkshop(TilePixieWorkshop tile, ContainerPixieTable inventorySlotsIn) {
         super(inventorySlotsIn);
         this.tile = tile;
         xSize = 176;
@@ -74,15 +74,17 @@ public class GuiPixieTable extends GuiContainer {
                 177, 47, (int)(tile.getCraftingProgress() * 57), 7);
         int food = tile.getFoodTimerProgress();
         if (food > 0) {
+            //bowl
+            drawTexturedModalRect(guiLeft + 92, guiTop + 54,
+                    177, 54, 29, 13);
+            //soup
             drawTexturedModalRect(guiLeft + 94, guiTop + 62 - food,
-                    179, 71, 25, food);
-            drawTexturedModalRect(guiLeft + 94, guiTop + 62 - food,
-                    179, 71, 25, food);
+                    179, 78 - food, 25, food);
         }
         if (tile.getEfficiency() > 1) {
-            String text = "x" +  String.format("%.3f", tile.getEfficiency());
+            String text = "x" +  String.format("%.2f", tile.getEfficiency());
             mc.fontRenderer.drawString(text,
-                    guiLeft + 106 - mc.fontRenderer.getStringWidth(text) / 2, guiTop + 39, 0xFFEFC772);
+                    guiLeft + 106 - mc.fontRenderer.getStringWidth(text) / 2, guiTop + 37, 0xFFEFC772);
         }
         GlStateManager.enableDepth();
     }
@@ -92,12 +94,12 @@ public class GuiPixieTable extends GuiContainer {
         if (tile.getEfficiency() > 1 && x >= guiLeft + 94 && y >= guiTop + 33 && x <= guiLeft + 120 && y <= guiTop + 47) {
             List<String> text = Lists.newArrayList();
             if (tile.getBaseEfficiency() > 1) text.add(new TextComponentTranslation("tooltip.fbiomes.efficiency.food",
-                    tile.getLastConsumedFood().getDisplayName(), String.format("%.3f", tile.getBaseEfficiency())).getFormattedText());
+                    tile.getLastConsumedFood().getDisplayName(), String.format("%.2f", tile.getBaseEfficiency())).getFormattedText());
             for (int i = 0; i < tile.getPixieCount(); i++) {
                 Pixie pixie = tile.getPixie(i);
                 text.add(new TextComponentTranslation("tooltip.fbiomes.efficiency.pixie",
-                        pixie.hasName() ? pixie.getName() : I18n.format("entity.fbiomes.pixie.name") + (i + 1),
-                        String.format("%.3f", pixie.getEfficiency())).getFormattedText());
+                        pixie.hasName() ? pixie.getName() : I18n.format("entity.fbiomes.pixie.name") + " " + (i + 1),
+                        String.format("%.2f", pixie.getEfficiency())).getFormattedText());
             }
             drawHoveringText(text, x, y, fontRenderer);
         }
