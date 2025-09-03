@@ -3,36 +3,24 @@ package net.smileycorp.fbiomes.client.gui;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiButton;
 import net.minecraft.client.renderer.GlStateManager;
-import net.minecraft.util.ResourceLocation;
+import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
 
 public class GuiButtonPixieAutomation extends GuiButton {
-    private final ResourceLocation texture;
-    public boolean toggled = false;
 
-    public GuiButtonPixieAutomation(int buttonId, int x, int y, int width, int height, ResourceLocation texture) {
-        super(buttonId, x, y, width, height, "");
-        this.texture = texture;
-    }
+    private final TileMysticStump tile;
 
-    public void toggle() {
-        toggled = !toggled;
+    public GuiButtonPixieAutomation(TileMysticStump tile, int x, int y) {
+        super(0, x, y, 18, 12, "");
+        this.tile = tile;
     }
 
     @Override
     public void drawButton(Minecraft mc, int mouseX, int mouseY, float partialTicks) {
-        this.hovered = mouseX >= this.x && mouseY >= this.y && mouseX < this.x + this.width && mouseY < this.y + this.height;
-
-        mc.getTextureManager().bindTexture(texture);
+        hovered = mouseX >= x && mouseY >= y && mouseX < x + width && mouseY < y + height;
+        mc.getTextureManager().bindTexture(GuiPixieTable.TEXTURE);
         GlStateManager.disableDepth();
-
-        if(toggled) {
-            drawTexturedModalRect(x, y, 206, 53, this.width, this.height);
-        }
-
-        if(hovered) {
-            drawTexturedModalRect(x, y, 206, 68, this.width, this.height);
-        }
-
+        if (tile.isActive()) drawTexturedModalRect(x, y, 206, 53, width, height);
+        if (hovered) drawTexturedModalRect(x, y, 206, 68, width, height);
         GlStateManager.enableDepth();
     }
 }

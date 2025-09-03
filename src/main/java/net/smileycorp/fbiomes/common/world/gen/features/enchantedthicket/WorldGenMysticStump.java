@@ -29,7 +29,9 @@ public class WorldGenMysticStump extends WorldGenerator {
                 pos.add(direction.getOffset()), FBiomesBlocks.MYSTIC_STUMP_PART.getDefaultState().withProperty(BlockMysticStumpPart.DIRECTION, direction));
         for (int i = 0; i < 3; i++) {
             EntityPixie pixie = new EntityPixie(world);
-            pixie.setVariant(EntityPixie.Variant.GLASSWING);
+            pixie.enablePersistence();
+            pixie.setVariant(EntityPixie.PixieVariant.GLASSWING);
+            pixie.setRandomSize();
             pixie.setPosition(pos.getX() + rand.nextFloat() - 0.5f, pos.getY() + 1.5f, pos.getZ() + rand.nextFloat() - 0.5f);
             world.spawnEntity(pixie);
         }

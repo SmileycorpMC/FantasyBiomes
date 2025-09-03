@@ -7,7 +7,7 @@ import net.minecraft.inventory.InventoryCrafting;
 import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.ItemStackHandler;
-import net.smileycorp.fbiomes.common.blocks.tile.TileMysticStump;
+import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
 
 import javax.annotation.Nonnull;
 
@@ -47,7 +47,7 @@ public class InventoryPixieTable extends ItemStackHandler {
             return true; //TODO
         else if(slot == 12)
             return stack.getItem() == Items.MUSHROOM_STEW;
-        else if(slot >= 14 && slot <= 20)
+        else if(slot >= 14 && slot < 19)
             return stack.getItem() instanceof ItemFood;
         else
             return false;
@@ -62,14 +62,13 @@ public class InventoryPixieTable extends ItemStackHandler {
     @Nonnull
     @Override
     public ItemStack extractItem(int slot, int amount, boolean simulate) {
+        if (slot < 9 || slot > 11) return ItemStack.EMPTY;
         return super.extractItem(slot, amount, simulate);
     }
 
     @Override
     protected void onContentsChanged(int slot) {
-        if(slot >= 0 && slot <= 8) {
-            tile.tryFindingRecipe();
-        }
+        if(slot >= 0 && slot <= 8) tile.tryFindingRecipe();
     }
 
     private static class InventoryWrapper extends InventoryCrafting {

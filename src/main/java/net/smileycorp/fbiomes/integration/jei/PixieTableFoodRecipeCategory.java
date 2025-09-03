@@ -99,7 +99,7 @@ public class PixieTableFoodRecipeCategory implements IRecipeCategory<PixieTableF
         
         @Override
         public void drawInfo(Minecraft mc, int recipeWidth, int recipeHeight, int mouseX, int mouseY) {
-            String str = I18n.format("jei.tooltip.fbiomes.pixie_table_food", String.format("%.2f", efficiency) + "%");
+            String str = I18n.format("jei.tooltip.fbiomes.efficiency", String.format("%.2f", efficiency) + "%");
             mc.fontRenderer.drawString(str, 154 - mc.fontRenderer.getStringWidth(str), 9 , 0xFFEFC772);
         }
         

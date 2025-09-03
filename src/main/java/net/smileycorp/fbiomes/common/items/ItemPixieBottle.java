@@ -18,6 +18,7 @@ import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
+import net.smileycorp.fbiomes.common.entities.Pixie;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -32,12 +33,12 @@ public class ItemPixieBottle extends ItemFBiomes {
     
     @Override
     public String byMeta(int meta) {
-        return "pixie_bottle_" + EntityPixie.Variant.get((byte) meta);
+        return "pixie_bottle_" + EntityPixie.PixieVariant.get((byte) meta);
     }
     
     @Override
     public int getMaxMeta() {
-        return EntityPixie.Variant.values().length;
+        return EntityPixie.PixieVariant.values().length;
     }
     
     @Override
@@ -73,17 +74,11 @@ public class ItemPixieBottle extends ItemFBiomes {
     
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltips, ITooltipFlag flag) {
-        tooltips.add(new TextComponentTranslation("item.fbiomes.pixie_bottle.tooltip.variant",
+        Pixie pixie = getPixie(stack);
+        if (pixie != null) pixie.addTooltips(tooltips);
+        else tooltips.add(new TextComponentTranslation("tooltip.fbiomes.pixie_variant",
                 new TextComponentTranslation("entity.fbiomes.pixie.variant."
-                        + EntityPixie.Variant.get((byte) stack.getMetadata()).getName())).getFormattedText());
-        if (stack.hasTagCompound()) {
-            NBTTagCompound nbt = stack.getTagCompound();
-            if (nbt.hasKey("EntityData")) {
-                NBTTagCompound data = nbt.getCompoundTag("EntityData");
-                tooltips.add(new TextComponentTranslation("item.fbiomes.pixie_bottle.tooltip.health",
-                        data.getFloat("Health"),  data.getFloat("MaxHealth")).getFormattedText());
-            }
-        }
+                        + EntityPixie.PixieVariant.get((byte) stack.getMetadata()).getName())).getFormattedText());
         super.addInformation(stack, world, tooltips, flag);
     }
     
@@ -91,12 +86,12 @@ public class ItemPixieBottle extends ItemFBiomes {
         EntityPixie pixie = new EntityPixie(world);
         if (ForgeEventFactory.doSpecialSpawn(pixie, world, (float) x, (float) y, (float) z, null)) return false;
         pixie.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(pixie)), null);
-        if (stack.hasTagCompound()) {
-            NBTTagCompound nbt = stack.getTagCompound();
-            if (nbt.hasKey("EntityData")) pixie.readFromNBT(nbt.getCompoundTag("EntityData"));
+        Pixie data = getPixie(stack);
+        if (data != null) data.apply(pixie);
+        else {
+            pixie.setVariant(EntityPixie.PixieVariant.get((byte) stack.getMetadata()));
+            if (stack.hasDisplayName()) pixie.setCustomNameTag(stack.getDisplayName());
         }
-        pixie.setVariant(EntityPixie.Variant.get((byte) stack.getMetadata()));
-        if (stack.hasDisplayName()) pixie.setCustomNameTag(stack.getDisplayName());
         pixie.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(world.rand.nextFloat() * 360f), 0);
         pixie.rotationYawHead = pixie.rotationYaw;
         pixie.renderYawOffset = pixie.rotationYaw;
@@ -104,13 +99,30 @@ public class ItemPixieBottle extends ItemFBiomes {
         pixie.playLivingSound();
         return pixie.isAddedToWorld();
     }
-    
+
+    public static Pixie getPixie(ItemStack stack) {
+        if (!stack.hasTagCompound()) return null;
+        NBTTagCompound nbt = stack.getTagCompound();
+        if (!nbt.hasKey("entity")) return null;
+        Pixie pixie = Pixie.fromNbt(nbt.getCompoundTag("entity"));
+        pixie.setVariant(EntityPixie.PixieVariant.get((byte) stack.getMetadata()));
+        if (stack.hasDisplayName()) pixie.setName(stack.getDisplayName());
+        nbt.setTag("entity", pixie.toNbt());
+        return pixie;
+    }
+
     public static ItemStack bottlePixie(EntityPixie pixie) {
-        ItemStack stack = new ItemStack(FBiomesItems.PIXIE_BOTTLE, 1, pixie.getVariant().ordinal());
-        if (pixie.hasCustomName()) stack.setStackDisplayName(pixie.getCustomNameTag());
-        if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
-        stack.getTagCompound().setTag("EntityData", pixie.storeInItem());
+        pixie.setMood(pixie.getMood() - 0.1f);
+        ItemStack stack = bottlePixie(pixie.storeInItem());
         pixie.setDead();
+        return stack;
+    }
+    
+    public static ItemStack bottlePixie(Pixie pixie) {
+        ItemStack stack = new ItemStack(FBiomesItems.PIXIE_BOTTLE, 1, pixie.getVariant().ordinal());
+        if (pixie.hasName()) stack.setStackDisplayName(pixie.getName());
+        if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
+        stack.getTagCompound().setTag("entity", pixie.toNbt());
         return stack;
     }
     

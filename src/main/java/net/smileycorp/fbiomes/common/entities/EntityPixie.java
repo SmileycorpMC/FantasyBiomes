@@ -1,11 +1,10 @@
 package net.smileycorp.fbiomes.common.entities;
 
+import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.entity.EntityLiving;
-import net.minecraft.entity.IEntityLivingData;
-import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
 import net.minecraft.entity.player.EntityPlayer;
@@ -21,6 +20,7 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.smileycorp.atlas.api.entity.ai.EntityAIMoveRandomFlying;
 import net.smileycorp.atlas.api.entity.ai.FlyingMoveControl;
 import net.smileycorp.atlas.api.recipe.WeightedOutputs;
@@ -32,21 +32,28 @@ import javax.annotation.Nullable;
 import java.awt.*;
 import java.util.EnumMap;
 import java.util.Random;
+import java.util.UUID;
 
-public class EntityPixie extends EntityLiving {
-    
+public class EntityPixie extends EntityLiving implements IEntityOwnable {
+
     private static final DataParameter<Byte> VARIANT = EntityDataManager.createKey(EntityPixie.class, DataSerializers.BYTE);
-    
+    private static final DataParameter<Float> SIZE = EntityDataManager.createKey(EntityPixie.class, DataSerializers.FLOAT);
+    private static final DataParameter<Float> MOOD = EntityDataManager.createKey(EntityPixie.class, DataSerializers.FLOAT);
+    private static final DataParameter<Optional<UUID>> OWNER = EntityDataManager.createKey(EntityPixie.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+
+    private Entity owner;
+
     public EntityPixie(World world) {
         super(world);
         moveHelper = new FlyingMoveControl(this);
         setSize(0.5f, 0.5f);
     }
-    
+
     @Nullable
     @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData data) {
-        setVariant(Variant.random(rand));
+        setVariant(PixieVariant.random(rand));
+        setRandomSize();
         return super.onInitialSpawn(difficulty, data);
     }
     
@@ -61,6 +68,9 @@ public class EntityPixie extends EntityLiving {
     protected void entityInit() {
         super.entityInit();
         dataManager.register(VARIANT, (byte)0);
+        dataManager.register(SIZE, 1f);
+        dataManager.register(MOOD, Pixie.MAX_MOOD / 2);
+        dataManager.register(OWNER, Optional.absent());
     }
     
     @Override
@@ -76,6 +86,9 @@ public class EntityPixie extends EntityLiving {
     protected boolean processInteract(EntityPlayer player, EnumHand hand) {
         ItemStack stack = player.getHeldItem(hand);
         if (stack.getItem() == Items.GLASS_BOTTLE) {
+            if (hasOwner()) if (!player.equals(getOwner())) {
+                return false;
+            }
             stack.shrink(1);
             ItemStack newStack = ItemPixieBottle.bottlePixie(this);
             player.addStat(StatList.getObjectUseStats(Items.GLASS_BOTTLE));
@@ -100,7 +113,7 @@ public class EntityPixie extends EntityLiving {
     public void fall(float distance, float damageMultiplier) {}
     
     @Override
-    protected void updateFallState(double y, boolean onGroundIn, IBlockState state, BlockPos pos) {}
+    protected void updateFallState(double y, boolean grounded, IBlockState state, BlockPos pos) {}
     
     @Override
     protected void playStepSound(BlockPos pos, Block block) {}
@@ -112,45 +125,91 @@ public class EntityPixie extends EntityLiving {
     
     @Override
     public float getEyeHeight() {
-        return 0.25f;
+        return 0.25f * getSize();
     }
     
-    public void setVariant(Variant variant) {
+    public void setVariant(PixieVariant variant) {
         dataManager.set(VARIANT, (byte)variant.ordinal());
     }
+
+    public void setSize(float size) {
+        size = Math.round(size * 100f) * 0.01f;
+        dataManager.set(SIZE, size);
+        setSize(size * 0.5f, size * 0.5f);
+    }
+
+    public void setRandomSize() {
+        setSize(getRandomSize(rand));
+    }
+
+    public static float getRandomSize(Random rand) {
+        return 1 + (float) rand.nextGaussian() * 0.3f;
+    }
+
+    public void setMood(float mood) {
+        if (mood < 0) mood = 0;
+        if (mood > Pixie.MAX_MOOD) mood = Pixie.MAX_MOOD;
+        dataManager.set(MOOD, mood);
+    }
+
+    public void setOwner(UUID uuid) {
+        dataManager.set(OWNER, Optional.of(uuid));
+        if (world instanceof WorldServer) owner = ((WorldServer) world).getEntityFromUuid(uuid);
+    }
     
-    public Variant getVariant() {
-        return Variant.get(dataManager.get(VARIANT));
+    public PixieVariant getVariant() {
+        return PixieVariant.get(dataManager.get(VARIANT));
+    }
+
+    public float getSize() {
+        return dataManager.get(SIZE);
+    }
+
+    public float getMood() {
+        return dataManager.get(MOOD);
+    }
+
+    public boolean hasOwner() {
+        return getOwnerId() != null;
+    }
+
+    @Nullable
+    @Override
+    public UUID getOwnerId() {
+        return dataManager.get(OWNER).orNull();
+    }
+
+    @Nullable
+    @Override
+    public Entity getOwner() {
+        if (owner == null && hasOwner()) if (world instanceof WorldServer)
+            owner = ((WorldServer) world).getEntityFromUuid(getOwnerId());
+        return owner;
     }
     
     @Override
     public void readEntityFromNBT(NBTTagCompound nbt) {
         super.readEntityFromNBT(nbt);
         if (nbt.hasKey("variant")) dataManager.set(VARIANT, nbt.getByte("variant"));
+        if (nbt.hasKey("size")) setSize(nbt.getFloat("size"));
+        if (nbt.hasKey("mood")) setMood(nbt.getFloat("mood"));
+        if (nbt.hasKey("owner")) dataManager.set(OWNER, Optional.of(nbt.getUniqueId("owner")));
     }
     
     @Override
     public void writeEntityToNBT(NBTTagCompound nbt) {
         super.writeEntityToNBT(nbt);
         nbt.setByte("variant", dataManager.get(VARIANT));
+        nbt.setFloat("size", dataManager.get(SIZE));
+        nbt.setFloat("mood", dataManager.get(MOOD));
+        if (hasOwner()) nbt.setUniqueId("owner", getOwnerId());
     }
     
-    public NBTTagCompound storeInItem() {
-        NBTTagCompound nbt = super.writeToNBT(new NBTTagCompound());
-        nbt.removeTag("Pos");
-        nbt.removeTag("Motion");
-        nbt.removeTag("Rotation");
-        nbt.removeTag("FallDistance");
-        nbt.removeTag("Air");
-        nbt.removeTag("UUIDMost");
-        nbt.removeTag("UUIDLeast");
-        nbt.removeTag("Leashed");
-        nbt.removeTag("Leash");
-        nbt.setFloat("MaxHealth", getMaxHealth());
-        return nbt;
+    public Pixie storeInItem() {
+        return new Pixie(this);
     }
-    
-    public enum Variant {
+
+    public enum PixieVariant {
         SWALLOWTAIL("swallowtail", 35, 0xFF68F2),
         MONARCH("monarch", 25, 0x68C1FF),
         RED_SPOTTED("red_spotted", 20, 0x7AFF68),
@@ -160,12 +219,12 @@ public class EntityPixie extends EntityLiving {
         MALACHITE("malachite", 0, 0x9A72FF),
         GLASSWING("glasswing", 0, 0xDDBDEC);
         
-        private static WeightedOutputs<Variant> table;
+        private static WeightedOutputs<PixieVariant> table;
         
         private final String name;
         private final int weight, colour;
         
-        Variant(String name, int weight, int colour) {
+        PixieVariant(String name, int weight, int colour) {
             this.name = name;
             this.weight = weight;
             this.colour = colour;
@@ -180,20 +239,20 @@ public class EntityPixie extends EntityLiving {
             return Color.HSBtoRGB(hsv[0], rand.nextFloat() * 0.3f, hsv[2]) & 0xFFFFFF;
         }
         
-        public static Variant get(byte val) {
+        public static PixieVariant get(byte val) {
             if (val >= values().length) val = 0;
             return values()[val];
         }
         
-        public static Variant random(Random rand) {
+        public static PixieVariant random(Random rand) {
             if (table == null) {
-                EnumMap<Variant, Integer> map = Maps.newEnumMap(Variant.class);
-                for (Variant variant : values()) map.put(variant, variant.weight);
+                EnumMap<PixieVariant, Integer> map = Maps.newEnumMap(PixieVariant.class);
+                for (PixieVariant variant : values()) map.put(variant, variant.weight);
                 table = new WeightedOutputs<>(map);
             }
             return table.getResult(rand);
         }
         
     }
-    
+
 }

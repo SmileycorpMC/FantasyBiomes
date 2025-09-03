@@ -3,8 +3,8 @@ package net.smileycorp.fbiomes.client.gui;
 import com.google.common.collect.Lists;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.smileycorp.fbiomes.common.blocks.tile.TileMysticStump;
-import net.smileycorp.fbiomes.common.entities.EntityPixie;
+import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
+import net.smileycorp.fbiomes.common.entities.Pixie;
 
 import java.util.List;
 
@@ -40,13 +40,11 @@ public class GuiPixieHouse extends Gui {
     
     public List<String> getTooltipText() {
         List<String> tooltips = Lists.newArrayList();
-        EntityPixie pixie = tile.getPixie(index);
-        tooltips.add(pixie.getName());
-        tooltips.add(new TextComponentTranslation("item.fbiomes.pixie_bottle.tooltip.variant",
-                new TextComponentTranslation("entity.fbiomes.pixie.variant."
-                        + pixie.getVariant().getName())).getFormattedText());
-                tooltips.add(new TextComponentTranslation("item.fbiomes.pixie_bottle.tooltip.health",
-                        pixie.getHealth(),  pixie.getMaxHealth()).getFormattedText());
+        Pixie pixie = tile.getPixie(index);
+        tooltips.add(pixie.hasName() ? pixie.getName() : new TextComponentTranslation("entity.fbiomes.pixie.name").getFormattedText());
+        pixie.addTooltips(tooltips);
+        tooltips.add(new TextComponentTranslation("tooltip.fbiomes.efficiency",
+                String.format("%.3f", (pixie.getEfficiency()))).getFormattedText());
         return tooltips;
     }
     

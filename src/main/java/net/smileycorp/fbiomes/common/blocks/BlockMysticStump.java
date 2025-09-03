@@ -11,6 +11,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.*;
@@ -20,7 +21,7 @@ import net.minecraft.world.World;
 import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.FantasyBiomes;
-import net.smileycorp.fbiomes.common.blocks.tile.TileMysticStump;
+import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
 import net.smileycorp.fbiomes.common.items.FBiomesItems;
 
 public class BlockMysticStump extends BlockBase {
@@ -110,23 +111,31 @@ public class BlockMysticStump extends BlockBase {
     }
     
     @Override
-    public boolean onBlockActivated(World worldIn, BlockPos pos, IBlockState state, EntityPlayer playerIn, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
-        if(worldIn.isRemote) return false;
-        ItemStack stack = playerIn.getHeldItem(hand);
+    public boolean onBlockActivated(World world, BlockPos pos, IBlockState state, EntityPlayer player, EnumHand hand, EnumFacing facing, float hitX, float hitY, float hitZ) {
+        if(hand == EnumHand.OFF_HAND || world.isRemote) return false;
+        ItemStack stack = player.getHeldItem(hand);
         if (!state.getValue(HOUSES)) {
             if (stack.getItem() == FBiomesItems.PIXIE_HOUSING) {
-                worldIn.setBlockState(pos, state.withProperty(HOUSES, true));
+                world.setBlockState(pos, state.withProperty(HOUSES, true));
                 return true;
             }
             return false;
         }
-        TileEntity tile = worldIn.getTileEntity(pos);
+        TileEntity tile = world.getTileEntity(pos);
         if (stack.getItem() == FBiomesItems.PIXIE_BOTTLE && tile instanceof TileMysticStump
                 && ((TileMysticStump) tile).getPixieCount() < 3) {
+            if (!player.isCreative()) stack.shrink(1);
             ((TileMysticStump) tile).addPixie(stack);
             return true;
         }
-        playerIn.openGui(FantasyBiomes.instance, 1, worldIn, pos.getX(), pos.getY(), pos.getZ());
+        if (stack.getItem() == Items.GLASS_BOTTLE && tile instanceof TileMysticStump
+                && ((TileMysticStump) tile).getPixieCount() > 0) {
+            ItemStack pixie = ((TileMysticStump) tile).bottlePixie();
+            if (!player.isCreative()) stack.shrink(1);
+            if (!player.addItemStackToInventory(pixie)) player.dropItem(stack, false);
+            return true;
+        }
+        player.openGui(FantasyBiomes.instance, 1, world, pos.getX(), pos.getY(), pos.getZ());
         return true;
     }
     

@@ -6,7 +6,7 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.common.network.IGuiHandler;
 import net.smileycorp.fbiomes.client.gui.GuiPixieTable;
-import net.smileycorp.fbiomes.common.blocks.tile.TileMysticStump;
+import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
 import net.smileycorp.fbiomes.common.inventory.ContainerPixieTable;
 
 import javax.annotation.Nullable;

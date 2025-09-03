@@ -40,7 +40,8 @@ public class WorldGenWitchCottage extends WorldGenTemplate {
             case "pixie":
                 EntityPixie pixie = new EntityPixie(world);
                 pixie.enablePersistence();
-                pixie.setVariant(EntityPixie.Variant.MALACHITE);
+                pixie.setVariant(EntityPixie.PixieVariant.MALACHITE);
+                pixie.setRandomSize();
                 pixie.moveToBlockPosAndAngles(pos, 0, 0);
                 world.spawnEntity(pixie);
                 world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);

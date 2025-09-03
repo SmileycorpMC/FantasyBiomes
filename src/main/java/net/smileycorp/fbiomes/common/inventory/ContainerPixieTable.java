@@ -8,7 +8,7 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
-import net.smileycorp.fbiomes.common.blocks.tile.TileMysticStump;
+import net.smileycorp.fbiomes.common.blocks.tiles.TileMysticStump;
 
 public class ContainerPixieTable extends Container {
     
