@@ -3,7 +3,6 @@ package net.smileycorp.fbiomes.common.inventory;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.InventoryPlayer;
 import net.minecraft.inventory.Container;
-import net.minecraft.inventory.IInventory;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.items.SlotItemHandler;
@@ -22,7 +21,7 @@ public class ContainerPixieTable extends Container {
         for (int i = 0; i < 3; ++i) for (int j = 0; j < 3; ++j) addSlotToContainer(new SlotItemHandler(tile.inventory, j + i * 3, 13 + j * 18, 8 + i * 19));
 
         // Output
-        for(int i = 0; i < 3; ++i) addSlotToContainer(new SlotItemHandler(tile.inventory, 9 + i, 147, 8 + i * 19));
+        for(int i = 0; i < 2; ++i) addSlotToContainer(new SlotItemHandler(tile.inventory, 10 + i, 147, 8 + i * 19));
 
         // Food
         for(int i = 0; i < 7; ++i) addSlotToContainer(new SlotPixieFood(tile.inventory, 12 + i, 8 + i * 24, 74));
@@ -77,17 +76,4 @@ public class ContainerPixieTable extends Container {
         }
     }
 
-    @Override
-    public void onCraftMatrixChanged(IInventory inventoryIn) {
-        super.onCraftMatrixChanged(inventoryIn);
-    }
-
-    @Override
-    public void onContainerClosed(EntityPlayer playerIn) {
-        super.onContainerClosed(playerIn);
-
-        /*if (!tile.getWorld().isRemote) {
-            this.clearContainer(playerIn, this.world, this.craftMatrix);
-        }*/
-    }
 }

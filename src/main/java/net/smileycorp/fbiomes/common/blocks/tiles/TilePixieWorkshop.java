@@ -57,7 +57,10 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
         if (foodTimer <= 0) tryConsumeFood();
         if (foodTimer <= 0) {
             foodTimer--;
-            if (foodTimer % 20 == 0) for (Pixie pixie : pixies) pixie.setMood(pixie.getMood() - pixie.getMoodDecay());
+            if (foodTimer % 20 == 0) {
+                for (Pixie pixie : pixies) pixie.setMood(pixie.getMood() - pixie.getMoodDecay());
+                calculateEfficiency();
+            }
         }
     }
 
@@ -85,12 +88,10 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
 
     public void tryFindingRecipe() {
         currentRecipe = PixieRecipeManager.findRecipe(inventory, world);
-        if (currentRecipe != null) tryCraft();
-        else {
-            recipeProgress = 0;
-            progressPercent = 0;
-            markDirty();
-        }
+        if (currentRecipe != null) return;
+        recipeProgress = 0;
+        progressPercent = 0;
+        markDirty();
     }
 
     public boolean isActive() {
@@ -111,7 +112,7 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
             recipeProgress = recipeDuration;
             ItemStack result = currentRecipe.getCraftingResult(inventory.getCraftingWrapper());
             if (result.isEmpty()) return;
-            for (int i = 9; i < 13; i++) {
+            for (int i = 9; i < 12; i++) {
                 if (!RecipeUtils.compareItemStacksCanFit(result, inventory.getStackInSlot(i))) continue;
                 result.setCount(result.getCount() + inventory.getStackInSlot(i).getCount());
                 inventory.setStackInSlot(i, result);

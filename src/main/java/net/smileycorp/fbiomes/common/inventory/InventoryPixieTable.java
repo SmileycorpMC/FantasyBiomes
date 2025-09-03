@@ -20,7 +20,7 @@ import javax.annotation.Nonnull;
 public class InventoryPixieTable extends ItemStackHandler {
 
     private final TilePixieWorkshop tile;
-    private final InventoryWrapper wrapper = new InventoryWrapper(this);
+    private final CraftingWrapper wrapper = new CraftingWrapper(this);
     private final WrappedItemStackHandler capabilityHandler = new WrappedItemStackHandler(this) {
 
         @Nonnull
@@ -71,13 +71,14 @@ public class InventoryPixieTable extends ItemStackHandler {
 
     @Override
     protected void onContentsChanged(int slot) {
-        if(slot >= 0 && slot <= 8) tile.tryFindingRecipe();
+        if (slot >= 0 && slot <= 8) tile.tryFindingRecipe();
     }
 
-    private static class InventoryWrapper extends InventoryCrafting {
+    private static class CraftingWrapper extends InventoryCrafting {
+
         private final InventoryPixieTable inventory;
 
-        public InventoryWrapper(InventoryPixieTable inventory) {
+        public CraftingWrapper(InventoryPixieTable inventory) {
             super(new Container() {
                 @Override
                 public boolean canInteractWith(EntityPlayer playerIn) {
@@ -93,8 +94,8 @@ public class InventoryPixieTable extends ItemStackHandler {
         }
 
         @Override
-        public ItemStack getStackInRowAndColumn(int row, int column) {
-            return (row < 0 || row > 3 || column < 0 || column > 3) ? ItemStack.EMPTY : getStackInSlot(row * 3 + column);
+        public ItemStack getStackInRowAndColumn(int column, int row) {
+            return (row < 0 || row >= 3 || column < 0 || column >= 3) ? ItemStack.EMPTY : getStackInSlot(row * 3 + column);
         }
 
         @Override

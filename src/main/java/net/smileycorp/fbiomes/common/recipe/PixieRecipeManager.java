@@ -19,9 +19,8 @@ public class PixieRecipeManager {
 
     @Nullable
     public static IRecipe findRecipe(InventoryPixieTable inventory, World world) {
-        for (IRecipe recipe : recipes.values()) if(recipe.matches(inventory.getCraftingWrapper(), world)) return recipe;
-        for (IRecipe recipe : CraftingManager.REGISTRY) if(recipe.matches(inventory.getCraftingWrapper(), world)) return recipe;
-        return null;
+        for (IRecipe recipe : recipes.values()) if (recipe.matches(inventory.getCraftingWrapper(), world)) return recipe;
+        return CraftingManager.findMatchingRecipe(inventory.getCraftingWrapper(), world);
     }
 
     public static boolean isPixieFood(ItemStack stack) {
