@@ -108,16 +108,23 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (!world.isRemote) {
-            if (spellCooldown > 0) spellCooldown--;
-            if (getMood() < 3 && ticksExisted % 10 == 0) addMood(0.05f * (float) Math.ceil(getMood()));
-            if (getPixieData().getMaxHealth() != getMaxHealth()) getPixieData().setMaxHealth(getMaxHealth());
-            return;
-        }
+        if (!world.isRemote) return;
         if (ticksExisted % 5 > 0) return;
         if (rand.nextBoolean()) return;
         ClientHandler.spawnParticle(EnumParticle.TWINKLE, posX + 0.1f * (rand.nextFloat() * 2f - 1), posY + height * 0.5 + 0.1f * (rand.nextFloat() * 2f - 1),
                 posZ + 0.1f * (rand.nextFloat() * 2f - 1), (double) getVariant().getRandomTrailColour(rand), -motionX * 0.3, -0.01, -motionZ * 0.3);
+    }
+
+    @Override
+    public void updateAITasks() {
+        super.updateAITasks();
+        if (!isEntityAlive()) return;
+        if (spellCooldown > 0) spellCooldown--;
+        if (ticksExisted % 10 == 0) {
+            heal(1);
+            if (getMood() < 3) addMood(0.05f * (float) Math.ceil(getMood()));
+        }
+        if (getPixieData().getMaxHealth() != getMaxHealth()) getPixieData().setMaxHealth(getMaxHealth());
     }
     
     @Override
