@@ -14,6 +14,7 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.stats.StatList;
+import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
@@ -149,6 +150,13 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     public void setPixieData(PixieData data) {
         dataManager.set(PIXIE_DATA, data);
         data.apply(this);
+    }
+
+    @Override
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (!super.attackEntityFrom(source, amount) || !(source.getTrueSource() instanceof EntityPlayer)) return false;
+        addMood(-0.3f);
+        return true;
     }
 
     @Override
