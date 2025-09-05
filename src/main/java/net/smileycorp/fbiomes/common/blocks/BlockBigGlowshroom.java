@@ -31,7 +31,7 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	
 	@Override
 	public IBlockState getStateFromMeta(int meta) {
-		return getDefaultState().withProperty(VARIANT, EnumGlowshroomVariant.values()[(meta - (meta % 2)) / 2])
+		return getDefaultState().withProperty(VARIANT,  EnumGlowshroomVariant.get((meta - (meta % 2)) / 2))
 				.withProperty(SHAPE, EnumMushroomShape.values()[meta % 2]);
 	}
 	

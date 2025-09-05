@@ -5,9 +5,11 @@
   "mixins": [
     "MixinEntityLivingBase",
     "MixinPotionEffect",
+    "MixinPotionUtils",
     "MixinWorldEntitySpawner"
   ],
   "client": [
+    "MixinWorld"
   ],
   "server": []
 }

@@ -1,6 +1,7 @@
 package net.smileycorp.fbiomes.client;
 
 import net.minecraft.client.Minecraft;
+import net.minecraft.world.World;
 import net.smileycorp.fbiomes.client.particle.ParticleFullbrightPixel;
 import net.smileycorp.fbiomes.client.particle.ParticlePixel;
 import net.smileycorp.fbiomes.client.particle.ParticleTwinkle;
@@ -21,6 +22,10 @@ public class ClientHandler {
                 mc.effectRenderer.addEffect(new ParticleTwinkle(mc.world, x, y, z, (int)(double)data[0], data[1], data[2], data[3]));
                 break;
         }
+    }
+    
+    public static World getWorld() {
+        return Minecraft.getMinecraft().world;
     }
     
 }

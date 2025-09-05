@@ -11,6 +11,7 @@ import net.minecraftforge.client.event.ColorHandlerEvent;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.event.TextureStitchEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.client.registry.RenderingRegistry;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -29,6 +30,10 @@ import net.smileycorp.fbiomes.common.items.FBiomesItems;
 
 @Mod.EventBusSubscriber(modid= Constants.MODID, value = Side.CLIENT)
 public class ClientProxy {
+
+	public ClientProxy() {
+		MinecraftForge.EVENT_BUS.register(new ClientEventListener());
+	}
 	
 	@SubscribeEvent
 	public static void registerModels(ModelRegistryEvent event) {

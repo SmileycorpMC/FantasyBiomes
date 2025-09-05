@@ -1,5 +1,6 @@
 package net.smileycorp.fbiomes.common.potion;
 
+import com.google.common.collect.Maps;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.potion.PotionType;
@@ -8,15 +9,17 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.registries.IForgeRegistry;
 import net.smileycorp.fbiomes.common.Constants;
+import net.smileycorp.fbiomes.common.blocks.enums.EnumGlowshroomVariant;
 
-import java.lang.reflect.Field;
+import java.util.EnumMap;
 
 @Mod.EventBusSubscriber(modid = Constants.MODID)
 public class FBiomesPotions {
     
     public static final Potion BIOLUMINESCENCE = new PotionBioLuminescence();
-    //public static final PotionType GLOWING = register("glowing", new PotionEffect(MobEffects.GLOWING, 3600));
-    //public static final PotionType LONGER_GLOWING = register("longer_glowing", new PotionEffect(MobEffects.GLOWING, 9600));
+
+    public static final EnumMap<EnumGlowshroomVariant, PotionTypeBioluminescence> BIOLUMINESCENCE_POTIONS = Maps.newEnumMap(EnumGlowshroomVariant.class);
+    public static final EnumMap<EnumGlowshroomVariant, PotionTypeBioluminescence> EXTENDED_BIOLUMINESCENCE_POTIONS = Maps.newEnumMap(EnumGlowshroomVariant.class);
     
     private static PotionType register(String name, PotionEffect... effects) {
         PotionType type = new PotionType(name, effects);
@@ -27,24 +30,19 @@ public class FBiomesPotions {
     @SubscribeEvent
     public static void registerPotions(RegistryEvent.Register<Potion> event) {
         IForgeRegistry<Potion> registry = event.getRegistry();
-        for (Field field : FBiomesPotions.class.getDeclaredFields()) {
-            try {
-                Object object = field.get(null);
-                if (!(object instanceof Potion) || object == null) continue;
-                registry.register((Potion) object);
-            } catch (Exception e) {}
-        }
+        registry.register(BIOLUMINESCENCE);
     }
     
     @SubscribeEvent
     public static void registerPotionTypes(RegistryEvent.Register<PotionType> event) {
         IForgeRegistry<PotionType> registry = event.getRegistry();
-        for (Field field : FBiomesPotions.class.getDeclaredFields()) {
-            try {
-                Object object = field.get(null);
-                if (!(object instanceof PotionType) || object == null) continue;
-                registry.register((PotionType) object);
-            } catch (Exception e) {}
+        for (EnumGlowshroomVariant variant : EnumGlowshroomVariant.values()) {
+            PotionTypeBioluminescence potion = new PotionTypeBioluminescence(variant, false);
+            BIOLUMINESCENCE_POTIONS.put(variant, potion);
+            registry.register(potion);
+            potion = new PotionTypeBioluminescence(variant, true);
+            EXTENDED_BIOLUMINESCENCE_POTIONS.put(variant, potion);
+            registry.register(potion);
         }
     }
     
