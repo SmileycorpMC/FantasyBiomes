@@ -13,12 +13,10 @@ import net.minecraft.util.EnumHand;
 import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.minecraft.world.World;
-import net.minecraftforge.event.ForgeEventFactory;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
-import net.smileycorp.fbiomes.common.entities.Pixie;
+import net.smileycorp.fbiomes.common.entities.PixieData;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -74,7 +72,7 @@ public class ItemPixieBottle extends ItemFBiomes {
     
     @Override
     public void addInformation(ItemStack stack, @Nullable World world, List<String> tooltips, ITooltipFlag flag) {
-        Pixie pixie = getPixie(stack);
+        PixieData pixie = getPixie(stack);
         if (pixie != null) pixie.addTooltips(tooltips);
         else tooltips.add(new TextComponentTranslation("tooltip.fbiomes.pixie_variant",
                 new TextComponentTranslation("entity.fbiomes.pixie.variant."
@@ -83,42 +81,29 @@ public class ItemPixieBottle extends ItemFBiomes {
     }
     
     public static boolean spawnPixie(World world, ItemStack stack, double x, double y, double z) {
-        EntityPixie pixie = new EntityPixie(world);
-        if (ForgeEventFactory.doSpecialSpawn(pixie, world, (float) x, (float) y, (float) z, null)) return false;
-        pixie.onInitialSpawn(world.getDifficultyForLocation(new BlockPos(pixie)), null);
-        Pixie data = getPixie(stack);
-        if (data != null) data.apply(pixie);
-        else {
-            pixie.setVariant(EntityPixie.PixieVariant.get((byte) stack.getMetadata()));
-            if (stack.hasDisplayName()) pixie.setCustomNameTag(stack.getDisplayName());
+        PixieData data = getPixie(stack);
+        if (data == null) {
+            data = PixieData.newPixie(EntityPixie.PixieVariant.get((byte) stack.getMetadata()), world.rand);
+            if (stack.hasDisplayName()) data.setName(stack.getDisplayName());
         }
-        pixie.setLocationAndAngles(x, y, z, MathHelper.wrapDegrees(world.rand.nextFloat() * 360f), 0);
-        pixie.rotationYawHead = pixie.rotationYaw;
-        pixie.renderYawOffset = pixie.rotationYaw;
-        world.spawnEntity(pixie);
+        EntityPixie pixie = data.spawn(world, x, y, z, true);
+        if (pixie == null) return false;
         pixie.playLivingSound();
         return pixie.isAddedToWorld();
     }
 
-    public static Pixie getPixie(ItemStack stack) {
+    public static PixieData getPixie(ItemStack stack) {
         if (!stack.hasTagCompound()) return null;
         NBTTagCompound nbt = stack.getTagCompound();
         if (!nbt.hasKey("entity")) return null;
-        Pixie pixie = Pixie.fromNbt(nbt.getCompoundTag("entity"));
+        PixieData pixie = PixieData.fromNbt(nbt.getCompoundTag("entity"));
         pixie.setVariant(EntityPixie.PixieVariant.get((byte) stack.getMetadata()));
         if (stack.hasDisplayName()) pixie.setName(stack.getDisplayName());
         nbt.setTag("entity", pixie.toNbt());
         return pixie;
     }
-
-    public static ItemStack bottlePixie(EntityPixie pixie) {
-        pixie.setMood(pixie.getMood() - 0.1f);
-        ItemStack stack = bottlePixie(pixie.storeInItem());
-        pixie.setDead();
-        return stack;
-    }
     
-    public static ItemStack bottlePixie(Pixie pixie) {
+    public static ItemStack bottlePixie(PixieData pixie) {
         ItemStack stack = new ItemStack(FBiomesItems.PIXIE_BOTTLE, 1, pixie.getVariant().ordinal());
         if (pixie.hasName()) stack.setStackDisplayName(pixie.getName());
         if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());

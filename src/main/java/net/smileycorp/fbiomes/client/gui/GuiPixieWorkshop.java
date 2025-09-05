@@ -10,7 +10,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.blocks.tiles.TilePixieWorkshop;
-import net.smileycorp.fbiomes.common.entities.Pixie;
+import net.smileycorp.fbiomes.common.entities.PixieData;
 import net.smileycorp.fbiomes.common.inventory.ContainerPixieTable;
 import net.smileycorp.fbiomes.common.network.PacketHandler;
 import net.smileycorp.fbiomes.common.network.PixieTableEnableMessage;
@@ -96,7 +96,7 @@ public class GuiPixieWorkshop extends GuiContainer {
             if (tile.getBaseEfficiency() > 1) text.add(new TextComponentTranslation("tooltip.fbiomes.efficiency.food",
                     tile.getLastConsumedFood().getDisplayName(), String.format("%.2f", tile.getBaseEfficiency())).getFormattedText());
             for (int i = 0; i < tile.getPixieCount(); i++) {
-                Pixie pixie = tile.getPixie(i);
+                PixieData pixie = tile.getPixie(i);
                 text.add(new TextComponentTranslation("tooltip.fbiomes.efficiency.pixie",
                         pixie.hasName() ? pixie.getName() : I18n.format("entity.fbiomes.pixie.name") + " " + (i + 1),
                         String.format("%.2f", pixie.getEfficiency())).getFormattedText());

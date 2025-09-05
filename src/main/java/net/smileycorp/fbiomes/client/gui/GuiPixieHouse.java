@@ -4,7 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.util.text.TextComponentTranslation;
 import net.smileycorp.fbiomes.common.blocks.tiles.TilePixieWorkshop;
-import net.smileycorp.fbiomes.common.entities.Pixie;
+import net.smileycorp.fbiomes.common.entities.PixieData;
 
 import java.util.List;
 
@@ -40,7 +40,7 @@ public class GuiPixieHouse extends Gui {
     
     public List<String> getTooltipText() {
         List<String> tooltips = Lists.newArrayList();
-        Pixie pixie = tile.getPixie(index);
+        PixieData pixie = tile.getPixie(index);
         tooltips.add(pixie.hasName() ? pixie.getName() : new TextComponentTranslation("entity.fbiomes.pixie.name").getFormattedText());
         pixie.addTooltips(tooltips);
         tooltips.add(new TextComponentTranslation("tooltip.fbiomes.efficiency",

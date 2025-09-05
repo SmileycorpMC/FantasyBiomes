@@ -19,7 +19,7 @@ import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.smileycorp.atlas.api.util.RecipeUtils;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
-import net.smileycorp.fbiomes.common.entities.Pixie;
+import net.smileycorp.fbiomes.common.entities.PixieData;
 import net.smileycorp.fbiomes.common.inventory.InventoryPixieTable;
 import net.smileycorp.fbiomes.common.items.ItemPixieBottle;
 import net.smileycorp.fbiomes.common.recipe.IPixieRecipe;
@@ -36,7 +36,7 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
     private final NonNullList<ItemStack> lastRecipe = NonNullList.withSize(9, ItemStack.EMPTY);
     private float recipeProgress = 0;
     private float progressPercent = 0;
-    private List<Pixie> pixies = Lists.newArrayList();
+    private List<PixieData> pixies = Lists.newArrayList();
     private float baseEfficiency = 1;
     private float efficiency = 1;
     private int foodTimer = 0;
@@ -57,7 +57,7 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
         if (tryConsumeFood()) return;
         foodTimer--;
         if (foodTimer % 20 != 0) return;
-        for (Pixie pixie : pixies) pixie.setMood(pixie.getMood() - pixie.getMoodDecay());
+        for (PixieData pixie : pixies) pixie.setMood(pixie.getMood() - pixie.getMoodDecay());
         calculateEfficiency();
     }
 
@@ -76,7 +76,7 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
         float efficiency = PixieRecipeManager.getFoodEfficiency(stack);
         if (efficiency <= 1) return false;
         baseEfficiency = efficiency;
-        for (Pixie pixie : pixies) pixie.setMood(pixie.getMood() + pixie.getMoodGain());
+        for (PixieData pixie : pixies) pixie.setMood(pixie.getMood() + pixie.getMoodGain());
         consumedFood = stack.splitStack(1);
         foodTimer = 600;
         calculateEfficiency();
@@ -136,19 +136,13 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
             return;
         }
         efficiency = baseEfficiency;
-        for (Pixie pixie : pixies) efficiency *= pixie.getEfficiency();
+        for (PixieData pixie : pixies) efficiency *= pixie.getEfficiency();
         markDirty();
     }
 
     public void destroy() {
-        for (Pixie pixie : pixies) {
-            EntityPixie entity = new EntityPixie(world);
-            entity.setPosition(pos.getX() + world.rand.nextInt(2) - 1,
-                    pos.getY() + 0.5, pos.getZ() + world.rand.nextInt(2) - 1);
-            pixie.apply(entity);
-            entity.enablePersistence();
-            world.spawnEntity(entity);
-        }
+        for (PixieData pixie : pixies) pixie.spawn(world, pos.getX() + world.rand.nextInt(2) - 1,
+                pos.getY() + 0.5, pos.getZ() + world.rand.nextInt(2) - 1);
         for (int slot = 0; slot < inventory.getSlots(); slot ++) {
             ItemStack stack = inventory.getStackInSlot(slot);
             if (stack.isEmpty()) continue;
@@ -190,9 +184,9 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
     
     public boolean addPixie(ItemStack stack) {
         if (pixies.size() > 3) return false;
-        Pixie pixie = ItemPixieBottle.getPixie(stack);
+        PixieData pixie = ItemPixieBottle.getPixie(stack);
         if (pixie == null) {
-            pixie = Pixie.newPixie(EntityPixie.PixieVariant.get((byte) stack.getMetadata()), world.rand);
+            pixie = PixieData.newPixie(EntityPixie.PixieVariant.get((byte) stack.getMetadata()), world.rand);
             if (stack.hasDisplayName()) pixie.setName(stack.getDisplayName());
         }
         pixies.add(pixie);
@@ -201,14 +195,14 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
         return true;
     }
     
-    public Pixie getPixie(int index) {
+    public PixieData getPixie(int index) {
         return pixies.get(index);
     }
     
     public ItemStack bottlePixie() {
         int count = getPixieCount();
         if (count == 0) return ItemStack.EMPTY;
-        Pixie pixie = pixies.get(count - 1);
+        PixieData pixie = pixies.get(count - 1);
         pixies.remove(count - 1);
         calculateEfficiency();
         markDirty();
@@ -229,7 +223,7 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
         super.readFromNBT(nbt);
         inventory.deserializeNBT(nbt.getCompoundTag("inventory"));
         pixies.clear();
-        for (NBTBase pixie : nbt.getTagList("pixies", 10)) pixies.add(Pixie.fromNbt((NBTTagCompound) pixie));
+        for (NBTBase pixie : nbt.getTagList("pixies", 10)) pixies.add(PixieData.fromNbt((NBTTagCompound) pixie));
         recipeProgress = nbt.getFloat("recipeProgress");
         foodTimer = nbt.getInteger("foodTimer");
         if (nbt.hasKey("consumedFood")) {
@@ -261,7 +255,7 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
         super.deserializeNBT(nbt);
         inventory.deserializeNBT(nbt.getCompoundTag("inventory"));
         pixies.clear();
-        for (NBTBase pixie : nbt.getTagList("pixies", 10)) pixies.add(Pixie.fromNbt((NBTTagCompound) pixie));
+        for (NBTBase pixie : nbt.getTagList("pixies", 10)) pixies.add(PixieData.fromNbt((NBTTagCompound) pixie));
         progressPercent = nbt.getFloat("recipeProgress");
         efficiency = nbt.getFloat("efficiency");
         baseEfficiency = nbt.getFloat("baseEfficiency");

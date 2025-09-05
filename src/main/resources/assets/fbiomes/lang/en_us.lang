@@ -131,9 +131,9 @@ entity.fbiomes.pixie.variant.sunset=§bSunset
 entity.fbiomes.pixie.variant.malachite=§bMalachite
 entity.fbiomes.pixie.variant.glasswing=§bGlasswing
 
-entity.fbiomes.pixie.mood.0=§0Furious
-entity.fbiomes.pixie.mood.1=§4Mad
-entity.fbiomes.pixie.mood.2=§cIrritated
+entity.fbiomes.pixie.mood.0=§4Furious
+entity.fbiomes.pixie.mood.1=§cAngry
+entity.fbiomes.pixie.mood.2=§6Irritated
 entity.fbiomes.pixie.mood.3=Neutral
 entity.fbiomes.pixie.mood.4=§2Positive
 entity.fbiomes.pixie.mood.5=§aHappy

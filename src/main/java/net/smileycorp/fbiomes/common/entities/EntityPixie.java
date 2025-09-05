@@ -1,6 +1,5 @@
 package net.smileycorp.fbiomes.common.entities;
 
-import com.google.common.base.Optional;
 import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
@@ -13,7 +12,6 @@ import net.minecraft.init.SoundEvents;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
-import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumHand;
@@ -40,13 +38,15 @@ import java.util.UUID;
 
 public class EntityPixie extends EntityLiving implements IEntityOwnable {
 
-    private static final DataParameter<Byte> VARIANT = EntityDataManager.createKey(EntityPixie.class, DataSerializers.BYTE);
-    private static final DataParameter<Float> SIZE = EntityDataManager.createKey(EntityPixie.class, DataSerializers.FLOAT);
-    private static final DataParameter<Float> MOOD = EntityDataManager.createKey(EntityPixie.class, DataSerializers.FLOAT);
-    private static final DataParameter<Optional<UUID>> OWNER = EntityDataManager.createKey(EntityPixie.class, DataSerializers.OPTIONAL_UNIQUE_ID);
+    private static final DataParameter<PixieData> PIXIE_DATA = EntityDataManager.createKey(EntityPixie.class, PixieData.SERIALIZER);
 
     private Entity owner;
     private int spellCooldown;
+
+    public EntityPixie(World world, PixieData data) {
+        this(world);
+        setPixieData(data);
+    }
 
     public EntityPixie(World world) {
         super(world);
@@ -57,8 +57,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     @Nullable
     @Override
     public IEntityLivingData onInitialSpawn(DifficultyInstance difficulty, @Nullable IEntityLivingData data) {
-        setVariant(PixieVariant.random(rand));
-        setRandomSize();
+        setPixieData(PixieData.newPixie(rand));
         return super.onInitialSpawn(difficulty, data);
     }
     
@@ -74,10 +73,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     @Override
     protected void entityInit() {
         super.entityInit();
-        dataManager.register(VARIANT, (byte)0);
-        dataManager.register(SIZE, 1f);
-        dataManager.register(MOOD, Pixie.MAX_MOOD / 2);
-        dataManager.register(OWNER, Optional.absent());
+        dataManager.register(PIXIE_DATA, PixieData.DEFAULT);
     }
     
     @Override
@@ -97,10 +93,12 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
                 return false;
             }
             stack.shrink(1);
-            ItemStack newStack = ItemPixieBottle.bottlePixie(this);
+            addMood(-0.25f);
+            ItemStack newStack = ItemPixieBottle.bottlePixie(getPixieData());
             player.addStat(StatList.getObjectUseStats(Items.GLASS_BOTTLE));
             playSound(SoundEvents.ENTITY_ITEM_PICKUP, 0.2f, ((world.rand.nextFloat() - world.rand.nextFloat()) * 0.7f + 1) * 2f);
             if (!player.inventory.addItemStackToInventory(newStack)) player.dropItem(newStack, false);
+            setDead();
             return true;
         }
         return super.processInteract(player, hand);
@@ -111,6 +109,8 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
         super.onUpdate();
         if (!world.isRemote) {
             if (spellCooldown > 0) spellCooldown--;
+            if (getMood() < 3 && ticksExisted % 10 == 0) addMood(0.05f * (float) Math.ceil(getMood()));
+            if (getPixieData().getMaxHealth() != getMaxHealth()) getPixieData().setMaxHealth(getMaxHealth());
             return;
         }
         if (ticksExisted % 5 > 0) return;
@@ -137,54 +137,76 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     public float getEyeHeight() {
         return 0.25f * getSize();
     }
-    
+
+    /*
+        do not use for modifying pixie data unless you use setPixieData
+        health, max health and bounding box will become desynced
+    */
+    public PixieData getPixieData() {
+        return dataManager.get(PIXIE_DATA);
+    }
+
+    public void setPixieData(PixieData data) {
+        dataManager.set(PIXIE_DATA, data);
+        data.apply(this);
+    }
+
+    @Override
+    public void setHealth(float health) {
+        super.setHealth(health);
+        getPixieData().setHealth(getHealth());
+    }
+
+    @Override
+    public void setCustomNameTag(String name) {
+        super.setCustomNameTag(name);
+        getPixieData().setName(getCustomNameTag());
+    }
+
     public void setVariant(PixieVariant variant) {
-        dataManager.set(VARIANT, (byte)variant.ordinal());
+        getPixieData().setVariant(variant);
     }
 
     public void setSize(float size) {
-        size = Math.round(size * 100f) * 0.01f;
-        dataManager.set(SIZE, size);
-        setSize(size * 0.5f, size * 0.5f);
-    }
-
-    public void setRandomSize() {
-        setSize(getRandomSize(rand));
-    }
-
-    public static float getRandomSize(Random rand) {
-        return 1 + (float) rand.nextGaussian() * 0.3f;
+        PixieData data = getPixieData();
+        data.setSize(size);
+        updateBoundingBox();
     }
 
     @Override
     public void notifyDataManagerChange(DataParameter<?> key) {
         super.notifyDataManagerChange(key);
-        if (!SIZE.equals(key)) return;
+        if (!PIXIE_DATA.equals(key)) return;
+        updateBoundingBox();
+    }
+
+    public void updateBoundingBox() {
         float size = getSize();
         setSize(size * 0.5f, size * 0.5f);
     }
 
+    public void addMood(float change) {
+       getPixieData().addMood(change);
+    }
+
     public void setMood(float mood) {
-        if (mood < 0) mood = 0;
-        if (mood > Pixie.MAX_MOOD) mood = Pixie.MAX_MOOD;
-        dataManager.set(MOOD, mood);
+        getPixieData().setMood(mood);
     }
 
     public void setOwner(UUID uuid) {
-        dataManager.set(OWNER, Optional.of(uuid));
-        if (world instanceof WorldServer) owner = ((WorldServer) world).getEntityFromUuid(uuid);
+        getPixieData().setOwner(uuid);
     }
     
     public PixieVariant getVariant() {
-        return PixieVariant.get(dataManager.get(VARIANT));
+        return getPixieData().getVariant();
     }
 
     public float getSize() {
-        return dataManager.get(SIZE);
+        return getPixieData().getSize();
     }
 
     public float getMood() {
-        return dataManager.get(MOOD);
+        return getPixieData().getMood();
     }
 
     public boolean hasOwner() {
@@ -194,7 +216,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     @Nullable
     @Override
     public UUID getOwnerId() {
-        return dataManager.get(OWNER).orNull();
+        return getPixieData().getOwner();
     }
 
     @Nullable
@@ -221,25 +243,15 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     @Override
     public void readEntityFromNBT(NBTTagCompound nbt) {
         super.readEntityFromNBT(nbt);
-        if (nbt.hasKey("variant")) dataManager.set(VARIANT, nbt.getByte("variant"));
-        if (nbt.hasKey("size")) setSize(nbt.getFloat("size"));
-        if (nbt.hasKey("mood")) setMood(nbt.getFloat("mood"));
-        if (nbt.hasKey("owner")) dataManager.set(OWNER, Optional.of(nbt.getUniqueId("owner")));
+        if (nbt.hasKey("data")) setPixieData(PixieData.fromNbt(nbt.getCompoundTag("data")));
         if (nbt.hasKey("spellCooldown")) spellCooldown = nbt.getInteger("spellCooldown");
     }
-    
+
     @Override
     public void writeEntityToNBT(NBTTagCompound nbt) {
         super.writeEntityToNBT(nbt);
-        nbt.setByte("variant", dataManager.get(VARIANT));
-        nbt.setFloat("size", dataManager.get(SIZE));
-        nbt.setFloat("mood", dataManager.get(MOOD));
-        if (getOwnerId() != null) nbt.setUniqueId("owner", getOwnerId());
+        nbt.setTag("data", getPixieData().toNbt());
         nbt.setInteger("spellCooldown", spellCooldown);
-    }
-    
-    public Pixie storeInItem() {
-        return new Pixie(this);
     }
 
     public enum PixieVariant {

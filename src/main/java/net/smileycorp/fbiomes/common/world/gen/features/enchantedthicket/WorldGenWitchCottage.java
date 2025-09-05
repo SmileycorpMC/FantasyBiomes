@@ -10,6 +10,7 @@ import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
+import net.smileycorp.fbiomes.common.entities.PixieData;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenTemplate;
 
 import java.util.Random;
@@ -35,15 +36,12 @@ public class WorldGenWitchCottage extends WorldGenTemplate {
                 witch.enablePersistence();
                 witch.moveToBlockPosAndAngles(pos, 0, 0);
                 world.spawnEntity(witch);
+                EntityPixie pixie = PixieData.newPixie(EntityPixie.PixieVariant.MALACHITE, rand)
+                        .spawn(world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
+                pixie.setOwner(witch);
                 world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
                 break;
             case "pixie":
-                EntityPixie pixie = new EntityPixie(world);
-                pixie.enablePersistence();
-                pixie.setVariant(EntityPixie.PixieVariant.MALACHITE);
-                pixie.setRandomSize();
-                pixie.moveToBlockPosAndAngles(pos, 0, 0);
-                world.spawnEntity(pixie);
                 world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);
                 break;
         }
