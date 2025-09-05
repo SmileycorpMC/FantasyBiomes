@@ -7,7 +7,6 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
-import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -29,6 +28,8 @@ import net.smileycorp.atlas.api.recipe.WeightedOutputs;
 import net.smileycorp.fbiomes.client.ClientHandler;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.EnumParticle;
+import net.smileycorp.fbiomes.common.entities.ai.EntityAIPixieFollowOwner;
+import net.smileycorp.fbiomes.common.entities.ai.EntityAIPixieHealOwner;
 import net.smileycorp.fbiomes.common.items.ItemPixieBottle;
 
 import javax.annotation.Nullable;
@@ -45,6 +46,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     private static final DataParameter<Optional<UUID>> OWNER = EntityDataManager.createKey(EntityPixie.class, DataSerializers.OPTIONAL_UNIQUE_ID);
 
     private Entity owner;
+    private int spellCooldown;
 
     public EntityPixie(World world) {
         super(world);
@@ -64,7 +66,9 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     protected void initEntityAI() {
         super.initEntityAI();
         tasks.addTask(0, new EntityAISwimming(this));
-        tasks.addTask(8, new EntityAIMoveRandomFlying(this));
+        tasks.addTask(1, new EntityAIPixieFollowOwner(this));
+        tasks.addTask(2, new EntityAIPixieHealOwner(this));
+        tasks.addTask(4, new EntityAIMoveRandomFlying(this));
     }
     
     @Override
@@ -105,7 +109,10 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     @Override
     public void onUpdate() {
         super.onUpdate();
-        if (!world.isRemote) return;
+        if (!world.isRemote) {
+            if (spellCooldown > 0) spellCooldown--;
+            return;
+        }
         if (ticksExisted % 5 > 0) return;
         if (rand.nextBoolean()) return;
         ClientHandler.spawnParticle(EnumParticle.TWINKLE, posX + 0.1f * (rand.nextFloat() * 2f - 1), posY + height * 0.5 + 0.1f * (rand.nextFloat() * 2f - 1),
@@ -181,7 +188,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     }
 
     public boolean hasOwner() {
-        return getOwnerId() != null;
+        return getOwner() != null;
     }
 
     @Nullable
@@ -192,10 +199,23 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
 
     @Nullable
     @Override
-    public Entity getOwner() {
-        if (owner == null && hasOwner()) if (world instanceof WorldServer)
+    public EntityLivingBase getOwner() {
+        if (owner == null && getOwnerId() != null && world instanceof WorldServer)
             owner = ((WorldServer) world).getEntityFromUuid(getOwnerId());
-        return owner;
+        return owner instanceof EntityLivingBase ? (EntityLivingBase) owner : null;
+    }
+
+    public void setOwner(EntityLivingBase owner) {
+        this.owner = owner;
+        setOwner(owner.getUniqueID());
+    }
+
+    public int getSpellCooldown() {
+        return spellCooldown;
+    }
+
+    public void setSpellCooldown(int spellCooldown) {
+        this.spellCooldown = spellCooldown;
     }
     
     @Override
@@ -205,6 +225,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
         if (nbt.hasKey("size")) setSize(nbt.getFloat("size"));
         if (nbt.hasKey("mood")) setMood(nbt.getFloat("mood"));
         if (nbt.hasKey("owner")) dataManager.set(OWNER, Optional.of(nbt.getUniqueId("owner")));
+        if (nbt.hasKey("spellCooldown")) spellCooldown = nbt.getInteger("spellCooldown");
     }
     
     @Override
@@ -213,7 +234,8 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
         nbt.setByte("variant", dataManager.get(VARIANT));
         nbt.setFloat("size", dataManager.get(SIZE));
         nbt.setFloat("mood", dataManager.get(MOOD));
-        if (hasOwner()) nbt.setUniqueId("owner", getOwnerId());
+        if (getOwnerId() != null) nbt.setUniqueId("owner", getOwnerId());
+        nbt.setInteger("spellCooldown", spellCooldown);
     }
     
     public Pixie storeInItem() {
@@ -249,6 +271,10 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
 
         public ResourceLocation getTexture() {
             return texture;
+        }
+
+        public int getColour() {
+            return colour;
         }
         
         public int getRandomTrailColour(Random rand) {
