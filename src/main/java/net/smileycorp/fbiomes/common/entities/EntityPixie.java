@@ -264,7 +264,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
         public static PixieVariant random(Random rand) {
             if (table == null) {
                 EnumMap<PixieVariant, Integer> map = Maps.newEnumMap(PixieVariant.class);
-                for (PixieVariant variant : values()) map.put(variant, variant.weight);
+                for (PixieVariant variant : values()) if (variant.weight > 0) map.put(variant, variant.weight);
                 table = new WeightedOutputs<>(map);
             }
             return table.getResult(rand);
