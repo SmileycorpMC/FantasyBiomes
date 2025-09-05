@@ -154,6 +154,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
 
     @Override
     public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (source.getTrueSource() != null && source.getTrueSource() == getOwner()) return false;
         if (!super.attackEntityFrom(source, amount) || !(source.getTrueSource() instanceof EntityPlayer)) return false;
         addMood(-0.3f);
         return true;
