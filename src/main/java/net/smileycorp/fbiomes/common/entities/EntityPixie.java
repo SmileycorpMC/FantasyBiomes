@@ -17,6 +17,7 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
@@ -25,6 +26,7 @@ import net.smileycorp.atlas.api.entity.ai.EntityAIMoveRandomFlying;
 import net.smileycorp.atlas.api.entity.ai.FlyingMoveControl;
 import net.smileycorp.atlas.api.recipe.WeightedOutputs;
 import net.smileycorp.fbiomes.client.ClientHandler;
+import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.EnumParticle;
 import net.smileycorp.fbiomes.common.items.ItemPixieBottle;
 
@@ -125,7 +127,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     
     @Override
     public float getEyeHeight() {
-        return 0.25f * getSize();
+        return 0.25f;
     }
     
     public void setVariant(PixieVariant variant) {
@@ -135,7 +137,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     public void setSize(float size) {
         size = Math.round(size * 100f) * 0.01f;
         dataManager.set(SIZE, size);
-        setSize(size * 0.5f, size * 0.5f);
+        //setSize(size * 0.5f, size * 0.5f);
     }
 
     public void setRandomSize() {
@@ -223,15 +225,21 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
         
         private final String name;
         private final int weight, colour;
+        private final ResourceLocation texture;
         
         PixieVariant(String name, int weight, int colour) {
             this.name = name;
             this.weight = weight;
             this.colour = colour;
+            this.texture = Constants.loc("textures/entity/pixie/" + name + ".png");
         }
         
         public String getName() {
             return name;
+        }
+
+        public ResourceLocation getTexture() {
+            return texture;
         }
         
         public int getRandomTrailColour(Random rand) {
@@ -252,7 +260,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
             }
             return table.getResult(rand);
         }
-        
+
     }
 
 }
