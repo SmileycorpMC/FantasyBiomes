@@ -4,7 +4,6 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.ItemFood;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTBase;
@@ -54,24 +53,22 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
         }
         if(currentRecipe == null |!isActive) return;
         if(currentRecipe.matches(inventory.getCraftingWrapper(), world)) tryCraft();
-        if (foodTimer <= 0) tryConsumeFood();
-        if (foodTimer <= 0) {
-            foodTimer--;
-            if (foodTimer % 20 == 0) {
-                for (Pixie pixie : pixies) pixie.setMood(pixie.getMood() - pixie.getMoodDecay());
-                calculateEfficiency();
-            }
-        }
+        if (foodTimer > 0) return;
+        if (tryConsumeFood()) return;
+        foodTimer--;
+        if (foodTimer % 20 != 0) return;
+        for (Pixie pixie : pixies) pixie.setMood(pixie.getMood() - pixie.getMoodDecay());
+        calculateEfficiency();
     }
 
-    private void tryConsumeFood() {
-        if (pixies.isEmpty()) return;
+    private boolean tryConsumeFood() {
+        if (pixies.isEmpty()) return false;
         for (int slot = 12; slot < 19; slot++) {
             ItemStack stack = inventory.getStackInSlot(slot);
             if (stack.isEmpty()) continue;
-            if (!(stack.getItem() instanceof ItemFood)) continue;
-            if (consumeFood(slot)) return;
+            if (consumeFood(slot)) return true;
         }
+        return false;
     }
 
     public boolean consumeFood(int slot) {
