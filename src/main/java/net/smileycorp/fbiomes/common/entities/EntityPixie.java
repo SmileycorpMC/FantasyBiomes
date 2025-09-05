@@ -7,6 +7,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.EntityAISwimming;
 import net.minecraft.entity.ai.attributes.AbstractAttributeMap;
+import net.minecraft.entity.monster.EntitySlime;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
@@ -127,7 +128,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     
     @Override
     public float getEyeHeight() {
-        return 0.25f;
+        return 0.25f * getSize();
     }
     
     public void setVariant(PixieVariant variant) {
@@ -137,7 +138,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
     public void setSize(float size) {
         size = Math.round(size * 100f) * 0.01f;
         dataManager.set(SIZE, size);
-        //setSize(size * 0.5f, size * 0.5f);
+        setSize(size * 0.5f, size * 0.5f);
     }
 
     public void setRandomSize() {
@@ -146,6 +147,14 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
 
     public static float getRandomSize(Random rand) {
         return 1 + (float) rand.nextGaussian() * 0.3f;
+    }
+
+    @Override
+    public void notifyDataManagerChange(DataParameter<?> key) {
+        super.notifyDataManagerChange(key);
+        if (!SIZE.equals(key)) return;
+        float size = getSize();
+        setSize(size * 0.5f, size * 0.5f);
     }
 
     public void setMood(float mood) {
