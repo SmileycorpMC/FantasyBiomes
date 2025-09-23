@@ -9,6 +9,7 @@ import net.minecraft.util.ResourceLocation;
 import net.smileycorp.fbiomes.client.entity.model.ModelPixie;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
+import net.smileycorp.fbiomes.common.entities.PixieData;
 
 import javax.annotation.Nullable;
 import java.awt.*;
@@ -24,7 +25,7 @@ public class RenderPixie extends RenderLiving<EntityPixie> {
     @Override
     public void doRender(EntityPixie entity, double x, double y, double z, float yaw, float pt) {
         if (!renderOutlines) {
-            EntityPixie.PixieVariant variant = entity.getVariant();
+            PixieData.Variant variant = entity.getVariant();
             if (entity.hasCustomName() && "jeb_".equals(entity.getCustomNameTag())) {
                 variant = null;
                 Color colour = Color.getHSBColor(((float)(entity.ticksExisted % 100) + pt) / 100f, 1, 1);
@@ -49,7 +50,7 @@ public class RenderPixie extends RenderLiving<EntityPixie> {
         return entity.getVariant().getTexture();
     }
 
-    public static void renderOrb(EntityPixie.PixieVariant variant, double x, double y, double z, float scale) {
+    public static void renderOrb(PixieData.Variant variant, double x, double y, double z, float scale) {
         RenderManager rm = Minecraft.getMinecraft().getRenderManager();
         GlStateManager.pushMatrix();
         GlStateManager.translate((float)x, (float)y, (float)z);

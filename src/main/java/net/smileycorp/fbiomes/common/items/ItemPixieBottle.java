@@ -31,12 +31,12 @@ public class ItemPixieBottle extends ItemFBiomes {
     
     @Override
     public String byMeta(int meta) {
-        return "pixie_bottle_" + EntityPixie.PixieVariant.get((byte) meta);
+        return "pixie_bottle_" + PixieData.Variant.get((byte) meta);
     }
     
     @Override
     public int getMaxMeta() {
-        return EntityPixie.PixieVariant.values().length;
+        return PixieData.Variant.values().length;
     }
     
     @Override
@@ -76,14 +76,14 @@ public class ItemPixieBottle extends ItemFBiomes {
         if (pixie != null) pixie.addTooltips(tooltips);
         else tooltips.add(new TextComponentTranslation("tooltip.fbiomes.pixie_variant",
                 new TextComponentTranslation("entity.fbiomes.pixie.variant."
-                        + EntityPixie.PixieVariant.get((byte) stack.getMetadata()).getName())).getFormattedText());
+                        + PixieData.Variant.get((byte) stack.getMetadata()).getName())).getFormattedText());
         super.addInformation(stack, world, tooltips, flag);
     }
     
     public static boolean spawnPixie(World world, ItemStack stack, double x, double y, double z) {
         PixieData data = getPixie(stack);
         if (data == null) {
-            data = PixieData.newPixie(EntityPixie.PixieVariant.get((byte) stack.getMetadata()), world.rand);
+            data = PixieData.newPixie(PixieData.Variant.get((byte) stack.getMetadata()), world.rand);
             if (stack.hasDisplayName()) data.setName(stack.getDisplayName());
         }
         EntityPixie pixie = data.spawn(world, x, y, z, true);
@@ -95,11 +95,11 @@ public class ItemPixieBottle extends ItemFBiomes {
     public static PixieData getPixie(ItemStack stack) {
         if (!stack.hasTagCompound()) return null;
         NBTTagCompound nbt = stack.getTagCompound();
-        if (!nbt.hasKey("entity")) return null;
-        PixieData pixie = PixieData.fromNbt(nbt.getCompoundTag("entity"));
-        pixie.setVariant(EntityPixie.PixieVariant.get((byte) stack.getMetadata()));
+        if (!nbt.hasKey("pixie")) return null;
+        PixieData pixie = PixieData.fromNbt(nbt.getCompoundTag("pixie"));
+        pixie.setVariant(PixieData.Variant.get((byte) stack.getMetadata()));
         if (stack.hasDisplayName()) pixie.setName(stack.getDisplayName());
-        nbt.setTag("entity", pixie.toNbt());
+        nbt.setTag("pixie", pixie.toNbt());
         return pixie;
     }
     
@@ -107,7 +107,7 @@ public class ItemPixieBottle extends ItemFBiomes {
         ItemStack stack = new ItemStack(FBiomesItems.PIXIE_BOTTLE, 1, pixie.getVariant().ordinal());
         if (pixie.hasName()) stack.setStackDisplayName(pixie.getName());
         if (!stack.hasTagCompound()) stack.setTagCompound(new NBTTagCompound());
-        stack.getTagCompound().setTag("entity", pixie.toNbt());
+        stack.getTagCompound().setTag("pixie", pixie.toNbt());
         return stack;
     }
     

@@ -36,7 +36,7 @@ public class WorldGenWitchCottage extends WorldGenTemplate {
                 witch.enablePersistence();
                 witch.moveToBlockPosAndAngles(pos, 0, 0);
                 world.spawnEntity(witch);
-                EntityPixie pixie = PixieData.newPixie(EntityPixie.PixieVariant.MALACHITE, rand)
+                EntityPixie pixie = PixieData.newPixie(PixieData.Variant.MALACHITE, rand)
                         .spawn(world, pos.getX() + 0.5f, pos.getY() + 0.5f, pos.getZ() + 0.5f);
                 pixie.setOwner(witch);
                 world.setBlockState(pos, Blocks.AIR.getDefaultState(), 2);

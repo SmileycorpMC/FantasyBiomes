@@ -6,7 +6,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;
 import net.smileycorp.fbiomes.common.blocks.BlockMysticStumpPart;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
-import net.smileycorp.fbiomes.common.entities.EntityPixie;
 import net.smileycorp.fbiomes.common.entities.PixieData;
 
 import java.util.Random;
@@ -28,7 +27,7 @@ public class WorldGenMysticStump extends WorldGenerator {
         setBlockAndNotifyAdequately(world, pos, FBiomesBlocks.MYSTIC_STUMP.getDefaultState());
         for (BlockMysticStumpPart.Direction direction : BlockMysticStumpPart.Direction.values()) setBlockAndNotifyAdequately(world,
                 pos.add(direction.getOffset()), FBiomesBlocks.MYSTIC_STUMP_PART.getDefaultState().withProperty(BlockMysticStumpPart.DIRECTION, direction));
-        for (int i = 0; i < 3; i++) PixieData.newPixie(EntityPixie.PixieVariant.GLASSWING, rand)
+        for (int i = 0; i < 3; i++) PixieData.newPixie(PixieData.Variant.GLASSWING, rand)
                     .spawn(world, pos.getX() + rand.nextFloat() - 0.5f, pos.getY() + 1.5f, pos.getZ() + rand.nextFloat() - 0.5f);
         return true;
     }

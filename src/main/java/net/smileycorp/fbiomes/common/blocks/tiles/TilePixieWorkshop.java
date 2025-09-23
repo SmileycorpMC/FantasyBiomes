@@ -18,7 +18,6 @@ import net.minecraft.util.NonNullList;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.smileycorp.atlas.api.util.RecipeUtils;
-import net.smileycorp.fbiomes.common.entities.EntityPixie;
 import net.smileycorp.fbiomes.common.entities.PixieData;
 import net.smileycorp.fbiomes.common.inventory.InventoryPixieTable;
 import net.smileycorp.fbiomes.common.items.ItemPixieBottle;
@@ -186,7 +185,7 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
         if (pixies.size() > 3) return false;
         PixieData pixie = ItemPixieBottle.getPixie(stack);
         if (pixie == null) {
-            pixie = PixieData.newPixie(EntityPixie.PixieVariant.get((byte) stack.getMetadata()), world.rand);
+            pixie = PixieData.newPixie(PixieData.Variant.get((byte) stack.getMetadata()), world.rand);
             if (stack.hasDisplayName()) pixie.setName(stack.getDisplayName());
         }
         pixies.add(pixie);

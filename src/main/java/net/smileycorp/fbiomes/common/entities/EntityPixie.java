@@ -1,6 +1,5 @@
 package net.smileycorp.fbiomes.common.entities;
 
-import com.google.common.collect.Maps;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.*;
@@ -16,25 +15,19 @@ import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.stats.StatList;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EnumHand;
-import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldServer;
 import net.smileycorp.atlas.api.entity.ai.EntityAIMoveRandomFlying;
 import net.smileycorp.atlas.api.entity.ai.FlyingMoveControl;
-import net.smileycorp.atlas.api.recipe.WeightedOutputs;
 import net.smileycorp.fbiomes.client.ClientHandler;
-import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.EnumParticle;
 import net.smileycorp.fbiomes.common.entities.ai.EntityAIPixieFollowOwner;
 import net.smileycorp.fbiomes.common.entities.ai.EntityAIPixieHealOwner;
 import net.smileycorp.fbiomes.common.items.ItemPixieBottle;
 
 import javax.annotation.Nullable;
-import java.awt.*;
-import java.util.EnumMap;
-import java.util.Random;
 import java.util.UUID;
 
 public class EntityPixie extends EntityLiving implements IEntityOwnable {
@@ -179,7 +172,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
         getPixieData().setName(getCustomNameTag());
     }
 
-    public void setVariant(PixieVariant variant) {
+    public void setVariant(PixieData.Variant variant) {
         getPixieData().setVariant(variant);
     }
 
@@ -213,7 +206,7 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
         getPixieData().setOwner(uuid);
     }
     
-    public PixieVariant getVariant() {
+    public PixieData.Variant getVariant() {
         return getPixieData().getVariant();
     }
 
@@ -268,62 +261,6 @@ public class EntityPixie extends EntityLiving implements IEntityOwnable {
         super.writeEntityToNBT(nbt);
         nbt.setTag("data", getPixieData().toNbt());
         nbt.setInteger("spellCooldown", spellCooldown);
-    }
-
-    public enum PixieVariant {
-        SWALLOWTAIL("swallowtail", 35, 0xFF68F2),
-        MONARCH("monarch", 25, 0x68C1FF),
-        RED_SPOTTED("red_spotted", 20, 0x7AFF68),
-        MARBLED("marbled", 14, 0xFFFF7D),
-        HAIRSTREAK("hairstreak", 5, 0x68FFE6),
-        SUNSET("sunset", 1, 0xF9FCFC),
-        MALACHITE("malachite", 0, 0x9A72FF),
-        GLASSWING("glasswing", 0, 0xDDBDEC);
-        
-        private static WeightedOutputs<PixieVariant> table;
-        
-        private final String name;
-        private final int weight, colour;
-        private final ResourceLocation texture;
-        
-        PixieVariant(String name, int weight, int colour) {
-            this.name = name;
-            this.weight = weight;
-            this.colour = colour;
-            this.texture = Constants.loc("textures/entity/pixie/" + name + ".png");
-        }
-        
-        public String getName() {
-            return name;
-        }
-
-        public ResourceLocation getTexture() {
-            return texture;
-        }
-
-        public int getColour() {
-            return colour;
-        }
-        
-        public int getRandomTrailColour(Random rand) {
-            float[] hsv = Color.RGBtoHSB((colour >> 16) & 0xFF, (colour >> 8) & 0xFF, colour & 0xFF, new float[3]);
-            return Color.HSBtoRGB(hsv[0], rand.nextFloat() * 0.3f, hsv[2]) & 0xFFFFFF;
-        }
-        
-        public static PixieVariant get(byte val) {
-            if (val >= values().length) val = 0;
-            return values()[val];
-        }
-        
-        public static PixieVariant random(Random rand) {
-            if (table == null) {
-                EnumMap<PixieVariant, Integer> map = Maps.newEnumMap(PixieVariant.class);
-                for (PixieVariant variant : values()) if (variant.weight > 0) map.put(variant, variant.weight);
-                table = new WeightedOutputs<>(map);
-            }
-            return table.getResult(rand);
-        }
-
     }
 
 }
