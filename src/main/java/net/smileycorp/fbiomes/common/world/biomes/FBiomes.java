@@ -27,19 +27,19 @@ public class FBiomes {
         registry.register(ENCHANTED_THICKET);
         //registry.register(FLOATING_MOUNTAIN);
         //registry.register(IRON_HILLS);
-        initBiome(DEAD_MARSH, false, BiomeType.COOL, 7,
+        initBiome(DEAD_MARSH, false, BiomeType.COOL, 5,
                 BiomeDictionary.Type.PLAINS,
                 BiomeDictionary.Type.SWAMP,
                 BiomeDictionary.Type.SPARSE,
                 BiomeDictionary.Type.SPOOKY
         );
-        initBiome(PEAT_MOOR, true, BiomeType.COOL, 8,
+        initBiome(PEAT_MOOR, true, BiomeType.COOL, 6,
                 BiomeDictionary.Type.HILLS,
                 BiomeDictionary.Type.SWAMP,
                 BiomeDictionary.Type.SPARSE,
                 BiomeDictionary.Type.SPOOKY
         );
-        initBiome(ENCHANTED_THICKET, false, BiomeType.WARM, 5,
+        initBiome(ENCHANTED_THICKET, false, BiomeType.WARM, 3,
                 BiomeDictionary.Type.FOREST,
                 BiomeDictionary.Type.DENSE,
                 BiomeDictionary.Type.MAGICAL,

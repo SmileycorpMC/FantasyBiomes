@@ -21,10 +21,12 @@ import net.smileycorp.atlas.api.client.colour.BlockGrassColour;
 import net.smileycorp.atlas.api.client.colour.ItemFoliageColour;
 import net.smileycorp.atlas.api.item.IMetaItem;
 import net.smileycorp.fbiomes.client.entity.RenderPixie;
+import net.smileycorp.fbiomes.client.entity.RenderWitchTrader;
 import net.smileycorp.fbiomes.client.particle.ParticlePixel;
 import net.smileycorp.fbiomes.common.Constants;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
+import net.smileycorp.fbiomes.common.entities.EntityWitchTrader;
 import net.smileycorp.fbiomes.common.items.FBiomesItems;
 
 @Mod.EventBusSubscriber(modid= Constants.MODID, value = Side.CLIENT)
@@ -45,8 +47,11 @@ public class ClientProxy {
 			else ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(),
 						item instanceof ItemBlock ? "inventory" : "normal"));
 		}
+		for (int i = 0; i < FBiomesItems.PIXIE_JAR.getMaxMeta(); i++) ModelLoader.setCustomModelResourceLocation(FBiomesItems.PIXIE_JAR, i,
+					new ModelResourceLocation(Constants.loc(FBiomesItems.PIXIE_JAR.byMeta(i)), "inventory"));
 		FBiomesBlocks.WOOD.registerModels();
 		RenderingRegistry.registerEntityRenderingHandler(EntityPixie.class, RenderPixie::new);
+		RenderingRegistry.registerEntityRenderingHandler(EntityWitchTrader.class, RenderWitchTrader::new);
 	}
 	
 	@SubscribeEvent

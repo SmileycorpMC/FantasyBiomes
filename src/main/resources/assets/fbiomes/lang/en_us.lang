@@ -17,6 +17,10 @@ item.fbiomes.web_cover.name=Web Cover
 
 item.fbiomes.pixie_bottle.name=Bottled Pixie
 
+item.fbiomes.pixie_housing_bundle.name=Pixie Housing Bundle
+item.fbiomes.mushroom_hut.name=Mushroom Hut
+item.fbiomes.pixie_tools.name=Pixie Tools
+
 tile.fbiomes.mud.name=Mud
 tile.fbiomes.peat.name=Peat
 tile.fbiomes.grassy_mud.name=Grassy Mud
@@ -25,6 +29,7 @@ tile.fbiomes.loose_rock.name=Loose Rock
 tile.fbiomes.roots.name=Roots
 tile.fbiomes.lichen.name=Lichen
 tile.fbiomes.brambles.name=Bramble Bush
+tile.fbiomes.mulched_bone.name=Mulched_Bone
 
 tile.fbiomes.toadstool.name=Toadstool
 tile.fbiomes.purple_mushroom.name=Purple Mushroom
@@ -107,6 +112,7 @@ tile.fbiomes.web_cover.name=Web Cover
 tile.fbiomes.mystic_stump.name=Mystic Stump
 tile.fbiomes.pixie_workshop.name=Pixie Workshop
 tile.fbiomes.mystic_stump_part.name=Mystic Stump
+tile.fbiomes.pixie_jar.name=Pixie Jar
 
 material.fbiomes.mithril.name=Mithril
 material.fbiomes.star_silver.name=Star-Silver
@@ -120,6 +126,8 @@ splash_potion.effect.glowing=Splash Potion of Glowing
 splash_potion.effect.longer_glowing=Splash Potion of Glowing
 lingering_potion.effect.glowing=Lingering Potion of Glowing
 lingering_potion.effect.longer_glowing=Lingering Potion of Glowing
+
+entity.fbiomes.witch_trader.name=Witch Trader
 
 entity.fbiomes.pixie.name=Pixie
 entity.fbiomes.pixie.variant.swallowtail=Swallowtail

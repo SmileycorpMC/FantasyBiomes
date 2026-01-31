@@ -4,6 +4,7 @@ import com.google.common.collect.Sets;
 import net.minecraft.block.BlockDirt;
 import net.minecraft.block.BlockDoublePlant;
 import net.minecraft.block.BlockStone;
+import net.minecraft.block.material.Material;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -120,20 +121,18 @@ public class BiomeEnchantedThicket extends Biome {
 				WorldGenOrantikkuTree CANOPY_TREE_GENERATOR = new WorldGenOrantikkuTree(false, true);
 				Set<BlockPos> canopy_trees = Sets.newHashSet();
 				//canopy trees
-				for (int i = 0; i < 2; ++i) for (int j = 0; j < 2; ++j) {
-					BlockPos blockpos = world.getHeight(pos.add(i * 8 + 1 + 8 + rand.nextInt(3), 0, j * 8 + 1 + 8 + rand.nextInt(3)));
-					if (TerrainGen.decorate(world, rand, new ChunkPos(blockpos), blockpos, EventType.TREE)
-							&& CANOPY_TREE_GENERATOR.canGenerate(world, blockpos)) canopy_trees.add(blockpos);
-				}
+				BlockPos treepos = getHeight(world, pos.add(9 + rand.nextInt(3), 0, 9 + rand.nextInt(3)));
+				if (TerrainGen.decorate(world, rand, new ChunkPos(treepos), treepos, EventType.TREE)
+						&& CANOPY_TREE_GENERATOR.canGenerate(world, treepos)) CANOPY_TREE_GENERATOR.generate(world, rand, treepos);
 				//features
 				if (rand.nextBoolean()) {
-					BlockPos pos1 = world.getHeight(pos.add(rand.nextInt(16) - rand.nextInt(16), 0, rand.nextInt(16) - rand.nextInt(16)));
+					BlockPos pos1 = getHeight(world, pos.add(rand.nextInt(16) - rand.nextInt(16), 0, rand.nextInt(16) - rand.nextInt(16)));
 					WorldGenerator feature = getRandomFeature(world, pos1, rand, canopy_trees);
 					if (feature != null) feature.generate(world, rand, pos1);
 				}
 				//trees and big mushrooms
-				for (int i = 0; i < 8; ++i) for (int j = 0; j < 8; ++j) {
-					BlockPos blockpos =  world.getHeight(pos.add(i * 2 + 1 + 8 + rand.nextInt(2), 0, j * 2 + 1 + 8 + rand.nextInt(2)));
+				for (int i = 0; i < 2; ++i) for (int j = 0; j < 2; ++j) {
+					BlockPos blockpos =  getHeight(world, pos.add(i * 8 + 5 + 8 + rand.nextInt(3), 0, j * 8 + 5 + 8 + rand.nextInt(3)));
                     if (rand.nextInt(10) < 3) genBigMushroom(world, rand, blockpos, canopy_trees);
                     else genTree(world, rand, blockpos, canopy_trees);
                 }
@@ -142,7 +141,7 @@ public class BiomeEnchantedThicket extends Biome {
 					if (TerrainGen.decorate(world, rand, new ChunkPos(pos), pos, EventType.SHROOM)) {
 						int j = rand.nextInt(16) + 8;
 						int k = rand.nextInt(16) + 8;
-						int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
+						int l = rand.nextInt(getHeight(world, pos.add(j, 0, k)).getY() + 32);
 						SHROOM_GENERATOR.generate(world, rand, pos.add(j, l, k));
 					}
 				}
@@ -151,16 +150,27 @@ public class BiomeEnchantedThicket extends Biome {
 					if (rand.nextInt(5) == 0 && TerrainGen.decorate(world, rand, new ChunkPos(pos), pos, EventType.GRASS)) {
 						int j = rand.nextInt(16) + 8;
 						int k = rand.nextInt(16) + 8;
-						int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
+						int l = rand.nextInt(getHeight(world, pos.add(j, 0, k)).getY() + 32);
 						if (rand.nextInt(3) == 1) DOUBLE_PLANT_GENERATOR.generate(world, rand, pos.add(j, l, k));
 						else getRandomWorldGenForGrass(rand).generate(world, rand, pos.add(j, l, k));
 					}
 				}
-				for (BlockPos tree : canopy_trees) CANOPY_TREE_GENERATOR.generate(world, rand, tree);
 				this.decorating = false;
 			}
 		}
-		
+
+		private BlockPos getHeight(World world, BlockPos pos) {
+			int x = pos.getX();
+			int z = pos.getZ();
+			BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
+			for (int i = world.getChunkFromChunkCoords(x >> 4, z >> 4).getHeightValue(x & 15, z & 15); i > 0; i--) {
+				mutable.setY(i);
+				Material material = world.getBlockState(mutable).getMaterial();
+				if (material == Material.GROUND || material == Material.GRASS || material == STONE) return mutable.toImmutable().up();
+			}
+			return pos;
+		}
+
 		public void genTree(World world, Random rand, BlockPos pos, Collection<BlockPos> canopy_trees) {
 			if (!TerrainGen.decorate(world, rand, new ChunkPos(pos), pos, EventType.TREE)) return;
 			boolean canHuge = true;
@@ -182,7 +192,7 @@ public class BiomeEnchantedThicket extends Biome {
 				if (dx < 3 || dz < 3) return;
 				if (dx < 6 || dz < 6) canHuge = false;
 			}
-			getRandomBigMushroom(rand, canHuge).generate(world, rand, pos);
+			getRandomBigMushroom(rand, rand.nextInt(3) == 0).generate(world, rand, pos);
 		}
 		
 		private WorldGenerator getRandomFeature(World world, BlockPos pos, Random rand, Set<BlockPos> canopyTrees) {
@@ -196,7 +206,7 @@ public class BiomeEnchantedThicket extends Biome {
 		private WorldGenerator getRandomBigMushroom(Random rand, boolean canHuge) {
 			return rand.nextInt(10) < 3 ? canHuge ? new WorldGenHugeGlowshroom(rand)
 					: new WorldGenBigGlowshroom(rand) : rand.nextInt(5) < 2 ? canHuge ?
-					new WorldGenHugeFBMushroom(rand) : rand.nextInt(3) == 0 ? new WorldGenSmallToadstool() :
+					new WorldGenHugeFBMushroom(rand) : rand.nextInt(3) == 0 ? new WorldGenSmallToadstool(true) :
 					new WorldGenBigFBMushroom(rand) : new WorldGenBigMushroom();
 		}
 		

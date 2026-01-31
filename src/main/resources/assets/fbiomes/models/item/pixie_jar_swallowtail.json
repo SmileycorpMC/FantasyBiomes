@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "fbiomes:items/pixie_jar/swallowtail",
+		"layer1": "fbiomes:items/jar"
+    }
+}

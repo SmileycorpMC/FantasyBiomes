@@ -9,7 +9,6 @@ buildscript {
     dependencies {
         classpath 'net.minecraftforge.gradle:ForgeGradle:3.+'
         classpath 'org.spongepowered:mixingradle:0.7-SNAPSHOT'
-        classpath 'com.github.jengelman.gradle.plugins:shadow:2.0.4'
     }
 }
 
@@ -23,12 +22,11 @@ apply plugin: 'net.minecraftforge.gradle'
 // Only edit below this line, the above code adds and enables the necessary things for Forge to be setup.
 apply plugin: 'eclipse'
 apply plugin: 'org.spongepowered.mixin'
-apply plugin: 'com.github.johnrengelman.shadow'
 apply plugin: 'java'
 
-version = "1.12.2-1.0.0"
+version = "1.12.2-1.0.0-DEV2"
 group = "net.smileycorp.fbiomes"
-archivesBaseName = "Fantasy-Biomes"
+archivesBaseName = "fbiomes Backport"
 
 sourceCompatibility = targetCompatibility = compileJava.sourceCompatibility = compileJava.targetCompatibility = '1.8' // Need this here so eclipse task generates correctly.
 
@@ -48,6 +46,12 @@ minecraft {
 
             // Recommended logging level for the console
             property 'forge.logging.console.level', 'debug'
+            property 'mixin.debug.export', 'true'
+            property 'mixin.hotSwap', 'true'
+            property 'mixin.checks.interfaces', 'true'
+            // property 'mixin.env.refMapRemappingFile', "${project.projectDir}/build/createSrgToMcp/output.srg"
+            arg '-torg.spongepowered.asm.launch.MixinTweaker'
+            arg "-mixin.config=mixins.fbiomes.json"
         }
 
         server {
@@ -60,14 +64,17 @@ minecraft {
         }
     }
 }
+
+sourceSets { main { output.resourcesDir = output.classesDir } }
+
 mixin {
     add sourceSets.main, "mixins.fbiomes.refmap.json"
+    config "mixins.fbiomes.json"
 }
 
 repositories {
     maven { url = 'https://repo.spongepowered.org/maven' }
 }
-
 
 configurations {
     embed
@@ -76,11 +83,13 @@ configurations {
 
 dependencies {
     minecraft 'net.minecraftforge:forge:1.12.2-14.23.5.2860'
-    implementation "curse.maven:atlas-463826:6829008"
     implementation "org.spongepowered:mixin:0.8"
+    annotationProcessor "org.spongepowered:mixin:0.8:processor"
     implementation "io.github.llamalad7:mixinextras-common:0.4.1"
-    implementation "curse.maven:jei-238222:4393461"
-    implementation "curse.maven:dynamiclights-227874:2563244"
+    compileOnly fg.deobf("curse.maven:jei-238222:4393461")
+    compileOnly fg.deobf("curse.maven:dynamiclights-227874:2563244")
+    annotationProcessor 'io.github.llamalad7:mixinextras-common:0.5.0'
+    implementation fg.deobf("curse.maven:atlas-463826:6981112")
 }
 
 // Example for how to get properties into the manifest for reading by the runtime..
@@ -92,7 +101,7 @@ jar {
                 "Specification-Version": "1", // We are version 1 of ourselves
                 "Implementation-Title": project.name,
                 "Implementation-Version": "${version}",
-                "Implementation-Vendor":"smileycorp",
+                "Implementation-Vendor" :"smileycorp",
                 "Implementation-Timestamp": new Date().format("yyyy-MM-dd'T'HH:mm:ssZ"),
                 "ForceLoadAsMod": true,
                 "FMLAT": "fbiomes_at.cfg",
@@ -103,24 +112,6 @@ jar {
 
     }
 }
-
-shadowJar {
-    classifier = ''
-    exclude 'LICENSE.txt'
-    dependencies {
-        include(dependency("org.spongepowered:mixin:0.8"))
-        include(dependency("io.github.llamalad7:mixinextras-common:0.4.1"))
-		exclude(dependency(files("libs/Atlas-Lib-1.12.2-1.1.6.jar")))
-    }
-}
-
-/*build.dependsOn(shadowJar)
-
-reobf {
-    shadowJar {}
-}
-
-build.dependsOn(reobf)*/
 
 processResources {
     inputs.property "version", project.version

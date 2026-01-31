@@ -14,6 +14,7 @@ import net.smileycorp.fbiomes.common.blocks.BlockWebCover;
 import net.smileycorp.fbiomes.common.blocks.FBiomesBlocks;
 import net.smileycorp.fbiomes.common.blocks.IMultifaceBlock;
 import net.smileycorp.fbiomes.common.items.block.ItemMultifaceBlock;
+import net.smileycorp.fbiomes.common.items.block.ItemPixieJar;
 
 import java.lang.reflect.Field;
 import java.util.List;
@@ -22,23 +23,27 @@ import java.util.List;
 public class FBiomesItems {
 	
 	public static List<Item> ITEMS = Lists.newArrayList();
-	
+
+	public static ItemMultifaceBlock<BlockLichen> LICHEN = new ItemMultifaceBlock<>(FBiomesBlocks.LICHEN.get(0));
+	public static ItemMultifaceBlock<BlockWebCover> WEB_COVER = new ItemMultifaceBlock<>(FBiomesBlocks.WEB_COVER.get(0));
+
 	public static Item BERRIES = new ItemBerries();
 	//public static Item MITHRIL_INGOT = new ItemMithril("ingot");
 	//public static Item MITHRIL_NUGGET = new ItemMithril("nugget");
 	//public static Item MITHRIL_DUST = new ItemMithril("dust");
-	public static Item PIXIE_BOTTLE = new ItemPixieBottle();
 	public static Item PIXIE_HOUSING = new ItemPixieHousing();
-	
-	public static ItemMultifaceBlock<BlockLichen> LICHEN = new ItemMultifaceBlock<>(FBiomesBlocks.LICHEN.get(0));
-	public static ItemMultifaceBlock<BlockWebCover> WEB_COVER = new ItemMultifaceBlock<>(FBiomesBlocks.WEB_COVER.get(0));
+
+	public static Item PIXIE_BOTTLE = new ItemPixieBottle();
+	public static ItemPixieJar PIXIE_JAR = new ItemPixieJar();
 	
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		IForgeRegistry<Item> registry = event.getRegistry();
 		for (final Block block : FBiomesBlocks.BLOCKS) {
 			if (block instanceof IMultifaceBlock) continue;
-			if (((BlockProperties)block).usesCustomItemHandler()) continue;
+			if (((BlockProperties)block).usesCustomItemHandler()) {
+				continue;
+			}
 			register(registry, new ItemBlockFBiomes(block));
 		}
 		FBiomesBlocks.WOOD.registerItems(registry);

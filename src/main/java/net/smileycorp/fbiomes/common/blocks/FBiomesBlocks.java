@@ -17,6 +17,7 @@ import net.smileycorp.fbiomes.common.blocks.enums.EnumGlowshroomVariant;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumMushroomVariant;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumVanillaWoodType;
 import net.smileycorp.fbiomes.common.blocks.enums.EnumWoodType;
+import net.smileycorp.fbiomes.common.blocks.tiles.TilePixieJar;
 import net.smileycorp.fbiomes.common.blocks.tiles.TilePixieWorkshop;
 import net.smileycorp.fbiomes.common.world.gen.mushroom.*;
 
@@ -32,11 +33,12 @@ public class FBiomesBlocks {
 	//Surface Blocks
 	public static Block MUD = new BlockMud();
 	public static Block GRASSY_MUD = new BlockGrassyMud();
-	
+	public static Block MULCHED_BONE = new BlockMulchedBone();
+
 	//Decorations
 	//public static Block FLOWER;
 	
-	public static BlockFBMushroom TOADSTOOL = new BlockFBMushroom("Toadstool", 0.1F, () -> new WorldGenSmallToadstool(), null);
+	public static BlockFBMushroom TOADSTOOL = new BlockFBMushroom("Toadstool", 0.1F, () -> new WorldGenSmallToadstool(false), null);
 	public static BlockFBMushroom PURPLE_SHROOM = new BlockFBMushroom("Purple_Mushroom", 0.1F,
 			() -> new WorldGenBigFBMushroom(EnumMushroomVariant.PURPLE), () -> new WorldGenHugeFBMushroom(EnumMushroomVariant.PURPLE));
 	public static BlockFBMushroom GREEN_SHROOM = new BlockFBMushroom("Green_Mushroom", 0.1f,
@@ -73,6 +75,7 @@ public class FBiomesBlocks {
 	//functional
 	public static BlockMysticStump MYSTIC_STUMP = new BlockMysticStump();
 	public static BlockMysticStumpPart MYSTIC_STUMP_PART = new BlockMysticStumpPart();
+	public static BlockPixieJar PIXIE_JAR = new BlockPixieJar();
 	
 	public final static BlockFBMushroom[] shrooms = {TOADSTOOL, PURPLE_SHROOM, GREEN_SHROOM};
 	public final static BlockFBMushroom[] glowshrooms = {BLUE_GLOWSHROOM, GREEN_GLOWSHROOM, YELLOW_GLOWSHROOM, PINK_GLOWSHROOM, PURPLE_GLOWSHROOM};
@@ -104,6 +107,7 @@ public class FBiomesBlocks {
 			} catch (Exception e) {}
 		}
 		GameRegistry.registerTileEntity(TilePixieWorkshop.class, Constants.loc("mystic_stump"));
+		GameRegistry.registerTileEntity(TilePixieJar.class, Constants.loc("pixie_jar"));
 	}
 	
 	private static <T extends Block> void register(IForgeRegistry<Block> registry, T block) {

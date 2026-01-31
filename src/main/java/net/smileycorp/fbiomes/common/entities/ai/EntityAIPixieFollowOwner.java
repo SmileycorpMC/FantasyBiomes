@@ -17,7 +17,7 @@ public class EntityAIPixieFollowOwner extends EntityAIBase {
     
     @Override
     public boolean shouldExecute() {
-        if (pixie.getMoveHelper().isUpdating() || pixie.hasOwner()) return false;
+        if (pixie.getMoveHelper().isUpdating() |! pixie.hasOwner()) return false;
         double dis = pixie.getDistanceSq(pixie.getOwner());
         return dis > 9 && dis <= 4094;
     }

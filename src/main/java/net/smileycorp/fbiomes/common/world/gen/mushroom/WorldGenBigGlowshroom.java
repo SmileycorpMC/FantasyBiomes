@@ -17,9 +17,11 @@ public class WorldGenBigGlowshroom extends WorldGenerator {
 	
 	protected final IBlockState stem;
 	protected final IBlockState cap;
+	protected boolean natural = false;
 	
 	public WorldGenBigGlowshroom(Random rand) {
 		this(EnumGlowshroomVariant.values()[rand.nextInt(EnumGlowshroomVariant.values().length)]);
+		natural = true;
 	}
 	
 	public WorldGenBigGlowshroom(EnumGlowshroomVariant type) {
@@ -32,7 +34,7 @@ public class WorldGenBigGlowshroom extends WorldGenerator {
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		int height = rand.nextInt(3) + 3;
 		IBlockState soil = world.getBlockState(pos.down());
-		if (!soil.getBlock().canSustainPlant(soil, world, pos.down(), EnumFacing.UP, FBiomesBlocks.TOADSTOOL)) return false;
+		if (!natural &! soil.getBlock().canSustainPlant(soil, world, pos.down(), EnumFacing.UP, FBiomesBlocks.TOADSTOOL)) return false;
 		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
 		for (int j = 0; j <= height + 1; j++) {
 			IBlockState state = world.getBlockState(mutable);

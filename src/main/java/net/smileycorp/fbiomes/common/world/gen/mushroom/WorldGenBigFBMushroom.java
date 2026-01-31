@@ -22,9 +22,11 @@ public class WorldGenBigFBMushroom extends WorldGenerator {
 	protected final IBlockState stem;
 	protected final IBlockState cap;
 	protected final IBlockState spot;
+	protected boolean natural = false;
 	
 	public WorldGenBigFBMushroom(Random rand) {
 		this(EnumMushroomVariant.values()[rand.nextInt(1) + 1]);
+		natural = true;
 	}
 	
 	public WorldGenBigFBMushroom(EnumMushroomVariant type) {
@@ -49,7 +51,7 @@ public class WorldGenBigFBMushroom extends WorldGenerator {
 		}
 		int height = rand.nextInt(3) + 2;
 		IBlockState soil = world.getBlockState(pos.down());
-		if (!soil.getBlock().canSustainPlant(soil, world, pos.down(), EnumFacing.UP, FBiomesBlocks.TOADSTOOL)) return false;
+		if (!natural &! soil.getBlock().canSustainPlant(soil, world, pos.down(), EnumFacing.UP, FBiomesBlocks.TOADSTOOL)) return false;
 		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
 		for (int j = 0; j <= height + 1; j++) {
 			IBlockState state = world.getBlockState(mutable);

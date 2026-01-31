@@ -39,7 +39,7 @@ public class RecipesRegistry {
 	}
 	
 	private static void registerCrafting() {
-	
+		//ForgeRegistries.RECIPES.register(new PixieJarRecipe());
 	}
 	
 	private static void registerBrewing() {

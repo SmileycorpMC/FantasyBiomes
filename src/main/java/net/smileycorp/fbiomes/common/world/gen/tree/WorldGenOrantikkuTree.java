@@ -41,6 +41,7 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree implements IMult
 	public boolean canGenerate(World world, BlockPos pos) {
 		BlockPos ground = pos.down();
 		IBlockState soil = world.getBlockState(ground);
+		if (natural) return soil.isFullBlock();
 		if (!soil.getBlock().canSustainPlant(soil, world, ground, EnumFacing.UP, (BlockSapling) Blocks.SAPLING)) return false;
 		for (EnumFacing facing : EnumFacing.HORIZONTALS) {
 			if (blocksPlacement(world, pos.offset(facing))) return false;
@@ -51,13 +52,13 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree implements IMult
 	
 	private boolean blocksPlacement(World world, BlockPos pos) {
 		IBlockState state = world.getBlockState(pos);
-		return !state.getBlock().canBeReplacedByLeaves(state, world, pos);
+		return state.isFullBlock();
 	}
 	
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		if (!natural &! canGenerate(world, pos)) return false;
-		int h = rand.nextInt(5) + 16;
+		int h = rand.nextInt(5) + 18;
 		//trunk
 		for (int i = 0; i < h; i++) if (blocksPlacement(world, pos.up(i))) {
 			if (h > 16) {

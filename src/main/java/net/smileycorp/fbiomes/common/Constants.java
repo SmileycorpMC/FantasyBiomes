@@ -7,8 +7,8 @@ import java.util.Locale;
 public class Constants {
 	
 	public static final String MODID = "fbiomes";
-	public static final String NAME = "Smileycorp's Fantasy Biomes";
-	public static final String VERSION = "alpha 1.1a";
+	public static final String NAME = "Phantasiai";
+	public static final String VERSION = "alpha 1.1b";
 	
 	public static String name(String name) {
 		return MODID + "." + name.toLowerCase(Locale.US);

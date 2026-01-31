@@ -15,9 +15,11 @@ public abstract class WorldGenHugeMushroomBase extends WorldGenerator {
 	
 	protected IBlockState stem;
 	protected IBlockState cap;
+	protected boolean natural = false;
 	
 	public WorldGenHugeMushroomBase(Random rand) {
 		pickType(rand);
+		natural = true;
 	}
 	
 	public WorldGenHugeMushroomBase(IBlockState stem, IBlockState cap) {
@@ -28,7 +30,7 @@ public abstract class WorldGenHugeMushroomBase extends WorldGenerator {
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		IBlockState soil = world.getBlockState(pos.down());
-		if (!soil.getBlock().canSustainPlant(soil, world, pos.down(), EnumFacing.UP, (IPlantable) Blocks.SAPLING)) return false;
+		if (!natural &! soil.getBlock().canSustainPlant(soil, world, pos.down(), EnumFacing.UP, (IPlantable) Blocks.SAPLING)) return false;
 		int height = rand.nextInt(3) + 5;
 		for (int j = 0; j < height + 2; j++) {
 			IBlockState state = world.getBlockState(pos.up(j));

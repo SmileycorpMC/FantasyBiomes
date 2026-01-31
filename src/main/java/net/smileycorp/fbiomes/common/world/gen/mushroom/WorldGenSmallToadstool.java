@@ -23,14 +23,19 @@ public class WorldGenSmallToadstool extends WorldGenerator {
 			.withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.CAP);
 	protected static final IBlockState SPOT = FBiomesBlocks.BIG_SHROOM.getDefaultState().withProperty(BlockBigMushroom.VARIANT, EnumMushroomVariant.TOADSTOOL)
 			.withProperty(BlockBigMushroom.SHAPE, EnumMushroomShape.SPOT);
-	
+	private final boolean natural;
+
 	private List<Vec3i> spots = Lists.newArrayList();
+
+	public WorldGenSmallToadstool(boolean natural) {
+		this.natural = true;
+	}
 
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		int height = rand.nextInt(3) + 2;
 		IBlockState soil = world.getBlockState(pos.down());
-		if (!soil.getBlock().canSustainPlant(soil, world, pos, EnumFacing.UP, FBiomesBlocks.TOADSTOOL)) return false;
+		if (!natural &! soil.getBlock().canSustainPlant(soil, world, pos, EnumFacing.UP, FBiomesBlocks.TOADSTOOL)) return false;
 		for (int j = 0; j<height+2; j++) {
 			IBlockState state = world.getBlockState(pos.up(j));
 			if (!state.getBlock().canBeReplacedByLeaves(state, world, pos)) return false;

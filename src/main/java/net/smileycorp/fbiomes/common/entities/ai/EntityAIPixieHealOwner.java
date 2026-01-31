@@ -19,7 +19,7 @@ public class EntityAIPixieHealOwner extends EntityAIBase {
 
     @Override
     public boolean shouldExecute() {
-        if (pixie.hasOwner() || pixie.getSpellCooldown() > 0) return false;
+        if (!pixie.hasOwner() || pixie.getSpellCooldown() > 0) return false;
         EntityLivingBase owner = pixie.getOwner();
         if (owner.getHealth() >= owner.getMaxHealth()) return false;
         double dis = pixie.getDistanceSq(pixie.getOwner());

@@ -1,7 +1,6 @@
 package net.smileycorp.fbiomes.common.world.gen.features.enchantedthicket;
 
 import net.minecraft.block.BlockChest;
-import net.minecraft.entity.monster.EntityWitch;
 import net.minecraft.init.Blocks;
 import net.minecraft.tileentity.TileEntityChest;
 import net.minecraft.util.EnumFacing;
@@ -9,7 +8,9 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;
 import net.minecraft.world.gen.structure.template.PlacementSettings;
 import net.smileycorp.fbiomes.common.Constants;
+import net.smileycorp.fbiomes.common.FBiomesLootTables;
 import net.smileycorp.fbiomes.common.entities.EntityPixie;
+import net.smileycorp.fbiomes.common.entities.EntityWitchTrader;
 import net.smileycorp.fbiomes.common.entities.PixieData;
 import net.smileycorp.fbiomes.common.world.gen.features.WorldGenTemplate;
 
@@ -28,11 +29,11 @@ public class WorldGenWitchCottage extends WorldGenTemplate {
                 setBlockAndNotifyAdequately(world, pos, Blocks.CHEST.getDefaultState().withProperty(BlockChest.FACING, EnumFacing.WEST)
                         .withMirror(settings.getMirror()).withRotation(settings.getRotation()));
                 TileEntityChest chest = new TileEntityChest(BlockChest.Type.BASIC);
-                chest.setLootTable(Constants.loc("chests/witch_cottage"), rand.nextLong());
+                chest.setLootTable(FBiomesLootTables.WITCH_COTTAGE, rand.nextLong());
                 world.setTileEntity(pos, chest);
                 break;
             case "witch":
-                EntityWitch witch = new EntityWitch(world);
+                EntityWitchTrader witch = new EntityWitchTrader(world);
                 witch.enablePersistence();
                 witch.moveToBlockPosAndAngles(pos, 0, 0);
                 world.spawnEntity(witch);

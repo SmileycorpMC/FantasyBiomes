@@ -26,7 +26,7 @@ import java.util.Random;
 public class BiomeDeadMarsh extends Biome {
 
 	public BiomeDeadMarsh() {
-		super(new BiomeProperties("Dead Marsh").setBaseHeight(-0.2F).setHeightVariation(0F));
+		super(new BiomeProperties("Dead Marsh").setBaseHeight(-0.1F).setHeightVariation(-0.1F));
 		topBlock = FBiomesBlocks.MUD.getDefaultState();
 		fillerBlock = FBiomesBlocks.MUD.getDefaultState();
 		setRegistryName(Constants.loc("Dead_Marsh"));
@@ -40,15 +40,20 @@ public class BiomeDeadMarsh extends Biome {
 	@Override
 	@SideOnly(Side.CLIENT)
     public int getGrassColorAtPos(BlockPos pos) {
-        return 0x858B3E;
+        return 0x775E2E;
     }
 	
-	 @Override
-	@SideOnly(Side.CLIENT)
-	 public int getFoliageColorAtPos(BlockPos pos) {
+ 	@Override
+ 	@SideOnly(Side.CLIENT)
+ 	public int getFoliageColorAtPos(BlockPos pos) {
 		 return 0x492519;
 	 }
-	
+
+	@Override
+	public int getWaterColorMultiplier() {
+		return 0xFBFF44;
+	}
+
 	@Override
     public BiomeDecorator createBiomeDecorator(){
         return getModdedBiomeDecorator(new Decorator());
@@ -61,11 +66,15 @@ public class BiomeDeadMarsh extends Biome {
 			int i = x & 15;
 			int j = z & 15;
 			for (int k = 255; k >= 0; --k) if (chunk.getBlockState(j, k, i).getMaterial() != Material.AIR) {
+				if (k == 63 && chunk.getBlockState(j, k, i).getBlock() != Blocks.AIR) {
+					chunk.setBlockState(j, k, i, AIR);
+					if (rand.nextBoolean()) chunk.setBlockState(j, k-1, i, WATER);
+				}
 				if (k == 62 && chunk.getBlockState(j, k, i).getBlock() != Blocks.WATER) chunk.setBlockState(j, k, i, WATER);
 				break;
 			}
 		}
-		boolean mud = Math.abs(noise) < 0.2;
+		boolean mud = Math.abs(noise) > 1;
 		topBlock = (mud ? FBiomesBlocks.GRASSY_MUD : Blocks.GRASS).getDefaultState();
 		fillerBlock = (mud ? FBiomesBlocks.MUD : Blocks.DIRT).getDefaultState();
 		super.genTerrainBlocks(world, rand, chunk, x, z, noise);
@@ -122,6 +131,16 @@ public class BiomeDeadMarsh extends Biome {
 	                }
 	            }	
 	            generateTrees(world, biome, rand, pos);
+				//mulched bone
+				for (int i = 0; i < 2 + rand.nextInt(3); i++) {
+					int x = pos.getX() + rand.nextInt(16);
+					int z = pos.getZ() + rand.nextInt(16);
+					BlockPos.MutableBlockPos pos1 = new BlockPos.MutableBlockPos(world.getHeight(new BlockPos(x, 0, z)));
+					System.out.println(pos1 + ", " + world.getBlockState(pos1));
+					while (!world.getBlockState(pos1).isFullBlock()) pos1.setY(pos1.getY() - 1);
+					if (world.getBlockState(pos1) == FBiomesBlocks.MUD.getDefaultState() && world.getBlockState(pos1.up()).getMaterial() == Material.WATER)
+						world.setBlockState(pos1, FBiomesBlocks.MULCHED_BONE.getDefaultState(), 10);
+				}
 	            this.decorating = false;
 	        }
 	    }
@@ -143,7 +162,7 @@ public class BiomeDeadMarsh extends Biome {
 		            WorldGenAbstractTree treeGen = biomeIn.getRandomTreeFeature(random);
 		            treeGen.setDecorationDefaults();
 		            BlockPos blockpos = worldIn.getHeight(chunkPos.add(treeX, 0, treeZ));
-		
+					if (random.nextBoolean()) return;
 		            if (treeGen.generate(worldIn, random, blockpos)){
 		                treeGen.generateSaplings(worldIn, random, blockpos);
 		            }

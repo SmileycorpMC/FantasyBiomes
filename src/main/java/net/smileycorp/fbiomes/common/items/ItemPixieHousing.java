@@ -22,7 +22,7 @@ public class ItemPixieHousing extends ItemFBiomes {
     
     @Override
     public String getUnlocalizedName(ItemStack stack) {
-        return "item." + Constants.MODID + "." + VARIANTS[stack.getMetadata() % VARIANTS.length] + ".name";
+        return "item." + Constants.MODID + "." + VARIANTS[stack.getMetadata() % VARIANTS.length];
     }
     
     @Override
