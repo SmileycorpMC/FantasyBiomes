@@ -1,7 +1,0 @@
-{
-    "parent": "block/cube_column",
-    "textures": {
-        "side": "fbiomes:blocks/gnarlwillow_log_side",
-		"end": "fbiomes:blocks/gnarlwillow_log_top"
-    }
-}

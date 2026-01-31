@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/half_slab",
+  "textures": {
+    "bottom": "phantasiai:blocks/orantikku_planks",
+    "top": "phantasiai:blocks/orantikku_planks",
+    "side": "phantasiai:blocks/orantikku_planks"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "half=bottom": {
+      "model": "phantasiai:orantikku_slab"
+    },
+    "half=both": {
+      "model": "phantasiai:orantikku_planks"
+    },
+    "half=top": {
+      "model": "phantasiai:orantikku_slab_top"
+    }
+  }
+}

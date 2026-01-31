@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_gate_closed",
+  "textures": {
+    "texture": "phantasiai:blocks/orantikku_planks"
+  }
+}

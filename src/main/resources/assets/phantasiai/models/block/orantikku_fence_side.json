@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/fence_side",
+  "textures": {
+    "texture": "phantasiai:blocks/orantikku_planks"
+  }
+}

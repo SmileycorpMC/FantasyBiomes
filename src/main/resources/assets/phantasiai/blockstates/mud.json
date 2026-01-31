@@ -1,0 +1,21 @@
+{
+    "forge_marker": 1,
+    "defaults": {
+        "model": "cube_all",
+        "textures": {
+            "all": "phantasiai:blocks/mud"
+        }
+    },
+    "variants": {
+        "variant=mud": [
+            {}
+        ],
+        "variant=peat": [
+            {
+                "textures": {
+                    "all": "phantasiai:blocks/peat"
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,24 @@
+{
+    "forge_marker": 1,
+	"variants": {
+		"facing=up":  { 
+			"model": "phantasiai:blue_glowshroom"
+		},
+		"facing=west":  { 
+			"model": "phantasiai:blue_wall_glowshroom",
+			"y": 90
+		},
+		"facing=north":  { 
+			"model": "phantasiai:blue_wall_glowshroom",
+			"y": 180
+		},
+		"facing=east":  { 
+			"model": "phantasiai:blue_wall_glowshroom",
+			"y": 270
+			
+		},
+		"facing=south":  { 
+			"model": "phantasiai:blue_wall_glowshroom"
+		}
+    }
+}

@@ -1,0 +1,8 @@
+{
+  "parent": "minecraft:block/inner_stairs",
+  "textures": {
+    "bottom": "phantasiai:blocks/gnarlwillow_planks",
+    "top": "phantasiai:blocks/gnarlwillow_planks",
+    "side": "phantasiai:blocks/gnarlwillow_planks"
+  }
+}

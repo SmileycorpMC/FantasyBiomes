@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/stairs",
-  "textures": {
-    "bottom": "fbiomes:blocks/orantikku_planks",
-    "top": "fbiomes:blocks/orantikku_planks",
-    "side": "fbiomes:blocks/orantikku_planks"
-  }
-}

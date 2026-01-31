@@ -1,0 +1,13 @@
+{
+  "compatibilityLevel": "JAVA_8",
+  "package": "net.smileycorp.phantasiai.mixin",
+  "refmap": "mixins.phantasiai.refmap.json",
+  "mixins": [
+    "MixinEntityLivingBase",
+    "MixinPotionEffect",
+    "MixinWorldEntitySpawner"
+  ],
+  "client": [
+  ],
+  "server": []
+}

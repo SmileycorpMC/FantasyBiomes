@@ -1,0 +1,6 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "phantasiai:items/pixie_housing_bundle"
+    }
+}

@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_top",
+  "textures": {
+    "top": "phantasiai:blocks/gnarlwillow_door_top",
+    "bottom": "phantasiai:blocks/gnarlwillow_door_bottom"
+  }
+}

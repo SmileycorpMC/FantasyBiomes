@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "phantasiai:blocks/blue_glowshroom_cap"
+    }
+}

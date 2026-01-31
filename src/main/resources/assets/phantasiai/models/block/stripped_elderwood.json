@@ -1,0 +1,6 @@
+{
+    "parent": "block/cube_all",
+    "textures": {
+        "all": "phantasiai:blocks/stripped_elderwood_log_side"
+    }
+}

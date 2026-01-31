@@ -1,7 +1,0 @@
-{
-    "parent": "atlaslib:block/layered_cube",
-    "textures": {
-        "base": "fbiomes:blocks/mud",
-		"overlay": "fbiomes:blocks/mulched_bone"
-    }
-}

@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "side": "phantasiai:blocks/stripped_elderwood_log_side",
+		"end": "phantasiai:blocks/stripped_elderwood_log_top"
+    }
+}

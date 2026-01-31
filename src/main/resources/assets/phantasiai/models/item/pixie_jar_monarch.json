@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "phantasiai:items/pixie_jar/monarch",
+		"layer1": "phantasiai:items/jar"
+    }
+}

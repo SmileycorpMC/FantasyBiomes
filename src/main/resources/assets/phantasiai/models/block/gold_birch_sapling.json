@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "phantasiai:blocks/gold_birch_sapling"
+    }
+}

@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "side": "phantasiai:blocks/gnarlwillow_log_side",
+		"end": "phantasiai:blocks/gnarlwillow_log_top"
+    }
+}

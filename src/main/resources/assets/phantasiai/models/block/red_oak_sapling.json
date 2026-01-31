@@ -1,0 +1,6 @@
+{
+    "parent": "block/cross",
+    "textures": {
+        "cross": "phantasiai:blocks/red_oak_sapling"
+    }
+}

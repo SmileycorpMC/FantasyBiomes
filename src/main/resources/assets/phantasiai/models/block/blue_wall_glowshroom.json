@@ -1,0 +1,6 @@
+{
+    "parent": "phantasiai:block/wall_shroom",
+    "textures": {
+        "cross": "phantasiai:blocks/blue_wall_glowshroom"
+    }
+}

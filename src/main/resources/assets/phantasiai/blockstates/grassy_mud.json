@@ -1,0 +1,47 @@
+{
+    "variants": {
+        "normal": {
+            "model": "phantasiai:grassy_mud"
+        },
+        "snowy=false,variant=mud": [
+            {
+                "model": "phantasiai:grassy_mud"
+            },
+            {
+                "model": "phantasiai:grassy_mud",
+                "y": 90
+            },
+            {
+                "model": "phantasiai:grassy_mud",
+                "y": 180
+            },
+            {
+                "model": "phantasiai:grassy_mud",
+                "y": 270
+            }
+        ],
+        "snowy=true,variant=mud": {
+            "model": "phantasiai:grassy_mud_snowed"
+        },
+        "snowy=false,variant=peat": [
+            {
+                "model": "phantasiai:grassy_peat"
+            },
+            {
+                "model": "phantasiai:grassy_peat",
+                "y": 90
+            },
+            {
+                "model": "phantasiai:grassy_peat",
+                "y": 180
+            },
+            {
+                "model": "phantasiai:grassy_peat",
+                "y": 270
+            }
+        ],
+        "snowy=true,variant=peat": {
+            "model": "phantasiai:grassy_peat_snowed"
+        }
+    }
+}

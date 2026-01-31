@@ -1,0 +1,8 @@
+{
+    "variants": {
+        "facing=north": { "model": "phantasiai:twisted_gnarlwillow" },
+        "facing=south": { "model": "phantasiai:twisted_gnarlwillow", "y": 180 },
+        "facing=west":  { "model": "phantasiai:twisted_gnarlwillow", "y": 270 },
+        "facing=east":  { "model": "phantasiai:twisted_gnarlwillow", "y": 90 }
+    }
+}

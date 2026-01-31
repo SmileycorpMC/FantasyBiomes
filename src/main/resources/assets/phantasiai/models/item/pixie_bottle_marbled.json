@@ -1,0 +1,7 @@
+{
+    "parent": "item/generated",
+    "textures": {
+        "layer0": "phantasiai:items/pixie_bottle/marbled",
+		"layer1": "items/potion_bottle_drinkable"
+    }
+}

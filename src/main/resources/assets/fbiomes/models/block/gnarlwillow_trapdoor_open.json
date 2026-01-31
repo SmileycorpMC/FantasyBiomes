@@ -1,6 +1,0 @@
-{
-  "parent": "minecraft:block/trapdoor_open",
-  "textures": {
-    "texture": "fbiomes:blocks/gnarlwillow_trapdoor"
-  }
-}

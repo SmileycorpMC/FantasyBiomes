@@ -1,0 +1,34 @@
+{
+	"variants": {
+		"shape=cap,variant=blue":  { 
+			"model": "phantasiai:blue_glowshroom_cap"
+		},
+		"shape=cap,variant=green":  { 
+			"model": "phantasiai:green_glowshroom_cap"
+		},	
+		"shape=cap,variant=yellow":  { 
+			"model": "phantasiai:yellow_glowshroom_cap"
+		},
+		"shape=cap,variant=pink":  { 
+			"model": "phantasiai:pink_glowshroom_cap"
+		},
+		"shape=cap,variant=purple":  { 
+			"model": "phantasiai:purple_glowshroom_cap"
+		},
+		"shape=stem,variant=blue":  { 
+			"model": "phantasiai:blue_glowshroom_stem"
+		},
+		"shape=stem,variant=green":  { 
+			"model": "phantasiai:green_glowshroom_stem"
+		},	
+		"shape=stem,variant=yellow":  { 
+			"model": "phantasiai:yellow_glowshroom_stem"
+		},
+		"shape=stem,variant=pink":  { 
+			"model": "phantasiai:pink_glowshroom_stem"
+		},
+		"shape=stem,variant=purple":  { 
+			"model": "phantasiai:purple_glowshroom_stem"
+		}
+    }
+}

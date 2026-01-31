@@ -1,0 +1,7 @@
+{
+  "parent": "minecraft:block/door_bottom",
+  "textures": {
+    "top": "phantasiai:blocks/orantikku_door_top",
+    "bottom": "phantasiai:blocks/orantikku_door_bottom"
+  }
+}

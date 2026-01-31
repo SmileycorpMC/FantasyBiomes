@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/generated",
+  "textures": {
+    "layer0": "phantasiai:items/gnarlwillow_door"
+  }
+}

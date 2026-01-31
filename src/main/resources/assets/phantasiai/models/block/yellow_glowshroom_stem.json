@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "side": "phantasiai:blocks/yellow_glowshroom_stem_side",
+		"end": "phantasiai:blocks/yellow_glowshroom_stem_top"
+    }
+}

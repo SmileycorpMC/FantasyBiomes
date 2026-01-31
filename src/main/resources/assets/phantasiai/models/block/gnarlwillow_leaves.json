@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/leaves",
+  "textures": {
+    "all": "phantasiai:blocks/gnarlwillow_leaves"
+  }
+}

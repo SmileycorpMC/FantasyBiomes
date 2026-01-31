@@ -1,0 +1,9 @@
+{
+    "parent": "block/orientable",
+    "textures": {
+        "top": "phantasiai:blocks/gnarlwillow_log_top",
+        "front": "phantasiai:blocks/twisted_gnarlwillow",
+        "side": "phantasiai:blocks/gnarlwillow_log_side",
+		"particle": "phantasiai:blocks/gnarlwillow_log_side" 
+    }
+}

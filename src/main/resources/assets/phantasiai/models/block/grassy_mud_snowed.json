@@ -1,0 +1,9 @@
+{
+    "parent": "atlaslib:block/grassy_cube",
+    "textures": {
+        "particle": "phantasiai:blocks/mud",
+        "base": "phantasiai:blocks/mud",
+        "top": "blocks/snow",
+        "side": "phantasiai:blocks/snowy_grass_side"
+    }
+}

@@ -1,0 +1,31 @@
+{
+	"variants": {
+		"shape=cap,variant=toadstool":  { 
+			"model": "phantasiai:toadstool_cap"
+		},
+		"shape=cap,variant=purple":  { 
+			"model": "phantasiai:purple_mushroom_cap"
+		},
+		"shape=cap,variant=green":  { 
+			"model": "phantasiai:green_mushroom_cap"
+		},
+		"shape=spot,variant=toadstool":  { 
+			"model": "phantasiai:toadstool_spot"
+		},
+		"shape=spot,variant=purple":  { 
+			"model": "phantasiai:purple_mushroom_spot"
+		},
+		"shape=spot,variant=green":  { 
+			"model": "phantasiai:green_mushroom_spot"
+		},
+		"shape=stem,variant=toadstool":  { 
+			"model": "phantasiai:mushroom_stem"
+		},
+		"shape=stem,variant=purple":  { 
+			"model": "phantasiai:mushroom_stem"
+		},
+		"shape=stem,variant=green":  { 
+			"model": "phantasiai:mushroom_stem"
+		}	
+    }
+}

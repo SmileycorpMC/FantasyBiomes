@@ -1,8 +1,0 @@
-{
-  "parent": "minecraft:block/upper_slab",
-  "textures": {
-    "bottom": "fbiomes:blocks/gnarlwillow_planks",
-    "top": "fbiomes:blocks/gnarlwillow_planks",
-    "side": "fbiomes:blocks/gnarlwillow_planks"
-  }
-}

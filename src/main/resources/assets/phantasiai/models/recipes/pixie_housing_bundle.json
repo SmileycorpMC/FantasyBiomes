@@ -1,0 +1,27 @@
+{
+  "group": "deeperdepths:copper_torch",
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    {
+      "item": "phantasiai:pixie_housing",
+      "data": 1
+    },
+    {
+      "item": "phantasiai:pixie_housing",
+      "data": 1
+    },
+    {
+      "item": "phantasiai:pixie_housing",
+      "data": 1
+    },
+    {
+      "item": "phantasiai:pixie_housing",
+      "data": 2
+    }
+  ],
+  "result": {
+    "item": "phantasiai:pixie_housing",
+    "data": 0,
+    "count": 1
+  }
+}

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:block/trapdoor_top",
+  "textures": {
+    "texture": "phantasiai:blocks/orantikku_trapdoor"
+  }
+}

@@ -1,0 +1,7 @@
+{
+    "parent": "atlaslib:block/layered_cube",
+    "textures": {
+        "base": "phantasiai:blocks/mud",
+		"overlay": "phantasiai:blocks/mulched_bone"
+    }
+}

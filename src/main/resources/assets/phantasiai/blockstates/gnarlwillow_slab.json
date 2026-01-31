@@ -1,0 +1,13 @@
+{
+  "variants": {
+    "half=bottom": {
+      "model": "phantasiai:gnarlwillow_slab"
+    },
+    "half=both": {
+      "model": "phantasiai:gnarlwillow_planks"
+    },
+    "half=top": {
+      "model": "phantasiai:gnarlwillow_slab_top"
+    }
+  }
+}

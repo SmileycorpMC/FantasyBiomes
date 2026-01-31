@@ -1,0 +1,7 @@
+{
+    "parent": "block/cube_column",
+    "textures": {
+        "side": "phantasiai:blocks/orantikku_log_side",
+		"end": "phantasiai:blocks/orantikku_log_top"
+    }
+}
