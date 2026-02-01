@@ -30,20 +30,20 @@ public class PhantasiaiBiomes {
         initBiome(DEAD_MARSH, false, BiomeType.COOL, 5,
                 BiomeDictionary.Type.PLAINS,
                 BiomeDictionary.Type.SWAMP,
-                BiomeDictionary.Type.SPARSE,
-                BiomeDictionary.Type.SPOOKY
+                BiomeDictionary.Type.SPARSE
+               // BiomeDictionary.Type.SPOOKY
         );
         initBiome(PEAT_MOOR, true, BiomeType.COOL, 6,
                 BiomeDictionary.Type.HILLS,
                 BiomeDictionary.Type.SWAMP,
-                BiomeDictionary.Type.SPARSE,
-                BiomeDictionary.Type.SPOOKY
+                BiomeDictionary.Type.SPARSE
+                //BiomeDictionary.Type.SPOOKY
         );
-        initBiome(ENCHANTED_THICKET, false, BiomeType.WARM, 3,
+        initBiome(ENCHANTED_THICKET, false, BiomeType.WARM, 1,
                 BiomeDictionary.Type.FOREST,
                 BiomeDictionary.Type.DENSE,
-                BiomeDictionary.Type.MAGICAL,
-                BiomeDictionary.Type.MUSHROOM,
+                //BiomeDictionary.Type.MAGICAL,
+                //BiomeDictionary.Type.MUSHROOM,
                 BiomeDictionary.Type.LUSH
         );
         /*initBiome(FLOATING_MOUNTAIN, false, BiomeType.COOL, 5,
