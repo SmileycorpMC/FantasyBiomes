@@ -20,6 +20,9 @@ item.phantasiai.pixie_bottle.name=Bottled Pixie
 item.phantasiai.pixie_housing_bundle.name=Pixie Housing Bundle
 item.phantasiai.mushroom_hut.name=Mushroom Hut
 item.phantasiai.pixie_tools.name=Pixie Tools
+item.phantasiai.pixie_housing_bundle.tooltip=Converts a Mystic Stump into a Pixie Workshop
+item.phantasiai.mushroom_hut.tooltip=A small mushroom shaped house, the perfect size for pixies
+item.phantasiai.pixie_tools.tooltip=A small set of tools, they look small enough for pixies to use
 
 tile.phantasiai.mud.name=Mud
 tile.phantasiai.peat.name=Peat
