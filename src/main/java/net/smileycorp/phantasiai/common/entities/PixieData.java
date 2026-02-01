@@ -178,7 +178,7 @@ public class PixieData {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setFloat("health", health);
         nbt.setFloat("maxHealth", maxHealth);
-        nbt.setByte("variant", (byte) variant.ordinal());
+        nbt.setByte("variant", (byte) (variant == null ? 0 : variant.ordinal()));
         nbt.setFloat("size", size);
         nbt.setFloat("mood", mood);
         if (owner != null) nbt.setUniqueId("owner", owner);
