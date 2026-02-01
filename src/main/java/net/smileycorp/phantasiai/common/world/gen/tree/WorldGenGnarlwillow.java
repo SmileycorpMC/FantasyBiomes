@@ -49,7 +49,7 @@ public class WorldGenGnarlwillow extends WorldGenAbstractTree {
 		for (int i = 0; i <= h; i++) {
 			setBlockAndNotifyAdequately(world, mutable, i == face && rand.nextInt(3) == 0 ?
 					PhantasiaiBlocks.TWISTED_GNARLWILLOW.getDefaultState().withProperty(BlockTwistedGnarlwillow.FACING, EnumFacing.HORIZONTALS[rand.nextInt(4)]) : LOG);
-			if (i > 3 && rand.nextBoolean() &! facings.isEmpty()) {
+			if (i > 3 && rand.nextInt(5) < facings.size() - 1 &! facings.isEmpty()) {
 				int x = rand.nextInt(facings.size());
 				generateBranch(world, rand, mutable, facings.get(x), h - i);
 				facings.remove(x);

@@ -19,6 +19,8 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.phantasiai.common.Constants;
 import net.smileycorp.phantasiai.common.blocks.PhantasiaiBlocks;
+import net.smileycorp.phantasiai.common.world.gen.features.moorland.WorldGenBoulder;
+import net.smileycorp.phantasiai.common.world.gen.features.moorland.WorldGenGraniteBoulder;
 import net.smileycorp.phantasiai.common.world.gen.tree.WorldGenGnarlwillow;
 import net.smileycorp.phantasiai.integration.ModIntegration;
 
@@ -63,21 +65,27 @@ public class BiomeDeadMarsh extends Biome {
 	@Override
 	public void genTerrainBlocks(World world, Random rand, ChunkPrimer chunk, int x, int z, double noise) {
 		double variation = GRASS_COLOR_NOISE.getValue((double)x * 0.25D, (double)z * 0.25D);
+		boolean mud = Math.abs(noise) > 1;
+		topBlock = (mud ? PhantasiaiBlocks.GRASSY_MUD : Blocks.GRASS).getDefaultState();
+		fillerBlock = (mud ? PhantasiaiBlocks.MUD : Blocks.DIRT).getDefaultState();
 		if (variation > 0) {
 			int i = x & 15;
 			int j = z & 15;
 			for (int k = 255; k >= 0; --k) if (chunk.getBlockState(j, k, i).getMaterial() != Material.AIR) {
 				if (k == 63 && chunk.getBlockState(j, k, i).getBlock() != Blocks.AIR) {
 					chunk.setBlockState(j, k, i, AIR);
-					if (rand.nextBoolean()) chunk.setBlockState(j, k-1, i, WATER);
+					if (rand.nextBoolean()) {
+						chunk.setBlockState(j, k-1, i, WATER);
+						topBlock = fillerBlock;
+					}
 				}
-				if (k == 62 && chunk.getBlockState(j, k, i).getBlock() != Blocks.WATER) chunk.setBlockState(j, k, i, WATER);
+				if (k == 62 && chunk.getBlockState(j, k, i).getBlock() != Blocks.WATER) {
+					chunk.setBlockState(j, k, i, WATER);
+					topBlock = fillerBlock;
+				}
 				break;
 			}
 		}
-		boolean mud = Math.abs(noise) > 1;
-		topBlock = (mud ? PhantasiaiBlocks.GRASSY_MUD : Blocks.GRASS).getDefaultState();
-		fillerBlock = (mud ? PhantasiaiBlocks.MUD : Blocks.DIRT).getDefaultState();
 		super.genTerrainBlocks(world, rand, chunk, x, z, noise);
 	}
 	
@@ -87,7 +95,7 @@ public class BiomeDeadMarsh extends Biome {
 		private Decorator() {
 			waterlilyPerChunk = 0;
 			treesPerChunk = 0;
-	        extraTreeChance = 0.5F;
+	        extraTreeChance = 0.2F;
 	        flowersPerChunk = 4;
 	        grassPerChunk = 25;
 	        deadBushPerChunk = 0;
@@ -137,10 +145,15 @@ public class BiomeDeadMarsh extends Biome {
 					int x = pos.getX() + rand.nextInt(16);
 					int z = pos.getZ() + rand.nextInt(16);
 					BlockPos.MutableBlockPos pos1 = new BlockPos.MutableBlockPos(world.getHeight(new BlockPos(x, 0, z)));
-					System.out.println(pos1 + ", " + world.getBlockState(pos1));
 					while (!world.getBlockState(pos1).isFullBlock()) pos1.setY(pos1.getY() - 1);
 					if (world.getBlockState(pos1) == PhantasiaiBlocks.MUD.getDefaultState() && world.getBlockState(pos1.up()).getMaterial() == Material.WATER)
 						world.setBlockState(pos1, PhantasiaiBlocks.MULCHED_BONE.getDefaultState(), 10);
+				}
+				if (rand.nextInt(25) == 0) {
+					int j = rand.nextInt(16) + 8;
+					int k = rand.nextInt(16) + 8;
+					int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
+					new WorldGenBoulder().generate(world, rand, pos.add(j, l, k));
 				}
 	            this.decorating = false;
 	        }
