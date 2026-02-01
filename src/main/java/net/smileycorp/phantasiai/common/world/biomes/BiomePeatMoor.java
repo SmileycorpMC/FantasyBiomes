@@ -76,7 +76,7 @@ public class BiomePeatMoor extends Biome {
 		BiomeMoorDecorator(){
 			waterlilyPerChunk = 0;
 			treesPerChunk = 1;
-	        extraTreeChance = 0.5F;
+	        extraTreeChance = 0.2F;
 	        flowersPerChunk = 4;
 	        grassPerChunk = 25;
 	        deadBushPerChunk = 0;
@@ -132,7 +132,13 @@ public class BiomePeatMoor extends Biome {
 	
 		private void generateTrees(World world, Biome biome, Random rand, BlockPos chunkPos)
 	    {
-	        int treesToGen = treesPerChunk;
+
+			int treesToGen = treesPerChunk;
+
+			if (rand.nextFloat() < extraTreeChance)
+			{
+				++treesToGen;
+			}
 	
 	        if(TerrainGen.decorate(world, rand, chunkPos, DecorateBiomeEvent.Decorate.EventType.TREE)) {
 		        for (int numTreesGenerated = 0; numTreesGenerated < treesToGen; ++numTreesGenerated)
