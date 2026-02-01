@@ -52,7 +52,7 @@ public class BiomeDeadMarsh extends Biome {
 
 	@Override
 	public int getWaterColorMultiplier() {
-		return ModIntegration.AQUA_ACROBATICS_LOADED ? 0x768478 : 0xFBFF44;
+		return ModIntegration.AQUA_ACROBATICS_LOADED ? 0x5A5B43 : 0xFBFF44;
 	}
 
 	@Override
