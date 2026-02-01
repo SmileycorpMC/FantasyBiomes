@@ -17,11 +17,14 @@ import java.util.Set;
 public class WorldGenBoulder extends WorldGenerator implements IMultiFacePlacer {
  
 	private static final int startRadius = 2;
-    
+
+    private final Set<BlockPos> positions = Sets.newHashSet();
     private final Set<BlockPos> lichen = Sets.newHashSet();
+    private int shift = 0;
     
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
+        BlockPos start = pos;
         while (true) {
             if (pos.getY() > 60) {
                 if (world.isAirBlock(pos.down()))  {
@@ -43,13 +46,17 @@ public class WorldGenBoulder extends WorldGenerator implements IMultiFacePlacer 
                 float f = (j + k + l) * 0.333F + 0.5F;
                 for (BlockPos newpos : BlockPos.getAllInBox(pos.add(-j, -k, -l), pos.add(j, k, l)))
                     if (newpos.distanceSq(pos) <= f * f) {
-                        setBlockAndNotifyAdequately(world, newpos, getBlockState(rand));
+                        positions.add(newpos);
+                        int dy = start.getY() - newpos.getY();
+                        if (dy > shift) shift = dy;
                         EnumFacing facing = EnumFacing.values()[rand.nextInt(EnumFacing.values().length)];
                         BlockPos p1 = pos.offset(facing);
                         if (world.isAirBlock(p1)) lichen.add(p1);
                     }
-                pos = pos.add(-(i1 + 1) + rand.nextInt(2 + i1 * 2), 0 - rand.nextInt(2), -(i1 + 1) + rand.nextInt(2 + i1 * 2));
+                pos = pos.add(-(i1 + 1) + rand.nextInt(2 + i1 * 2),  rand.nextInt(2), -(i1 + 1) + rand.nextInt(2 + i1 * 2));
             }
+            shift /= 2;
+            for (BlockPos pos1 : positions) setBlockAndNotifyAdequately(world, pos1, getBlockState(rand));
             for (BlockPos pos1 : lichen) if (world.isAirBlock(pos1)) setBlockAndNotifyAdequately(world, pos1, getMultiface(lichen(), world, pos1));
             lichen.clear();
             return true;
@@ -57,17 +64,25 @@ public class WorldGenBoulder extends WorldGenerator implements IMultiFacePlacer 
     }
     
     protected IBlockState getBlockState(Random rand) {
-        switch (rand.nextInt(5)) {
+        switch (rand.nextInt(7)) {
             case 0:
                 return Blocks.COBBLESTONE.getDefaultState();
             case 1:
                 return Blocks.STONE.getDefaultState().withProperty(BlockStone.VARIANT, BlockStone.EnumType.ANDESITE);
             case 2:
                 return Blocks.GRAVEL.getDefaultState();
+            case 3:
+            case 4:
+                return Blocks.MOSSY_COBBLESTONE.getDefaultState();
         }
         return Blocks.STONE.getDefaultState();
     }
-    
+
+    @Override
+    protected void setBlockAndNotifyAdequately(World world, BlockPos pos, IBlockState state) {
+        super.setBlockAndNotifyAdequately(world, pos.up(shift), state);
+    }
+
     @Override
     public boolean supportsMultiFace(IBlockState state) {
         Block block = state.getBlock();
