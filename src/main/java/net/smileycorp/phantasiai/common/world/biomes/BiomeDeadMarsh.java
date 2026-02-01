@@ -20,6 +20,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.phantasiai.common.Constants;
 import net.smileycorp.phantasiai.common.blocks.PhantasiaiBlocks;
 import net.smileycorp.phantasiai.common.world.gen.tree.WorldGenGnarlwillow;
+import net.smileycorp.phantasiai.integration.ModIntegration;
 
 import java.util.Random;
 
@@ -51,7 +52,7 @@ public class BiomeDeadMarsh extends Biome {
 
 	@Override
 	public int getWaterColorMultiplier() {
-		return 0xFBFF44;
+		return ModIntegration.AQUA_ACROBATICS_LOADED ? 0x768478 : 0xFBFF44;
 	}
 
 	@Override
