@@ -1,5 +1,6 @@
 package net.smileycorp.phantasiai.common.blocks;
 
+import com.google.common.collect.Lists;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
@@ -14,13 +15,17 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IShearable;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.phantasiai.common.Constants;
 import net.smileycorp.phantasiai.common.Phantasiai;
 
+import javax.annotation.Nonnull;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
-public class BlockRoots extends BlockBush implements BlockProperties, IGrowable {
+public class BlockRoots extends BlockBush implements BlockProperties, IShearable, IGrowable {
 
 	public BlockRoots() {
 		super(Material.PLANTS);
@@ -85,6 +90,17 @@ public class BlockRoots extends BlockBush implements BlockProperties, IGrowable 
 	@Override
 	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
 		return true;
+	}
+
+	@Override
+	public boolean isShearable(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos) {
+		return true;
+	}
+
+	@Nonnull
+	@Override
+	public List<ItemStack> onSheared(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
+		return Lists.newArrayList(new ItemStack(this));
 	}
 
 }

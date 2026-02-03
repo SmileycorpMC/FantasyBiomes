@@ -21,6 +21,7 @@ import net.minecraft.util.math.RayTraceResult;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.IBlockAccess;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IShearable;
 import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.phantasiai.common.Constants;
 import net.smileycorp.phantasiai.common.Phantasiai;
@@ -28,12 +29,10 @@ import net.smileycorp.phantasiai.common.blocks.enums.EnumMultifaceDirection;
 import net.smileycorp.phantasiai.common.items.PhantasiaiItems;
 import org.apache.commons.lang3.ArrayUtils;
 
-import java.util.Arrays;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Random;
+import javax.annotation.Nonnull;
+import java.util.*;
 
-public class BlockLichen extends BlockBush implements IGrowable, BlockProperties, IMultifaceBlock<BlockLichen> {
+public class BlockLichen extends BlockBush implements BlockProperties, IMultifaceBlock<BlockLichen>, IShearable, IGrowable {
 	
 	private final int ordinal;
 	//stores the position and state to set in bonemeal logic, so we don't have to re-check
@@ -140,20 +139,31 @@ public class BlockLichen extends BlockBush implements IGrowable, BlockProperties
 	}
 	
 	@Override
-	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-		return true;
-	}
-	
-	@Override
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 		return new ItemStack(PhantasiaiItems.LICHEN);
+	}
+
+	@Override
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		return true;
 	}
 	
 	@Override
 	protected ItemStack getSilkTouchDrop(IBlockState state) {
 		return new ItemStack(PhantasiaiItems.LICHEN, IMultifaceBlock.getFacings(state).length);
 	}
-	
+
+	@Override
+	public boolean isShearable(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos) {
+		return true;
+	}
+
+	@Nonnull
+	@Override
+	public List<ItemStack> onSheared(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
+		return Lists.newArrayList(getSilkTouchDrop(world.getBlockState(pos)));
+	}
+
 	@Override
 	public int quantityDropped(Random rand) {
 		return 0;
@@ -241,5 +251,5 @@ public class BlockLichen extends BlockBush implements IGrowable, BlockProperties
 	public static IBlockState getBlockState(EnumFacing... facings) {
 		return getBlockState(IMultifaceBlock.getMeta(facings));
 	}
-	
+
 }

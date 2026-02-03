@@ -25,6 +25,7 @@ import net.smileycorp.phantasiai.common.blocks.enums.EnumMultifaceDirection;
 import net.smileycorp.phantasiai.common.items.PhantasiaiItems;
 import org.apache.commons.lang3.ArrayUtils;
 
+import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
@@ -40,7 +41,6 @@ public class BlockWebCover extends BlockWeb implements BlockProperties, IMultifa
 		setUnlocalizedName(Constants.name("web_cover"));
 		setRegistryName(Constants.loc("web_cover_" + ordinal));
 		setDefaultState(EnumMultifaceDirection.getDefaultState(blockState.getBaseState()));
-		setSoundType(SoundType.PLANT);
 	}
 	
 	@Override
@@ -95,7 +95,18 @@ public class BlockWebCover extends BlockWeb implements BlockProperties, IMultifa
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 		return new ItemStack(PhantasiaiItems.WEB_COVER);
 	}
-	
+
+	@Override
+	public boolean isShearable(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos) {
+		return true;
+	}
+
+	@Nonnull
+	@Override
+	public List<ItemStack> onSheared(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
+		return Lists.newArrayList(getSilkTouchDrop(world.getBlockState(pos)));
+	}
+
 	@Override
 	protected ItemStack getSilkTouchDrop(IBlockState state) {
 		return new ItemStack(PhantasiaiItems.WEB_COVER, IMultifaceBlock.getFacings(state).length);
