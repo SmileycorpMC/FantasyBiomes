@@ -5,8 +5,10 @@ import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Items;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
@@ -78,6 +80,11 @@ public class BlockRoots extends BlockBush implements BlockProperties, IGrowable 
 	@Override
 	public void grow(World world, Random random, BlockPos pos, IBlockState state) {
 		world.setBlockState(pos.down(), state);
+	}
+
+	@Override
+	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
+		return true;
 	}
 
 }
