@@ -2,7 +2,9 @@ package net.smileycorp.phantasiai.client;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.entity.EntityPlayerSP;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
+import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
@@ -24,10 +26,14 @@ public class ClientEventListener {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.isGamePaused()) return;
         EntityPlayerSP player = mc.player;
+        World world = player.world;
         if (player == null) return;
+        if (player.posY < 60) return;
+        if (!world.isAirBlock(new BlockPos(player.posX, player.posY + player.getEyeHeight(), player.posZ))) return;
         Random rand = player.getRNG();
-        Biome biome = player.world.getBiome(player.getPosition());
+        Biome biome = world.getBiome(player.getPosition());
         if (biome == PhantasiaiBiomes.DEAD_MARSH) {
+            if (player.posY > 70) return;
             Vec3d pos = new Vec3d(player.posX + (rand.nextFloat() - 0.5) * 10, player.posY + rand.nextFloat() * 3,
                     player.posZ + (rand.nextFloat() - 0.5) * 10);
             Vec3d vec = DirectionUtils.getDirectionVec(pos, new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ));
@@ -35,7 +41,8 @@ public class ClientEventListener {
                     rand.nextFloat() * vec.x, rand.nextFloat() * vec.y, rand.nextFloat() * vec.z, 0.5);
         }
         if (biome == PhantasiaiBiomes.ENCHANTED_THICKET) {
-            ClientHandler.spawnParticle(EnumParticle.PIXEL, player.posX + (rand.nextFloat() - 0.5) * 10, player.posY + 5 + rand.nextFloat() * 3,
+            if (player.posY > 85) return;
+            for (int i = 0; i < 4; i++) ClientHandler.spawnParticle(EnumParticle.PIXEL, player.posX + (rand.nextFloat() - 0.5) * 10, player.posY + 5 + rand.nextFloat() * 3,
                     player.posZ + (rand.nextFloat() - 0.5) * 10, (double)0x570300, 60d, (rand.nextFloat() - 0.5f) * 0.2, - (rand.nextFloat() + 0.5) * 0.2,  (rand.nextFloat() - 0.5f) * 0.2, 0.5);
         }
     }
