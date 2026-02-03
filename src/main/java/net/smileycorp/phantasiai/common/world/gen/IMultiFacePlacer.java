@@ -8,8 +8,8 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.smileycorp.phantasiai.common.blocks.BlockLichen;
 import net.smileycorp.phantasiai.common.blocks.BlockWebCover;
-import net.smileycorp.phantasiai.common.blocks.PhantasiaiBlocks;
 import net.smileycorp.phantasiai.common.blocks.IMultifaceBlock;
+import net.smileycorp.phantasiai.common.blocks.PhantasiaiBlocks;
 
 import java.util.Arrays;
 import java.util.List;

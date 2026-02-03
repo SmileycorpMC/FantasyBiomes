@@ -11,8 +11,8 @@ import net.smileycorp.atlas.api.block.BlockProperties;
 import net.smileycorp.phantasiai.common.Constants;
 import net.smileycorp.phantasiai.common.blocks.BlockLichen;
 import net.smileycorp.phantasiai.common.blocks.BlockWebCover;
-import net.smileycorp.phantasiai.common.blocks.PhantasiaiBlocks;
 import net.smileycorp.phantasiai.common.blocks.IMultifaceBlock;
+import net.smileycorp.phantasiai.common.blocks.PhantasiaiBlocks;
 import net.smileycorp.phantasiai.common.items.block.ItemMultifaceBlock;
 import net.smileycorp.phantasiai.common.items.block.ItemPixieJar;
 

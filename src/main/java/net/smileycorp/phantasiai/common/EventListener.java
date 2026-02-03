@@ -1,12 +1,9 @@
 package net.smileycorp.phantasiai.common;
 
 import net.minecraft.util.math.BlockPos;
-import net.minecraftforge.event.entity.living.LivingSpawnEvent;
 import net.minecraftforge.event.world.WorldEvent;
-import net.minecraftforge.fml.common.eventhandler.Event;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.PlayerEvent;
-import net.smileycorp.phantasiai.common.entities.ICreatureType;
 import net.smileycorp.phantasiai.common.world.biomes.PhantasiaiBiomes;
 
 public class EventListener {
