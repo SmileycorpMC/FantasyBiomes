@@ -32,7 +32,8 @@ tile.phantasiai.loose_rock.name=Loose Rock
 tile.phantasiai.roots.name=Roots
 tile.phantasiai.lichen.name=Lichen
 tile.phantasiai.brambles.name=Bramble Bush
-tile.phantasiai.mulched_bone.name=Mulched_Bone
+tile.phantasiai.mulched_bone_mud.name=Mulched_Bone
+tile.phantasiai.mulched_bone_dirt.name=Mulched_Bone
 
 tile.phantasiai.toadstool.name=Toadstool
 tile.phantasiai.purple_mushroom.name=Purple Mushroom

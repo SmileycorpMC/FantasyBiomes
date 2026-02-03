@@ -1,1 +1,10 @@
-{"forge_marker": 1, "variants": {"normal": {"model": "phantasiai:mulched_bone"}}}
+{
+	"variants": {
+		"variant=mud":  { 
+			"model": "phantasiai:mulched_bone"
+		},
+		"variant=dirt":  { 
+			"model": "phantasiai:mulched_bone_dirt"
+		}
+    }
+}

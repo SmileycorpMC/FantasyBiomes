@@ -1,0 +1,7 @@
+{
+    "parent": "atlaslib:block/layered_cube",
+    "textures": {
+        "base": "minecraft:blocks/dirt",
+		"overlay": "phantasiai:blocks/mulched_bone"
+    }
+}

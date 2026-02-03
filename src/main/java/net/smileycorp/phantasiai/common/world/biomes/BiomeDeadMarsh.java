@@ -2,6 +2,7 @@ package net.smileycorp.phantasiai.common.world.biomes;
 
 import net.minecraft.block.BlockStone;
 import net.minecraft.block.material.Material;
+import net.minecraft.block.state.IBlockState;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.ChunkPos;
@@ -18,9 +19,10 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import net.smileycorp.phantasiai.common.Constants;
+import net.smileycorp.phantasiai.common.blocks.BlockMulchedBone;
 import net.smileycorp.phantasiai.common.blocks.PhantasiaiBlocks;
+import net.smileycorp.phantasiai.common.blocks.enums.EnumMulchedBoneType;
 import net.smileycorp.phantasiai.common.world.gen.features.moorland.WorldGenBoulder;
-import net.smileycorp.phantasiai.common.world.gen.features.moorland.WorldGenGraniteBoulder;
 import net.smileycorp.phantasiai.common.world.gen.tree.WorldGenGnarlwillow;
 import net.smileycorp.phantasiai.integration.ModIntegration;
 
@@ -141,13 +143,16 @@ public class BiomeDeadMarsh extends Biome {
 	            }	
 	            generateTrees(world, biome, rand, pos);
 				//mulched bone
-				for (int i = 0; i < 2 + rand.nextInt(3); i++) {
+				for (int i = 0; i < 5 + rand.nextInt(5); i++) {
 					int x = pos.getX() + rand.nextInt(16);
 					int z = pos.getZ() + rand.nextInt(16);
 					BlockPos.MutableBlockPos pos1 = new BlockPos.MutableBlockPos(world.getHeight(new BlockPos(x, 0, z)));
 					while (!world.getBlockState(pos1).isFullBlock()) pos1.setY(pos1.getY() - 1);
-					if (world.getBlockState(pos1) == PhantasiaiBlocks.MUD.getDefaultState() && world.getBlockState(pos1.up()).getMaterial() == Material.WATER)
-						world.setBlockState(pos1, PhantasiaiBlocks.MULCHED_BONE.getDefaultState(), 10);
+					if (world.getBlockState(pos1.up()).getMaterial() != Material.WATER) break;
+					IBlockState state = world.getBlockState(pos1);
+					if (state == PhantasiaiBlocks.MUD.getDefaultState()) world.setBlockState(pos1, PhantasiaiBlocks.MULCHED_BONE.getDefaultState(), 10);
+					else if (state == Blocks.DIRT.getDefaultState()) world.setBlockState(pos1, PhantasiaiBlocks.MULCHED_BONE.getDefaultState()
+							.withProperty(BlockMulchedBone.VARIANT, EnumMulchedBoneType.DIRT), 10);
 				}
 				if (rand.nextInt(25) == 0) {
 					int j = rand.nextInt(16) + 8;
