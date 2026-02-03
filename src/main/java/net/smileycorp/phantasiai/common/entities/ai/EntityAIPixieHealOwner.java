@@ -41,7 +41,7 @@ public class EntityAIPixieHealOwner extends EntityAIBase {
         heals ++;
         pixie.playSound(SoundEvents.BLOCK_NOTE_HARP, 0.75f, 0.5f + heals * 0.02f);
         for (int i = 3; i < 5 + rand.nextInt(3); i++)
-            EnumParticle.PIXEL_FULLBRIGHT.send(owner.dimension, owner.posX + (rand.nextDouble() - 0.5) * (double)owner.width,
+            EnumParticle.TWINKLE.send(owner.dimension, owner.posX + (rand.nextDouble() - 0.5) * (double)owner.width,
                     owner.posY + rand.nextDouble() * (double)owner.height, owner.posZ + (rand.nextDouble() - 0.5) * (double)owner.width,
                     (double) pixie.getVariant().getColour(), 50d, 0d, 0.05, 0d);
         this.updateTask();
