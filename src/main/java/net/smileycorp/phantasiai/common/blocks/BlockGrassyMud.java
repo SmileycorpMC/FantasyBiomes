@@ -5,6 +5,7 @@ import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.EnumHand;
@@ -19,11 +20,14 @@ import net.smileycorp.phantasiai.common.Phantasiai;
 import net.smileycorp.phantasiai.common.blocks.enums.EnumMudType;
 
 import javax.annotation.Nullable;
+import java.util.Random;
 
 public class BlockGrassyMud extends BlockGrassBase {
     
 	public BlockGrassyMud() {
 		super("grassy_mud", Constants.MODID, Phantasiai.TAB, BlockGrassyMud::removeGrass);
+        setHardness(0.6f);
+        setResistance(1);
         setDefaultState(blockState.getBaseState().withProperty(BlockMud.VARIANT, EnumMudType.MUD).withProperty(SNOWY, false));
 	}
     
@@ -36,7 +40,13 @@ public class BlockGrassyMud extends BlockGrassBase {
     protected BlockStateContainer createBlockState() {
         return new BlockStateContainer(this, BlockMud.VARIANT, SNOWY);
     }
-    
+
+    @Override
+    public Item getItemDropped(IBlockState state, Random random, int fortune) {
+        return PhantasiaiBlocks.MUD.getItemDropped(PhantasiaiBlocks.MUD.getDefaultState()
+                .withProperty(BlockMud.VARIANT, state.getValue(BlockMud.VARIANT)), random , fortune);
+    }
+
     @Override
     public int damageDropped(IBlockState state) {
         return getMetaFromState(state);
