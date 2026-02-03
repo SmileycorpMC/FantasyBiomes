@@ -24,7 +24,6 @@ public class WorldGenBoulder extends WorldGenerator implements IMultiFacePlacer 
     
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
-        BlockPos start = pos;
         while (true) {
             if (pos.getY() > 60) {
                 if (world.isAirBlock(pos.down()))  {
@@ -39,6 +38,9 @@ public class WorldGenBoulder extends WorldGenerator implements IMultiFacePlacer 
             }
             if (pos.getY() <= 3) return false;
             int i1 = startRadius;
+            BlockPos start = pos;
+            int min = start.getY();
+            int max = start.getY();
             for (int i = 0; i1 >= 0 && i < 3; ++i) {
                 int j = i1 + rand.nextInt(2);
                 int k = i1 + rand.nextInt(2);
@@ -47,17 +49,21 @@ public class WorldGenBoulder extends WorldGenerator implements IMultiFacePlacer 
                 for (BlockPos newpos : BlockPos.getAllInBox(pos.add(-j, -k, -l), pos.add(j, k, l)))
                     if (newpos.distanceSq(pos) <= f * f) {
                         positions.add(newpos);
-                        int dy = start.getY() - newpos.getY();
-                        if (dy > shift) shift = dy;
+                        if (newpos.getY() < min) min = newpos.getY();
+                        if (newpos.getY() > max) max = newpos.getY();
                         EnumFacing facing = EnumFacing.values()[rand.nextInt(EnumFacing.values().length)];
                         BlockPos p1 = pos.offset(facing);
                         if (world.isAirBlock(p1)) lichen.add(p1);
                     }
                 pos = pos.add(-(i1 + 1) + rand.nextInt(2 + i1 * 2),  rand.nextInt(2), -(i1 + 1) + rand.nextInt(2 + i1 * 2));
             }
-            shift /= 2;
+            shift = start.getY() - (min + (int) Math.ceil((float)(max - min) / 4f));
             for (BlockPos pos1 : positions) setBlockAndNotifyAdequately(world, pos1, getBlockState(rand));
-            for (BlockPos pos1 : lichen) if (world.isAirBlock(pos1)) setBlockAndNotifyAdequately(world, pos1, getMultiface(lichen(), world, pos1));
+            for (BlockPos pos1 : lichen) {
+                pos1 = pos1.up(shift);
+                if (world.isAirBlock(pos1)) setBlockAndNotifyAdequately(world, pos1, getMultiface(lichen(), world, pos1));
+            }
+            positions.clear();
             lichen.clear();
             return true;
         }
