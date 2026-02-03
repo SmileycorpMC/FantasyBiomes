@@ -3,15 +3,18 @@ package net.smileycorp.phantasiai.common.blocks;
 import com.google.common.collect.Lists;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockWeb;
-import net.minecraft.block.SoundType;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
+import net.minecraft.enchantment.EnchantmentHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
+import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemSword;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
+import net.minecraft.util.NonNullList;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -29,7 +32,6 @@ import javax.annotation.Nonnull;
 import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Random;
 
 public class BlockWebCover extends BlockWeb implements BlockProperties, IMultifaceBlock<BlockWebCover> {
 	
@@ -40,6 +42,8 @@ public class BlockWebCover extends BlockWeb implements BlockProperties, IMultifa
         setCreativeTab(Phantasiai.TAB);
 		setUnlocalizedName(Constants.name("web_cover"));
 		setRegistryName(Constants.loc("web_cover_" + ordinal));
+		setLightOpacity(1);
+		setHardness(4);
 		setDefaultState(EnumMultifaceDirection.getDefaultState(blockState.getBaseState()));
 	}
 	
@@ -87,11 +91,6 @@ public class BlockWebCover extends BlockWeb implements BlockProperties, IMultifa
 	}
 	
 	@Override
-	public boolean canSilkHarvest(World world, BlockPos pos, IBlockState state, EntityPlayer player) {
-		return true;
-	}
-	
-	@Override
 	public ItemStack getPickBlock(IBlockState state, RayTraceResult target, World world, BlockPos pos, EntityPlayer player) {
 		return new ItemStack(PhantasiaiItems.WEB_COVER);
 	}
@@ -104,17 +103,25 @@ public class BlockWebCover extends BlockWeb implements BlockProperties, IMultifa
 	@Nonnull
 	@Override
 	public List<ItemStack> onSheared(@Nonnull ItemStack item, IBlockAccess world, BlockPos pos, int fortune) {
-		return Lists.newArrayList(getSilkTouchDrop(world.getBlockState(pos)));
+		return Lists.newArrayList(new ItemStack(PhantasiaiItems.WEB_COVER, IMultifaceBlock.getFacings(world.getBlockState(pos)).length));
 	}
 
 	@Override
-	protected ItemStack getSilkTouchDrop(IBlockState state) {
-		return new ItemStack(PhantasiaiItems.WEB_COVER, IMultifaceBlock.getFacings(state).length);
+	public boolean canHarvestBlock(IBlockAccess world, BlockPos pos, EntityPlayer player) {
+		return player.getHeldItemMainhand().getItem() instanceof ItemSword;
 	}
-	
+
 	@Override
-	public int quantityDropped(Random rand) {
-		return 0;
+	public float getPlayerRelativeBlockHardness(IBlockState state, EntityPlayer player, World world, BlockPos pos) {
+		if (!(player.getHeldItemMainhand().getItem() instanceof ItemSword)) return super.getPlayerRelativeBlockHardness(state, player, world, pos);
+		int efficiency = EnchantmentHelper.getEfficiencyModifier(player);
+		return (float)(efficiency > 0 ? efficiency * efficiency + 1 : 0)/30f
+				+ 0.15f / (0.25f + IMultifaceBlock.getFacings(state).length * 0.75f);
+	}
+
+	@Override
+	public void getDrops(NonNullList<ItemStack> drops, IBlockAccess world, BlockPos pos, IBlockState state, int fortune) {
+		drops.add(new ItemStack(Items.STRING, IMultifaceBlock.getFacings(state).length));
 	}
 	
 	@Override
