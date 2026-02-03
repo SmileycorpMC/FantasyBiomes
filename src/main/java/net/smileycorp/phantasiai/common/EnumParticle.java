@@ -11,11 +11,11 @@ import java.util.function.Function;
 public enum EnumParticle {
     
     PIXEL((buf, data) -> {buf.writeInt((int)(double)data[0]); buf.writeInt((int)(double)data[1]); buf.writeDouble(data[2]);
-        buf.writeDouble(data[3]); buf.writeDouble(data[4]);},
-            buf -> new Double[] {(double) buf.readInt(), (double) buf.readInt(), buf.readDouble(), buf.readDouble(), buf.readDouble()}),
+        buf.writeDouble(data[3]); buf.writeDouble(data[4]); buf.writeDouble(data[5]);},
+            buf -> new Double[] {(double) buf.readInt(), (double) buf.readInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble()}),
     PIXEL_FULLBRIGHT((buf, data) -> {buf.writeInt((int)(double)data[0]); buf.writeInt((int)(double)data[1]); buf.writeDouble(data[2]);
-        buf.writeDouble(data[3]); buf.writeDouble(data[4]);},
-            buf -> new Double[] {(double) buf.readInt(), (double) buf.readInt(), buf.readDouble(), buf.readDouble(), buf.readDouble()}),
+        buf.writeDouble(data[3]); buf.writeDouble(data[4]);  buf.writeDouble(data[5]);},
+            buf -> new Double[] {(double) buf.readInt(), (double) buf.readInt(), buf.readDouble(), buf.readDouble(), buf.readDouble(), buf.readDouble()}),
     TWINKLE((buf, data) -> {buf.writeInt((int)(double)data[0]); buf.writeDouble(data[1]); buf.writeDouble(data[2]); buf.writeDouble(data[3]);},
             buf -> new Double[] {(double) buf.readInt(), buf.readDouble(), buf.readDouble(), buf.readDouble()});
     

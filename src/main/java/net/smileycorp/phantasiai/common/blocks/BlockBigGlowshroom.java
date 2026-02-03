@@ -89,7 +89,7 @@ public class BlockBigGlowshroom extends BlockBigMushroom {
 	protected void spawnSpores(World world, BlockPos pos, IBlockState state, Entity entity) {
 		for (int i = 0; i < world.rand.nextInt(3) + 3; i++)
 			EnumParticle.PIXEL_FULLBRIGHT.send(entity.dimension, pos.getX() + world.rand.nextFloat(), pos.getY() - 0.1f,
-					pos.getZ() + world.rand.nextFloat(), getSporeColour(state), 100d, 0d, -0.05, 0d);
+					pos.getZ() + world.rand.nextFloat(), getSporeColour(state), 100d, 0d, -0.05, 0d, 1d);
 	}
 	
 	@Override

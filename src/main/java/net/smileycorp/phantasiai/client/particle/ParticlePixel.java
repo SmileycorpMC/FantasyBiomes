@@ -8,7 +8,7 @@ public class ParticlePixel extends Particle {
     
     public static TextureAtlasSprite SPRITE;
     
-    public ParticlePixel(World world, double x, double y, double z, int colour, int maxAge, double motionX, double motionY, double motionZ) {
+    public ParticlePixel(World world, double x, double y, double z, int colour, int maxAge, double motionX, double motionY, double motionZ, double scale) {
         super(world, x, y, z, 0, 0, 0);
         setPosition(x, y, z);
         setRBGColorF((colour >> 16) / 255f, (colour >> 8 & 255) / 255f, (colour & 255) / 255f);
@@ -21,8 +21,8 @@ public class ParticlePixel extends Particle {
         this.motionY = motionY;
         this.motionZ = motionZ;
         particleMaxAge = maxAge;
-        particleScale = 0.5f;
-        setSize(0.05f, 0.05f);
+        particleScale = (float) scale * 0.5f;
+        setSize(particleScale * 0.1f, particleScale * 0.1f);
     }
     
     @Override

@@ -27,7 +27,7 @@ public class ClientEventListener {
                 player.posZ + (rand.nextFloat() - 0.5) * 10);
         Vec3d vec = DirectionUtils.getDirectionVec(pos, new Vec3d(player.posX, player.posY + player.getEyeHeight(), player.posZ));
         ClientHandler.spawnParticle(EnumParticle.PIXEL, pos.x, pos.y, pos.z, 0d, 20d,
-                rand.nextFloat() * vec.x, rand.nextFloat() * vec.y, rand.nextFloat() * vec.z);
+                rand.nextFloat() * vec.x, rand.nextFloat() * vec.y, rand.nextFloat() * vec.z, 0.5);
     }
 
 }
