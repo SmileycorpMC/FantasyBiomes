@@ -5,6 +5,7 @@ import net.minecraft.block.Block;
 import net.minecraft.block.BlockBush;
 import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
+import net.minecraft.block.material.Material;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -13,6 +14,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.util.BlockRenderLayer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.Mirror;
+import net.minecraft.util.Tuple;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.RayTraceResult;
@@ -30,11 +32,12 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 public class BlockLichen extends BlockBush implements IGrowable, BlockProperties, IMultifaceBlock<BlockLichen> {
 	
 	private final int ordinal;
+	//stores the position and state to set in bonemeal logic, so we don't have to re-check
+	private Tuple<BlockPos, IBlockState> growPos = null;
 	
 	public BlockLichen(int ordinal) {
 		this.ordinal = ordinal;
@@ -49,42 +52,48 @@ public class BlockLichen extends BlockBush implements IGrowable, BlockProperties
 	public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
 		return true;
 	}
-	
+
 	@Override
-	public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
-		return true;
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+		return growPos != null;
 	}
 
-	public List<EnumFacing> getSpreadableDirections(World world, BlockPos pos, IBlockState state) {
-		return Arrays.stream(EnumFacing.values()).filter(facing -> canSpread(world, pos, state, facing)).collect(Collectors.toList());
-	}
-	
-	public boolean canSpread(World world, BlockPos pos, IBlockState state, EnumFacing facing) {
-		BlockPos pos1 = pos.offset(facing);
-		if (world.isAirBlock(pos1)) return true;
-		if (IMultifaceBlock.hasFacing(state, facing)) return false;
-		return world.isSideSolid(pos1, facing.getOpposite());
-	}
-	
-	public void spread(World world, BlockPos pos, IBlockState state, EnumFacing facing) {
-		BlockPos pos1 = pos.offset(facing);
-		if (world.isAirBlock(pos1)) {
-			if (world.isAirBlock(pos1)) world.setBlockState(pos1, state, 18);
-			return;
-		}
-		if (!world.isSideSolid(pos1, facing.getOpposite())) return;
-		world.setBlockState(pos, getBlockState(ArrayUtils.add(IMultifaceBlock.getFacings(state), facing)));
-	}
-	
 	@Override
-	public boolean canUseBonemeal(World world, Random rand, BlockPos pos, IBlockState state) {
-		return !getSpreadableDirections(world, pos, state).isEmpty();
+	public boolean canGrow(World world, BlockPos pos, IBlockState state, boolean isClient) {
+		EnumFacing[] facings = IMultifaceBlock.getFacings(state);
+		for (EnumFacing facing : EnumFacing.values()) {
+			if (IMultifaceBlock.hasFacing(state, facing)) continue;
+			if (!world.isSideSolid(pos.offset(facing), facing.getOpposite())) continue;
+			if (!isClient) growPos = new Tuple<>(pos, getBlockStateFromFacing(ArrayUtils.add(facings, facing)));
+			return true;
+		}
+		for (EnumFacing facing : facings) {
+			for (EnumFacing dir : EnumFacing.values()) {
+				if (dir.getAxis() == facing.getAxis()) continue;
+				BlockPos pos1 = pos.offset(dir);
+				IBlockState state1 = world.getBlockState(pos1);
+				if (state1.getMaterial() == Material.AIR) {
+					if (!world.isSideSolid(pos1.offset(facing), facing.getOpposite())) continue;
+					if (!isClient) growPos = new Tuple<>(pos1, getBlockStateFromFacing(facing));
+					return true;
+				}
+				if (state1.getBlock() instanceof BlockLichen) {
+					if (IMultifaceBlock.hasFacing(state1, facing)) continue;
+					if (!world.isSideSolid(pos1.offset(facing), facing.getOpposite())) continue;
+					if (!isClient) growPos = new Tuple<>(pos1, getBlockStateFromFacing(ArrayUtils.add(IMultifaceBlock.getFacings(state1), facing)));
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	@Override
 	public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
-		List<EnumFacing> dirs = getSpreadableDirections(world, pos, state);
-        spread(world, pos, state, dirs.get(dirs.size()));
+		//in case mods try to force the block to grow before the field is set
+		if (growPos == null) if (!canGrow(world, pos, state, world.isRemote)) return;
+		world.setBlockState(growPos.getFirst(), growPos.getSecond());
+		growPos = null;
 	}
 	
 	@Override

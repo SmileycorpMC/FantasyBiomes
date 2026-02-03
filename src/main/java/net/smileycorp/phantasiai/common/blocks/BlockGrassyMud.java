@@ -1,10 +1,12 @@
 package net.smileycorp.phantasiai.common.blocks;
 
+import net.minecraft.block.BlockTallGrass;
 import net.minecraft.block.state.BlockStateContainer;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
+import net.minecraft.init.Blocks;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
@@ -88,9 +90,23 @@ public class BlockGrassyMud extends BlockGrassBase {
         entity.motionX *= 0.8d;
         entity.motionZ *= 0.8d;
     }
-    
+
     private static IBlockState removeGrass(IBlockState state) {
         return PhantasiaiBlocks.MUD.getDefaultState().withProperty(BlockMud.VARIANT, state.getValue(BlockMud.VARIANT));
+    }
+
+    @Override
+    public void grow(World world, Random rand, BlockPos pos, IBlockState state) {
+        BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
+        for (int i = -4; i <= 4; i++) for (int j = -4; j <= 4; j++) {
+            mutable.setPos(pos.getX() + i, pos.getY(), pos.getZ() + j);
+            System.out.println(mutable);
+            if (i + j != 0) if (rand.nextInt(Math.abs(i) + Math.abs(j)) > 1) continue;
+            BlockPos up = mutable.up();
+            if (!world.isAirBlock(up)) continue;
+            if (world.getBlockState(mutable) != state) continue;
+            world.setBlockState(up, Blocks.TALLGRASS.getDefaultState().withProperty(BlockTallGrass.TYPE, BlockTallGrass.EnumType.GRASS));
+        }
     }
 
 }

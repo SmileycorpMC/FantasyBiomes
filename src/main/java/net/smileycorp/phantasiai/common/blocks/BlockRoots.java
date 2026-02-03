@@ -1,6 +1,7 @@
 package net.smileycorp.phantasiai.common.blocks;
 
 import net.minecraft.block.BlockBush;
+import net.minecraft.block.IGrowable;
 import net.minecraft.block.SoundType;
 import net.minecraft.block.material.Material;
 import net.minecraft.block.state.IBlockState;
@@ -17,7 +18,7 @@ import net.smileycorp.phantasiai.common.Phantasiai;
 
 import java.util.Random;
 
-public class BlockRoots extends BlockBush implements BlockProperties {
+public class BlockRoots extends BlockBush implements BlockProperties, IGrowable {
 
 	public BlockRoots() {
 		super(Material.PLANTS);
@@ -62,5 +63,21 @@ public class BlockRoots extends BlockBush implements BlockProperties {
 	 public boolean canBlockStay(World world, BlockPos pos, IBlockState state) {
         return state.getBlock() == this && canPlaceBlockOnSide(world, pos, EnumFacing.DOWN);
     }
+
+
+	@Override
+	public boolean canGrow(World worldIn, BlockPos pos, IBlockState state, boolean isClient) {
+		return true;
+	}
+
+	@Override
+	public boolean canUseBonemeal(World worldIn, Random rand, BlockPos pos, IBlockState state) {
+		return true;
+	}
+
+	@Override
+	public void grow(World world, Random random, BlockPos pos, IBlockState state) {
+		world.setBlockState(pos.down(), state);
+	}
 
 }
