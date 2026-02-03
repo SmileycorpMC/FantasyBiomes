@@ -25,7 +25,6 @@ import net.smileycorp.atlas.api.block.BlockBase;
 import net.smileycorp.phantasiai.common.Constants;
 import net.smileycorp.phantasiai.common.Phantasiai;
 import net.smileycorp.phantasiai.common.PhantasiaiLootTables;
-import net.smileycorp.phantasiai.common.blocks.enums.EnumMudType;
 import net.smileycorp.phantasiai.common.blocks.enums.EnumMulchedBoneType;
 
 import javax.annotation.Nullable;
