@@ -30,7 +30,10 @@ import net.smileycorp.phantasiai.common.items.PhantasiaiItems;
 import org.apache.commons.lang3.ArrayUtils;
 
 import javax.annotation.Nonnull;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 
 public class BlockLichen extends BlockBush implements BlockProperties, IMultifaceBlock<BlockLichen>, IShearable, IGrowable {
 	

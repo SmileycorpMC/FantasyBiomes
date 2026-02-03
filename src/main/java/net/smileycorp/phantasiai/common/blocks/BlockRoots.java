@@ -21,7 +21,6 @@ import net.smileycorp.phantasiai.common.Constants;
 import net.smileycorp.phantasiai.common.Phantasiai;
 
 import javax.annotation.Nonnull;
-import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
