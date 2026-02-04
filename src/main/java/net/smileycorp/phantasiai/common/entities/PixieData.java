@@ -198,6 +198,10 @@ public class PixieData {
         return new PixieData(variant, getRandomSize(rand), PixieData.MAX_MOOD / 2);
     }
 
+    public static PixieData getDefault(int variant) {
+        return getDefault(Variant.get((byte) variant));
+    }
+
     public static PixieData getDefault(Variant variant) {
         return variant.getDefault();
     }

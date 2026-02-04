@@ -11,6 +11,7 @@ import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
 import net.smileycorp.phantasiai.common.blocks.PhantasiaiBlocks;
+import net.smileycorp.phantasiai.common.capabilities.PhantasiaiCapabilities;
 import net.smileycorp.phantasiai.common.network.PacketHandler;
 import net.smileycorp.phantasiai.common.world.WorldEventHandler;
 
@@ -39,6 +40,7 @@ public class Phantasiai {
 		NetworkRegistry.INSTANCE.registerGuiHandler(this, new GUIHandler());
 		MinecraftForge.TERRAIN_GEN_BUS.register(new WorldEventHandler());
 		MinecraftForge.EVENT_BUS.register(new EventListener());
+		 PhantasiaiCapabilities.init();
 	 }
 	 
 	 @EventHandler

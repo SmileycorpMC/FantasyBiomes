@@ -10,10 +10,12 @@ import net.minecraftforge.common.brewing.BrewingRecipeRegistry;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.registry.ForgeRegistries;
 import net.minecraftforge.oredict.OreDictionary;
 import net.smileycorp.atlas.api.block.FuelHandler;
 import net.smileycorp.phantasiai.common.blocks.BlockFBMushroom;
 import net.smileycorp.phantasiai.common.blocks.PhantasiaiBlocks;
+import net.smileycorp.phantasiai.common.recipe.PixieJarRecipe;
 
 import javax.annotation.Nullable;
 

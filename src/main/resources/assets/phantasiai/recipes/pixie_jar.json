@@ -1,0 +1,29 @@
+{
+  "group": "phantasiai:pixie_jar",
+  "type": "minecraft:crafting_shaped",
+  "mirror": false,
+  "pattern": [
+    "GSG",
+    "GPG",
+    "GGG"
+  ],
+  "key": {
+	"G": {
+      "type": "forge:ore_dict",
+      "ore": "paneGlassColorless"
+    },
+	"S": {
+      "type": "forge:ore_dict",
+      "ore": "slabWood"
+    },
+    "P": {
+      "item": "phantasiai:pixie_bottle",
+	  "data": 32767
+    }
+  },
+  "result": {
+    "item": "phantasiai:pixie_jar",
+    "data": 0,
+    "count": 1
+  }
+}
