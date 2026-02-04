@@ -64,7 +64,8 @@ public class GuiPixieWorkshop extends GuiContainer {
         mc.getTextureManager().bindTexture(TEXTURE);
         drawTexturedModalRect(guiLeft, guiTop, 0, 0, xSize, ySize);
         houses.forEach(GuiPixieHouse::draw);
-        for (int i = 12; i < 19; i++) {
+        //slot bowls
+        for (int i = 11; i < 18; i++) {
             Slot slot = inventorySlots.getSlot(i);
             if (slot.getHasStack()) continue;
             drawTexturedModalRect(guiLeft + slot.xPos, guiTop + slot.yPos,
