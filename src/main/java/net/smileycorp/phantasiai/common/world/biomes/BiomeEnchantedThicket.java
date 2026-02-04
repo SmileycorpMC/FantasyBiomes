@@ -197,7 +197,7 @@ public class BiomeEnchantedThicket extends Biome {
 		
 		private WorldGenerator getRandomFeature(World world, BlockPos pos, Random rand, Set<BlockPos> canopyTrees) {
 			int r = rand.nextInt(15);
-			if (r < 3) return new WorldGenWitchCottage();
+			if (r < 2) return new WorldGenWitchCottage();
 			if (r < 5) return new WorldGenMysticStump();
 			if (r < 9) return new WorldGenHollowLog();
 			return new WorldGenLog();

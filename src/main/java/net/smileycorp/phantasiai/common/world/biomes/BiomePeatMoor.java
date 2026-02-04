@@ -125,7 +125,7 @@ public class BiomePeatMoor extends Biome {
 			int k = rand.nextInt(16) + 8;
 			int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
 			if (rand.nextInt(6) == 0) (rand.nextInt(3) == 0 ? new WorldGenGraniteBoulder() : new WorldGenBoulder()).generate(world, rand, pos.add(j, l, k));
-			else if (rand.nextInt(16) == 0) circle.generate(world, rand, pos.add(j, l, k));
+			else if (rand.nextInt(20) == 0) circle.generate(world, rand, pos.add(j, l, k));
 			generateTrees(world, biome, rand, pos);
 			decorating = false;
 		}

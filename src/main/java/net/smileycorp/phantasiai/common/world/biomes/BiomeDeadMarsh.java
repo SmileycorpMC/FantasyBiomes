@@ -154,7 +154,7 @@ public class BiomeDeadMarsh extends Biome {
 					else if (state == Blocks.DIRT.getDefaultState()) world.setBlockState(pos1, PhantasiaiBlocks.MULCHED_BONE.getDefaultState()
 							.withProperty(BlockMulchedBone.VARIANT, EnumMulchedBoneType.DIRT), 10);
 				}
-				if (rand.nextInt(25) == 0) {
+				if (rand.nextInt(20) == 0) {
 					int j = rand.nextInt(16) + 8;
 					int k = rand.nextInt(16) + 8;
 					int l = rand.nextInt(world.getHeight(pos.add(j, 0, k)).getY() + 32);
