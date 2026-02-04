@@ -26,9 +26,9 @@ public class ClientEventListener {
         Minecraft mc = Minecraft.getMinecraft();
         if (mc.isGamePaused()) return;
         EntityPlayerSP player = mc.player;
-        World world = player.world;
         if (player == null) return;
         if (player.posY < 60) return;
+        World world = player.world;
         if (!world.isAirBlock(new BlockPos(player.posX, player.posY + player.getEyeHeight(), player.posZ))) return;
         Random rand = player.getRNG();
         Biome biome = world.getBiome(player.getPosition());
