@@ -3,8 +3,6 @@ package net.smileycorp.phantasiai.common.capabilities;
 import net.minecraftforge.common.capabilities.Capability;
 import net.minecraftforge.common.capabilities.CapabilityInject;
 import net.minecraftforge.common.capabilities.CapabilityManager;
-import net.minecraftforge.common.capabilities.ICapabilityProvider;
-import net.smileycorp.atlas.api.util.Func;
 
 public class PhantasiaiCapabilities {
 

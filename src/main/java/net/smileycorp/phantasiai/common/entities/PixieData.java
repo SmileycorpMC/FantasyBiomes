@@ -1,7 +1,6 @@
 package net.smileycorp.phantasiai.common.entities;
 
 import com.google.common.collect.Maps;
-import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.SharedMonsterAttributes;
 import net.minecraft.item.EnumRarity;
 import net.minecraft.nbt.NBTTagCompound;
@@ -11,7 +10,6 @@ import net.minecraft.network.datasync.DataSerializer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
 import net.minecraftforge.common.IRarity;
 import net.minecraftforge.event.ForgeEventFactory;

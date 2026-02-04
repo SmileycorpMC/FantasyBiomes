@@ -1,10 +1,8 @@
 package net.smileycorp.phantasiai.common.blocks.tiles;
 
-import com.google.common.collect.Lists;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.ItemStackHelper;
-import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTBase;
@@ -31,7 +29,6 @@ import net.smileycorp.phantasiai.common.recipe.IPixieRecipe;
 import net.smileycorp.phantasiai.common.recipe.PixieRecipeManager;
 
 import javax.annotation.Nullable;
-import java.util.List;
 
 public class TilePixieWorkshop extends TileEntity implements ITickable {
 
