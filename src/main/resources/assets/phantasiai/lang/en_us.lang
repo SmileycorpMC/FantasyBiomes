@@ -155,9 +155,9 @@ tooltip.phantasiai.pixie_variant=Variant: %1$s
 tooltip.phantasiai.size=Size: %1$s
 tooltip.phantasiai.health=Health: %1$s/%2$s
 tooltip.phantasiai.mood=Mood: %1$s
-tooltip.phantasiai.efficiency=§e%1$s Efficiency
-tooltip.phantasiai.efficiency.food=§eFood Multiplier (%1$s) : x%2$s
-tooltip.phantasiai.efficiency.pixie=§ePixie Multiplier (%1$s) : x%2$s
+tooltip.phantasiai.efficiency=§6x%1$s Efficiency
+tooltip.phantasiai.efficiency.food=Food Multiplier (%1$s): §6x%2$s
+tooltip.phantasiai.efficiency.pixie=Pixie Multiplier (%1$s): §6x%2$s
 
 jei.category.phantasiai.pixie_table_food=Pixie Workshop Food
-jei.tooltip.phantasiai.efficiency=+%s Efficiency
+jei.tooltip.phantasiai.efficiency=x%s Efficiency

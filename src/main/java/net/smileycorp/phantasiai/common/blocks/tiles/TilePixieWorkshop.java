@@ -4,6 +4,7 @@ import com.google.common.collect.Lists;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.inventory.InventoryHelper;
 import net.minecraft.inventory.ItemStackHelper;
+import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
 import net.minecraft.nbt.NBTBase;
@@ -15,7 +16,12 @@ import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ITickable;
 import net.minecraft.util.NonNullList;
+import net.minecraft.world.World;
+import net.minecraft.world.WorldServer;
 import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.util.FakePlayer;
+import net.minecraftforge.common.util.FakePlayerFactory;
+import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.items.CapabilityItemHandler;
 import net.smileycorp.atlas.api.util.RecipeUtils;
 import net.smileycorp.phantasiai.common.entities.PixieData;
@@ -35,7 +41,7 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
     private final NonNullList<ItemStack> lastRecipe = NonNullList.withSize(9, ItemStack.EMPTY);
     private float recipeProgress = 0;
     private float progressPercent = 0;
-    private List<PixieData> pixies = Lists.newArrayList();
+    private NonNullList<PixieData> pixies = NonNullList.create();
     private float baseEfficiency = 1;
     private float efficiency = 1;
     private int foodTimer = 0;
@@ -44,6 +50,7 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
 
     @Override
     public void update() {
+        if (world.isRemote) return;
         if (foodTimer > 0) foodTimer -= getPixieCount();
         if (foodTimer == 0) {
             baseEfficiency = 1;
@@ -79,6 +86,7 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
         consumedFood = stack.splitStack(1);
         foodTimer = 600;
         calculateEfficiency();
+        markDirty();
         return true;
     }
 
@@ -104,23 +112,28 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
     public void tryCraft() {
         int recipeDuration = (currentRecipe instanceof IPixieRecipe ? ((IPixieRecipe)currentRecipe).getCraftingDuration() : 500);
         progressPercent = recipeProgress / (float) recipeDuration;
+        markDirty();
         if ((recipeProgress += efficiency) >= recipeDuration) {
+            FakePlayer player = FakePlayerFactory.getMinecraft((WorldServer) world);
             recipeProgress = recipeDuration;
             ItemStack result = currentRecipe.getCraftingResult(inventory.getCraftingWrapper());
+            result.onCrafting(world, player, result.getCount());
+            FMLCommonHandler.instance().firePlayerCraftingEvent(player, result, inventory.getCraftingWrapper());
             if (result.isEmpty()) return;
             for (int i = 9; i < 12; i++) {
                 if (!RecipeUtils.compareItemStacksCanFit(result, inventory.getStackInSlot(i))) continue;
                 result.setCount(result.getCount() + inventory.getStackInSlot(i).getCount());
                 inventory.setStackInSlot(i, result);
+                NonNullList<ItemStack> remainingItems = currentRecipe.getRemainingItems(inventory.getCraftingWrapper());
                 for (int j = 0; j < 9; j++) {
                     ItemStack stack = inventory.getStackInSlot(j);
                     ItemStack cache = stack.copy();
                     cache.setCount(1);
                     lastRecipe.set(0, cache);
                     if (stack.isEmpty()) continue;
-                    ItemStack container = stack.getItem().getContainerItem(stack);
+                    ItemStack container = remainingItems.get(j);
                     if (container.isEmpty()) stack.shrink(1);
-                    else inventory.setStackInSlot(j, container);
+                    else inventory.setStackInSlot(j, container.copy());
                 }
                 recipeProgress = 0;
                 progressPercent = 0;
@@ -136,7 +149,6 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
         }
         efficiency = baseEfficiency;
         for (PixieData pixie : pixies) efficiency *= pixie.getEfficiency();
-        markDirty();
     }
 
     public void destroy() {
@@ -209,12 +221,19 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
     }
 
     @Override
+    public void setWorld(World world) {
+        super.setWorld(world);
+        world.markBlockRangeForRenderUpdate(pos, pos);
+    }
+
+    @Override
     public void markDirty() {
+        super.markDirty();
+        if (!hasWorld()) return;
         IBlockState state = world.getBlockState(pos);
         world.markBlockRangeForRenderUpdate(pos, pos);
         world.notifyBlockUpdate(pos, state, state, 3);
         world.scheduleBlockUpdate(pos, getBlockType(), 0, 0);
-        super.markDirty();
     }
 
     @Override
@@ -232,6 +251,7 @@ public class TilePixieWorkshop extends TileEntity implements ITickable {
         isActive = nbt.getBoolean("isActive");
         ItemStackHelper.loadAllItems(nbt.getCompoundTag("lastRecipe"), lastRecipe);
         calculateEfficiency();
+        tryFindingRecipe();
     }
     
     @Override

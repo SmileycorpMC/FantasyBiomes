@@ -1,7 +1,9 @@
 package net.smileycorp.phantasiai.common.entities;
 
 import com.google.common.collect.Maps;
+import net.minecraft.enchantment.Enchantment;
 import net.minecraft.entity.SharedMonsterAttributes;
+import net.minecraft.item.EnumRarity;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.network.datasync.DataParameter;
@@ -9,7 +11,9 @@ import net.minecraft.network.datasync.DataSerializer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
+import net.minecraftforge.common.IRarity;
 import net.minecraftforge.event.ForgeEventFactory;
 import net.smileycorp.atlas.api.recipe.WeightedOutputs;
 import net.smileycorp.phantasiai.common.Constants;
@@ -221,14 +225,14 @@ public class PixieData {
     }
 
     public enum Variant {
-        SWALLOWTAIL("swallowtail", 35, 0xFF68F2),
-        MONARCH("monarch", 25, 0x68C1FF),
-        RED_SPOTTED("red_spotted", 20, 0x7AFF68),
-        MARBLED("marbled", 14, 0xFFFF7D),
-        HAIRSTREAK("hairstreak", 5, 0x68FFE6),
-        SUNSET("sunset", 1, 0xF9FCFC),
-        MALACHITE("malachite", 0, 0x9A72FF),
-        GLASSWING("glasswing", 0, 0xDDBDEC);
+        SWALLOWTAIL("swallowtail", 35, 0xFF68F2, EnumRarity.COMMON),
+        MONARCH("monarch", 25, 0x68C1FF, EnumRarity.COMMON),
+        RED_SPOTTED("red_spotted", 20, 0x7AFF68, EnumRarity.COMMON),
+        MARBLED("marbled", 14, 0xFFFF7D, EnumRarity.UNCOMMON),
+        HAIRSTREAK("hairstreak", 5, 0x68FFE6, EnumRarity.UNCOMMON),
+        SUNSET("sunset", 1, 0xF9FCFC, EnumRarity.RARE),
+        MALACHITE("malachite", 0, 0x9A72FF, EnumRarity.RARE),
+        GLASSWING("glasswing", 0, 0xDDBDEC, EnumRarity.RARE);
 
         private static WeightedOutputs<Variant> table;
 
@@ -236,13 +240,15 @@ public class PixieData {
         private final int weight, colour;
         private final ResourceLocation texture;
         private final PixieData defaultData;
+        private final IRarity rarity;
 
-        Variant(String name, int weight, int colour) {
+        Variant(String name, int weight, int colour, IRarity rarity) {
             this.name = name;
             this.weight = weight;
             this.colour = colour;
             this.texture = Constants.loc("textures/entity/pixie/" + name + ".png");
             defaultData = new PixieData(this, 1, PixieData.MAX_MOOD / 2);
+            this.rarity = rarity;
         }
 
         public String getName() {
@@ -264,6 +270,10 @@ public class PixieData {
         public int getRandomTrailColour(Random rand) {
             float[] hsv = Color.RGBtoHSB((colour >> 16) & 0xFF, (colour >> 8) & 0xFF, colour & 0xFF, new float[3]);
             return Color.HSBtoRGB(hsv[0], rand.nextFloat() * 0.3f, hsv[2]) & 0xFFFFFF;
+        }
+
+        public IRarity getRarity() {
+            return rarity;
         }
 
         public static Variant get(byte val) {

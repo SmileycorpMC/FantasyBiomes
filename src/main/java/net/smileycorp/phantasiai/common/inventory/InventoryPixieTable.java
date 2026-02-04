@@ -71,6 +71,7 @@ public class InventoryPixieTable extends ItemStackHandler {
 
     @Override
     protected void onContentsChanged(int slot) {
+        markDirty();
         if (slot >= 0 && slot <= 8) tile.tryFindingRecipe();
     }
 

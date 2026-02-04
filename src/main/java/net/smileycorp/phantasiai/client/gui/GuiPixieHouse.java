@@ -44,7 +44,7 @@ public class GuiPixieHouse extends Gui {
         tooltips.add(pixie.hasName() ? pixie.getName() : new TextComponentTranslation("entity.phantasiai.pixie.name").getFormattedText());
         pixie.addTooltips(tooltips);
         tooltips.add(new TextComponentTranslation("tooltip.phantasiai.efficiency",
-                String.format("%.2f", (pixie.getEfficiency()))).getFormattedText());
+                "\u00a76" +  String.format("%.2f", (pixie.getEfficiency()))).getFormattedText());
         return tooltips;
     }
     

@@ -7,7 +7,10 @@ import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Slot;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.text.Style;
+import net.minecraft.util.text.TextComponentString;
 import net.minecraft.util.text.TextComponentTranslation;
+import net.minecraft.util.text.TextFormatting;
 import net.smileycorp.phantasiai.common.Constants;
 import net.smileycorp.phantasiai.common.blocks.tiles.TilePixieWorkshop;
 import net.smileycorp.phantasiai.common.entities.PixieData;
@@ -84,7 +87,7 @@ public class GuiPixieWorkshop extends GuiContainer {
         }
         if (tile.getEfficiency() > 1) {
             String text = "x" +  String.format("%.2f", tile.getEfficiency());
-            mc.fontRenderer.drawString(text,
+            mc.fontRenderer.drawStringWithShadow(text,
                     guiLeft + 106 - mc.fontRenderer.getStringWidth(text) / 2, guiTop + 37, 0xFFEFC772);
         }
         GlStateManager.enableDepth();
@@ -95,15 +98,18 @@ public class GuiPixieWorkshop extends GuiContainer {
         if (tile.getEfficiency() > 1 && x >= guiLeft + 94 && y >= guiTop + 33 && x <= guiLeft + 120 && y <= guiTop + 47) {
             List<String> text = Lists.newArrayList();
             if (tile.getBaseEfficiency() > 1) text.add(new TextComponentTranslation("tooltip.phantasiai.efficiency.food",
-                    tile.getLastConsumedFood().getDisplayName(), String.format("%.2f", tile.getBaseEfficiency())).getFormattedText());
+                    tile.getLastConsumedFood().getDisplayName(), "\u00a76" + String.format("%.2f", tile.getBaseEfficiency())).getFormattedText());
             for (int i = 0; i < tile.getPixieCount(); i++) {
                 PixieData pixie = tile.getPixie(i);
                 text.add(new TextComponentTranslation("tooltip.phantasiai.efficiency.pixie",
-                        pixie.hasName() ? pixie.getName() : I18n.format("entity.phantasiai.pixie.name") + " " + (i + 1),
-                        String.format("%.2f", pixie.getEfficiency())).getFormattedText());
+                        new TextComponentTranslation(pixie.hasName() ? pixie.getName() :
+                                I18n.format("entity.phantasiai.pixie.name") + " " + (i + 1)).setStyle(new Style()
+                                .setColor(pixie.getVariant().getRarity().getColor())),
+                        "\u00a76" + String.format("%.2f", pixie.getEfficiency())).getFormattedText());
             }
             drawHoveringText(text, x, y, fontRenderer);
         }
+
         for (GuiPixieHouse house : houses) if (house.isHovered(x, y)) {
             drawHoveringText(house.getTooltipText(), x, y, fontRenderer);
             return;

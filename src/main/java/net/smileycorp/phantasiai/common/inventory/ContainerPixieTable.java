@@ -21,7 +21,7 @@ public class ContainerPixieTable extends Container {
         for (int i = 0; i < 3; ++i) for (int j = 0; j < 3; ++j) addSlotToContainer(new SlotItemHandler(tile.inventory, j + i * 3, 13 + j * 18, 8 + i * 19));
 
         // Output
-        for(int i = 0; i < 2; ++i) addSlotToContainer(new SlotItemHandler(tile.inventory, 10 + i, 147, 8 + i * 19));
+        for(int i = 0; i < 3; ++i) addSlotToContainer(new SlotItemHandler(tile.inventory, 9 + i, 147, 8 + i * 19));
 
         // Food
         for(int i = 0; i < 7; ++i) addSlotToContainer(new SlotPixieFood(tile.inventory, 12 + i, 8 + i * 24, 74));
