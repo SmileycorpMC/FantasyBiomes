@@ -44,7 +44,7 @@ public class EntityAIPixieHealOwner extends EntityAIBase {
             EnumParticle.TWINKLE.send(owner.dimension, owner.posX + (rand.nextDouble() - 0.5) * (double)owner.width,
                     owner.posY + rand.nextDouble() * (double)owner.height, owner.posZ + (rand.nextDouble() - 0.5) * (double)owner.width,
                     (double) pixie.getVariant().getColour(), 50d, 0d, 0.05, 0d);
-        this.updateTask();
+        super.updateTask();
     }
 
 }
