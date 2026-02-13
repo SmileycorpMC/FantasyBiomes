@@ -59,15 +59,23 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree implements IMult
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		if (!natural &! canGenerate(world, pos)) return false;
 		int h = rand.nextInt(5) + 18;
+		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
 		//trunk
-		for (int i = 0; i < h; i++) if (blocksPlacement(world, pos.up(i))) {
-			if (h > 16) {
-				h = 14;
-				break;
+		for (int i = 0; i < h; i++) {
+			mutable.move(EnumFacing.UP);
+			if (blocksPlacement(world, mutable)) {
+				if (h > 16) {
+					h = 14;
+					break;
+				}
+				return false;
 			}
-			return false;
 		}
-		for (int i = 0; i < h; i++) setBlock(world, rand, pos.up(i), LOG);
+		mutable.setY(pos.getY());
+		for (int i = 0; i < h; i++) {
+			mutable.move(EnumFacing.UP);
+			setBlock(world, rand, pos.up(i), LOG);
+		}
 		EnumFacing stump = DirectionUtils.getRandomDirectionXZ(rand);
 		setBlockAndNotifyAdequately(world, pos.up(rand.nextInt(3) + 7).offset(stump),
 				PhantasiaiBlocks.WOOD.getLogState(EnumWoodType.ORANTIKKU, BlockLog.EnumAxis.fromFacingAxis(stump.getAxis())));
@@ -75,10 +83,10 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree implements IMult
 		for (int i = 0; i < 4; i++) generateRoot(world, rand, pos, DirectionUtils.getXZDirection(i));
 		//branches
 		setBlockAndNotifyAdequately(world, pos.up(h), BARK);
-		//generateLeaves(world, pos.up(h - 1), 7);
 		int branches = rand.nextInt(4) + 5;
-		for (int i = 0; i < branches; i++) generateBranch(world, rand, new BlockPos.MutableBlockPos(pos.up(h)), rand.nextInt(5) + 7,
+		for (int i = 0; i < branches; i++) generateBranch(world, rand, new BlockPos.MutableBlockPos(pos.up(h - rand.nextInt(5))), rand.nextInt(3) + 5,
 					getBranchDir(TWO_PI * (float) i / (float) branches, rand));
+		//generateLeaves(world, rand, pos.up(h));
 		for (BlockPos pos1 : lichen) if (world.isAirBlock(pos1)) setBlockAndNotifyAdequately(world, pos1,
 				getMultiface(rand.nextInt(50) == 0 ? web() : lichen(), world, pos1));
 		lichen.clear();
@@ -129,19 +137,24 @@ public class WorldGenOrantikkuTree extends WorldGenAbstractTree implements IMult
 			bpos = bpos.add(dir.normalize());
 			mutable.setPos(bpos.x, bpos.y, bpos.z);
 			if (world.isAirBlock(mutable) || world.getBlockState(mutable) == LEAVES) setBlockAndNotifyAdequately(world, mutable, BARK);
-			if (i > 3) generateLeaves(world, mutable, 4 + rand.nextInt(3));
+			if (i == length -1) break;
 			dir = dir.addVector(0.5 * (0.1f * rand.nextInt(10) - 0.5), 0.2 * (0.1f * rand.nextInt(3) - 0.2), 0.5 * (0.1f * rand.nextInt(10) - 0.5));
 		}
+		mutable.move(EnumFacing.UP);
+		if (world.isAirBlock(mutable) || world.getBlockState(mutable) == LEAVES) setBlockAndNotifyAdequately(world, mutable, BARK);
+		mutable.move(EnumFacing.UP);
+		generateLeaves(world, rand, mutable);
 	}
 	
-	private void generateLeaves(World world, BlockPos pos, int r) {
-		for (int i = -r; i <= r; i++) for (int j = -2; j <= r -1; j++) for (int k = -r; k <= r; k++) {
-			if (i * i + j * j + k * k >= r * r) continue;
-			BlockPos newpos = pos.north(i).up(j).east(k);
-			IBlockState state = world.getBlockState(newpos);
+	private void generateLeaves(World world, Random random, BlockPos pos) {
+		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
+		for (int i = -6; i <= 6; i++) for (int j = -1; j <= 3; j++) for (int k = -6; k <= 6; k++) {
+			if (i * i + j * j * 4 + k * k >= 30 + random.nextInt(8)) continue;
+			mutable.setPos(pos.getX() + i, pos.getY() + j, pos.getZ() + k);
+			IBlockState state = world.getBlockState(mutable);
 			if (state == LEAVES) continue;
-			if (!state.getBlock().canBeReplacedByLeaves(state, world, newpos)) continue;
-			setBlockAndNotifyAdequately(world, newpos, LEAVES);
+			if (!state.getBlock().canBeReplacedByLeaves(state, world, mutable)) continue;
+			setBlockAndNotifyAdequately(world, mutable, LEAVES);
 		}
 	}
 	

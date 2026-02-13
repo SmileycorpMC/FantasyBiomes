@@ -25,7 +25,7 @@ public class WorldGenGnarlwillow extends WorldGenAbstractTree {
 	protected static final IBlockState LOG = PhantasiaiBlocks.WOOD.getLogState(EnumWoodType.GNARLWILLOW, BlockLog.EnumAxis.Y);
 	protected static final IBlockState BARK = PhantasiaiBlocks.WOOD.getLogState(EnumWoodType.GNARLWILLOW, BlockLog.EnumAxis.NONE);
 	protected static final IBlockState LEAVES = PhantasiaiBlocks.WOOD.getLeavesState(EnumWoodType.GNARLWILLOW)
-			.withProperty(BlockLeaves.DECAYABLE, false).withProperty(BlockLeaves.CHECK_DECAY, false);
+			.withProperty(BlockLeaves.DECAYABLE, true).withProperty(BlockLeaves.CHECK_DECAY, false);
 	
 	protected final Map<BlockPos, EnumFacing> vines = Maps.newHashMap();
 	
@@ -42,12 +42,12 @@ public class WorldGenGnarlwillow extends WorldGenAbstractTree {
 	@Override
 	public boolean generate(World world, Random rand, BlockPos pos) {
 		if (!canGenerate(world, pos)) return false;
-		int h = rand.nextInt(3) + 5;
+		int h = rand.nextInt(3) + 7;
 		int face = rand.nextInt(3) + 1;
 		List<EnumFacing> facings = Lists.newArrayList(EnumFacing.HORIZONTALS);
 		BlockPos.MutableBlockPos mutable = new BlockPos.MutableBlockPos(pos);
 		for (int i = 0; i <= h; i++) {
-			setBlockAndNotifyAdequately(world, mutable, i == face && rand.nextInt(3) == 0 ?
+			setBlockAndNotifyAdequately(world, mutable, i == face && rand.nextInt(5) == 0 ?
 					PhantasiaiBlocks.TWISTED_GNARLWILLOW.getDefaultState().withProperty(BlockTwistedGnarlwillow.FACING, EnumFacing.HORIZONTALS[rand.nextInt(4)]) : LOG);
 			if (i > 3 && rand.nextInt(5) < facings.size() - 1 &! facings.isEmpty()) {
 				int x = rand.nextInt(facings.size());
@@ -56,6 +56,7 @@ public class WorldGenGnarlwillow extends WorldGenAbstractTree {
 			}
 			mutable.move(EnumFacing.UP);
 		}
+		mutable.move(EnumFacing.DOWN, 2);
 		generateLeaves(world, mutable);
 		for (Map.Entry<BlockPos, EnumFacing> entry : vines.entrySet()) {
 			mutable.setPos(entry.getKey());
